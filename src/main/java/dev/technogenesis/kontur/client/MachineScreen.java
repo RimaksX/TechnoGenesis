@@ -53,8 +53,8 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
     static final int TITLE_Y = 6;
     static final int INV_LABEL_Y = 92;
 
-    // вкладка слота модуля слева: держатель шириной 29 перекрывает край окна на 4 пикселя; слот и шкала нагрева лежат на нём
-    private static final int HOLDER_X = -25;
+    // вкладка слота модуля слева: держатель шириной 31 перекрывает край окна на 4 пикселя; слот и шкала нагрева лежат на нём
+    private static final int HOLDER_X = -27;
     private static final int HOLDER_Y = 34;
 
     // панель настройки сторон перекрывает рабочую область окна: сверху кнопки типов, слева развёртка куба из пяти клеток
@@ -125,10 +125,10 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
     public List<Rect2i> extraAreas() {
         List<Rect2i> areas = new ArrayList<>();
         if (def.tabSlot() >= 0) {
-            areas.add(new Rect2i(leftPos + HOLDER_X, topPos + HOLDER_Y, 29, holderHeight()));
+            areas.add(new Rect2i(leftPos + HOLDER_X, topPos + HOLDER_Y, 31, holderHeight()));
         }
         if (hasConfigTab()) {
-            areas.add(new Rect2i(leftPos + HOLDER_X, topPos + configTabY(), 29, CFG_TAB_H));
+            areas.add(new Rect2i(leftPos + HOLDER_X, topPos + configTabY(), 31, CFG_TAB_H));
         }
         return areas;
     }
@@ -182,15 +182,15 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
             GuiUtil.slot(g, x + slot.x, y + slot.y, role);
         }
         if (def.hasModule() && (menu.slots.get(def.moduleSlot()).hasItem() || menu.heatPercent() > 0)) {
-            GuiUtil.heatBar(g, x + HOLDER_X + 5, y + HOLDER_Y + heatBarOffset(), menu.heatPercent());
+            GuiUtil.heatBar(g, x + HOLDER_X + 6, y + HOLDER_Y + heatBarOffset(), menu.heatPercent());
         }
         if (hasConfigTab()) {
             boolean open = menu.configOpen();
-            if (open || inRect(mouseX, mouseY, x + HOLDER_X + 4, y + configTabY() + 4, 20, 18)) {
-                g.fill(x + HOLDER_X + 4, y + configTabY() + 4, x + HOLDER_X + 24, y + configTabY() + 22,
+            if (open || inRect(mouseX, mouseY, x + HOLDER_X + 5, y + configTabY() + 5, 20, 20)) {
+                g.fill(x + HOLDER_X + 5, y + configTabY() + 5, x + HOLDER_X + 25, y + configTabY() + 25,
                         open ? 0x40F5C542 : 0x30FFFFFF);
             }
-            g.blit(WRENCH_ICON, x + HOLDER_X + 6, y + configTabY() + 5, 0f, 0f, 16, 16, 16, 16);
+            g.blit(WRENCH_ICON, x + HOLDER_X + 7, y + configTabY() + 7, 0f, 0f, 16, 16, 16, 16);
         }
         if (menu.configOpen()) {
             drawConfig(g, x, y, mouseX, mouseY);
@@ -307,7 +307,7 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
     private void renderCustomTooltips(GuiGraphics g, int mx, int my) {
         int x = leftPos;
         int y = topPos;
-        if (hasConfigTab() && inRect(mx, my, x + HOLDER_X + 4, y + configTabY() + 4, 20, 18)) {
+        if (hasConfigTab() && inRect(mx, my, x + HOLDER_X + 5, y + configTabY() + 5, 20, 20)) {
             g.renderComponentTooltip(font, List.of(Component.translatable("gui.kontur.config_tab"),
                     Component.translatable("gui.kontur.config_tab_hint").withStyle(ChatFormatting.GRAY)), mx, my);
         }
@@ -344,7 +344,7 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
                 && menu.totalTime() > 0) {
             g.renderTooltip(font, Component.translatable("gui.kontur.progress", 100 * menu.progress() / menu.totalTime()), mx, my);
         }
-        if (def.hasModule() && inRect(mx, my, x + HOLDER_X + 5, y + HOLDER_Y + heatBarOffset(), 18, 6)) {
+        if (def.hasModule() && inRect(mx, my, x + HOLDER_X + 6, y + HOLDER_Y + heatBarOffset(), 18, 6)) {
             List<Component> lines = new ArrayList<>();
             lines.add(Component.translatable("gui.kontur.heat", menu.heatPercent()));
             lines.add(Component.translatable("gui.kontur.cooling", menu.cooling()).withStyle(ChatFormatting.GRAY));
@@ -400,7 +400,7 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
 
     // ------------------------------------------------------------------ панель настройки сторон
 
-    private static final int CFG_TAB_H = 26;
+    private static final int CFG_TAB_H = 30;
 
     /** Есть ли у машины хоть одна грань с разъёмом (у фермы разъёмы особые, панель ей не нужна). */
     private boolean hasConfigTab() {
@@ -592,7 +592,7 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
         int y = topPos;
         int mx = (int) Math.floor(mouseX);
         int my = (int) Math.floor(mouseY);
-        if (hasConfigTab() && button == 0 && inRect(mx, my, x + HOLDER_X + 4, y + configTabY() + 4, 20, 18)) {
+        if (hasConfigTab() && button == 0 && inRect(mx, my, x + HOLDER_X + 5, y + configTabY() + 5, 20, 20)) {
             menu.setConfigOpen(!menu.configOpen());
             click();
             return true;
@@ -635,11 +635,11 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
 
     /** Вкладка: слот модуля, слот радиатора и полоса нагрева (у панелей - только слот покрытия). */
     private int holderHeight() {
-        return def.hasCooler() ? 57 : def.hasModule() ? 36 : 26;
+        return def.hasCooler() ? 61 : def.hasModule() ? 39 : 30;
     }
 
     private int heatBarOffset() {
-        return def.hasCooler() ? 47 : 25;
+        return def.hasCooler() ? 49 : 27;
     }
 
     private static boolean inRect(int mx, int my, int x, int y, int w, int h) {
