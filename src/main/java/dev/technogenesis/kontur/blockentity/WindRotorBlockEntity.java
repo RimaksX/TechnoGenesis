@@ -81,7 +81,7 @@ public class WindRotorBlockEntity extends PassiveGeneratorBlockEntity {
     }
 
     private int computeOutput() {
-        if (level.getGameTime() % 20 == 0 || rate == 0 && !exposed) {
+        if (level.getGameTime() % 20 == 0) {
             exposed = checkExposure();
         }
         if (!exposed) {

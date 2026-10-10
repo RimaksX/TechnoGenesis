@@ -236,13 +236,16 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
         }
         int gain = status == MachineStatus.RUNNING && !overheated ? moduleHeat : 0;
         int cool = coolingPerTick();
+        int before = heat;
         heat = Math.max(0, Math.min(ModuleTier.HEAT_MAX, heat + gain - cool));
         if (heat >= ModuleTier.HEAT_MAX) {
             overheated = true;
         } else if (overheated && heat <= ModuleTier.HEAT_RESUME) {
             overheated = false;
         }
-        setChanged();
+        if (heat != before) {
+            setChanged();
+        }
     }
 
     /** Остывание за тик: собственное, радиатор и грани с водой, льдом или снегом. */
@@ -454,7 +457,7 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
         IoMode result;
         if (mode.type == null) {
             IoMode now = combinedMode(side);
-            result = reverse ? now.prev() : now.next();
+            result = nextReachable(now, reverse);
             for (TransferType t : TransferType.values()) {
                 if (supports(t)) {
                     sides.set(t, side, def.coerce(t, result));
@@ -469,6 +472,28 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
         }
         sidesChanged();
         return result;
+    }
+
+    /** Следующий сводный режим, который машина вообще может принять (у генератора только закрыто и выход). */
+    private IoMode nextReachable(IoMode now, boolean reverse) {
+        IoMode[] all = IoMode.values();
+        for (int k = 1; k <= all.length; k++) {
+            IoMode cand = all[(now.ordinal() + (reverse ? all.length - k : k)) % all.length];
+            boolean in = false;
+            boolean out = false;
+            for (TransferType t : TransferType.values()) {
+                if (supports(t)) {
+                    IoMode m = def.coerce(t, cand);
+                    in |= m.canInput();
+                    out |= m.canOutput();
+                }
+            }
+            IoMode got = in && out ? IoMode.ALL : in ? IoMode.INPUT : out ? IoMode.OUTPUT : IoMode.NONE;
+            if (got == cand) {
+                return cand;
+            }
+        }
+        return now;
     }
 
     /** Панель в меню: следующий (или предыдущий) режим одного типа на одной грани. Null, если такого типа у машины нет. */
@@ -509,6 +534,7 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
         setChanged();
         if (level != null) {
             level.invalidateCapabilities(worldPosition);
+            level.updateNeighborsAt(worldPosition, getBlockState().getBlock());
             level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Block.UPDATE_CLIENTS);
         }
     }
@@ -526,7 +552,9 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
 
     @Override
     public void handleUpdateTag(CompoundTag tag, HolderLookup.Provider registries) {
-        sides.load(tag.getCompound("sides"));
+        if (tag.contains("sides")) {
+            sides.load(tag.getCompound("sides"));
+        }
         sanitizeSides();
         int o = tag.getInt("status");
         shown = o >= 0 && o < MachineStatus.values().length ? MachineStatus.values()[o] : MachineStatus.IDLE;
@@ -577,7 +605,9 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
         if (e != null) {
             energy.deserializeNBT(registries, e);
         }
-        sides.load(tag.getCompound("sides"));
+        if (tag.contains("sides")) {
+            sides.load(tag.getCompound("sides"));
+        }
         sanitizeSides();
         progress = tag.getInt("progress");
         totalTime = tag.getInt("total");
@@ -660,13 +690,7 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
 
             @Override
             public int fill(FluidStack resource, FluidAction action) {
-                for (MachineTank tank : tanks) {
-                    if (!tank.output && tank.isFluidValid(resource)
-                            && (tank.isEmpty() || FluidStack.isSameFluidSameComponents(tank.getFluid(), resource))) {
-                        return tank.fill(resource, action);
-                    }
-                }
-                return 0;
+                return resource.isEmpty() ? 0 : fillInputTank(resource, action);
             }
 
             @Override
@@ -681,14 +705,37 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
 
             @Override
             public FluidStack drain(int maxDrain, FluidAction action) {
-                for (MachineTank tank : tanks) {
-                    if (!tank.isEmpty()) {
-                        return tank.drain(maxDrain, action);
+                for (int pass = 0; pass < 2; pass++) {      // сначала выходные баки, потом входные
+                    for (MachineTank tank : tanks) {
+                        if (!tank.isEmpty() && tank.output == (pass == 0)) {
+                            return tank.drain(maxDrain, action);
+                        }
                     }
                 }
                 return FluidStack.EMPTY;
             }
         };
+    }
+
+    /** Жидкости, которые рецепты машины принимают наравне (вода и техническая вода): их можно смешивать в одном баке. */
+    protected boolean interchangeable(FluidStack a, FluidStack b) {
+        return false;
+    }
+
+    /** Наливает во входной бак; взаимозаменяемая жидкость вливается в то, что уже лежит в баке, и не блокирует линию. */
+    private int fillInputTank(FluidStack resource, IFluidHandler.FluidAction action) {
+        for (MachineTank tank : tanks) {
+            if (tank.output || !tank.isFluidValid(resource)) {
+                continue;
+            }
+            if (tank.isEmpty() || FluidStack.isSameFluidSameComponents(tank.getFluid(), resource)) {
+                return tank.fill(resource, action);
+            }
+            if (interchangeable(tank.getFluid(), resource)) {
+                return tank.fill(tank.getFluid().copyWithAmount(resource.getAmount()), action);
+            }
+        }
+        return 0;
     }
 
     /** Меню: слить бак целиком в никуда (для остатков, которые не набираются в ведро). */
@@ -787,13 +834,7 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
             if (!mode(TransferType.FLUIDS, side).canInput() || resource.isEmpty()) {
                 return 0;
             }
-            for (MachineTank tank : tanks) {
-                if (!tank.output && tank.isFluidValid(resource)
-                        && (tank.isEmpty() || FluidStack.isSameFluidSameComponents(tank.getFluid(), resource))) {
-                    return tank.fill(resource, action);
-                }
-            }
-            return 0;
+            return fillInputTank(resource, action);
         }
 
         @Override

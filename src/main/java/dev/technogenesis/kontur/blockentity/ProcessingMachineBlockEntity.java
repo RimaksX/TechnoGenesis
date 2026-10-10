@@ -65,6 +65,19 @@ public class ProcessingMachineBlockEntity extends MachineBlockEntity {
         return false;
     }
 
+    @Override
+    protected boolean interchangeable(FluidStack a, FluidStack b) {
+        if (level == null) {
+            return false;
+        }
+        for (RecipeHolder<MachineRecipe> h : level.getRecipeManager().getAllRecipesFor(recipeType())) {
+            if (h.value().fluidInput().map(f -> f.accepts(a.getFluid()) && f.accepts(b.getFluid())).orElse(false)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private MachineRecipeInput currentInput() {
         ItemStack in = inputSlot >= 0 ? inventory.getStackInSlot(inputSlot) : ItemStack.EMPTY;
         FluidStack fluid = inputTank >= 0 ? tanks[inputTank].getFluid() : FluidStack.EMPTY;

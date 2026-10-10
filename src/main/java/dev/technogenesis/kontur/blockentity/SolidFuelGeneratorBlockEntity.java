@@ -81,7 +81,14 @@ public class SolidFuelGeneratorBlockEntity extends MachineBlockEntity {
             ItemStack remainder = fuel.getCraftingRemainingItem();
             fuel.shrink(1);
             if (fuel.isEmpty()) {
-                inventory.setStackInSlot(FUEL_SLOT, remainder);
+                inventory.setStackInSlot(FUEL_SLOT, ItemStack.EMPTY);
+            }
+            if (!remainder.isEmpty()) {
+                // пустое ведро и подобное уходит в выход, а не залипает в слоте топлива
+                ItemStack left = inventory.insertItem(ASH_SLOT, remainder, false);
+                if (!left.isEmpty()) {
+                    net.minecraft.world.level.block.Block.popResource(level, worldPosition, left);
+                }
             }
             if (ash) {
                 inventory.insertItem(ASH_SLOT, ashStack, false);

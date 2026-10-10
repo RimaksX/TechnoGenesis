@@ -144,6 +144,10 @@ public class WrenchItem extends Item {
             player.displayClientMessage(Component.translatable("wrench.kontur.front").withStyle(ChatFormatting.GRAY), true);
             return InteractionResult.CONSUME;
         }
+        if (!be.kind().hasPort(side)) {
+            player.displayClientMessage(Component.translatable("gui.kontur.no_port").withStyle(ChatFormatting.GRAY), true);
+            return InteractionResult.CONSUME;
+        }
         IoMode result = be.cycleSide(mode, side, player.isShiftKeyDown());
         if (result == null) {
             player.displayClientMessage(Component.translatable("wrench.kontur.unsupported", modeName(mode))

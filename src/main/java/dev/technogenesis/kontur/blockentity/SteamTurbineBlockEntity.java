@@ -39,6 +39,11 @@ public class SteamTurbineBlockEntity extends SolidFuelGeneratorBlockEntity {
     }
 
     @Override
+    protected boolean interchangeable(FluidStack a, FluidStack b) {
+        return acceptsFluid(a) && acceptsFluid(b);
+    }
+
+    @Override
     protected boolean ready(int speed) {
         if (tanks[0].getFluidAmount() < WATER_PER_TICK * speed) {
             setStatus(MachineStatus.NO_WATER);
