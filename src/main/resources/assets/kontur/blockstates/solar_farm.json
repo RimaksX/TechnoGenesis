@@ -12,10 +12,19 @@
     {
       "when": {
         "facing": "north",
-        "part": "1|2|3|4|5"
+        "part": "1|2"
       },
       "apply": {
-        "model": "kontur:block/solar_farm_tile"
+        "model": "kontur:block/solar_farm_front"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "part": "3|4|5"
+      },
+      "apply": {
+        "model": "kontur:block/solar_farm_back"
       }
     },
     {
@@ -31,10 +40,20 @@
     {
       "when": {
         "facing": "east",
-        "part": "1|2|3|4|5"
+        "part": "1|2"
       },
       "apply": {
-        "model": "kontur:block/solar_farm_tile",
+        "model": "kontur:block/solar_farm_front",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "3|4|5"
+      },
+      "apply": {
+        "model": "kontur:block/solar_farm_back",
         "y": 90
       }
     },
@@ -51,10 +70,20 @@
     {
       "when": {
         "facing": "south",
-        "part": "1|2|3|4|5"
+        "part": "1|2"
       },
       "apply": {
-        "model": "kontur:block/solar_farm_tile",
+        "model": "kontur:block/solar_farm_front",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "3|4|5"
+      },
+      "apply": {
+        "model": "kontur:block/solar_farm_back",
         "y": 180
       }
     },
@@ -71,10 +100,20 @@
     {
       "when": {
         "facing": "west",
-        "part": "1|2|3|4|5"
+        "part": "1|2"
       },
       "apply": {
-        "model": "kontur:block/solar_farm_tile",
+        "model": "kontur:block/solar_farm_front",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "3|4|5"
+      },
+      "apply": {
+        "model": "kontur:block/solar_farm_back",
         "y": 270
       }
     }
