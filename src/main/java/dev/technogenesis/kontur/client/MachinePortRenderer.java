@@ -53,8 +53,6 @@ public final class MachinePortRenderer implements BlockEntityRenderer<MachineBlo
         VertexConsumer vc = buffers.getBuffer(RenderType.entityCutoutNoCull(TEXTURE));
         PoseStack.Pose pose = stack.last();
         int lit = LightTexture.pack(Math.max(LightTexture.block(light), 9), LightTexture.sky(light));
-        boolean[] has = {be.kind().definition.hasItems(), be.kind().definition.hasFluids(),
-                be.kind().definition.energyCapacity > 0};
         WrenchMode wrench = heldWrenchMode();
         for (Direction dir : Direction.values()) {
             RelativeSide rs = RelativeSide.of(facing, dir);
@@ -68,7 +66,7 @@ public final class MachinePortRenderer implements BlockEntityRenderer<MachineBlo
             boolean in = false;
             boolean out = false;
             for (TransferType t : TransferType.values()) {
-                if (!has[t.ordinal()]) {
+                if (!be.supports(t)) {
                     continue;
                 }
                 IoMode m = be.sides.get(t, rs);

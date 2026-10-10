@@ -104,6 +104,16 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
         String t = fit(title.getString(), IMAGE_W - 16);
         g.drawString(font, t, (imageWidth - font.width(t)) / 2, TITLE_Y, GuiUtil.TITLE_TEXT, false);
         g.drawString(font, fit(playerInventoryTitle.getString(), IMAGE_W - 16), 8, INV_LABEL_Y, GuiUtil.LABEL_TEXT, false);
+        // номера выходов: у каждого свои грани, которые настраиваются ключом
+        int[] outs = def.outputSlots();
+        for (int i = 0; outs.length >= 2 && i < outs.length && i < 3; i++) {
+            Slot sl = menu.slots.get(outs[i]);
+            g.pose().pushPose();
+            g.pose().translate(sl.x + 1, sl.y + 1, 300);
+            g.pose().scale(0.6f, 0.6f, 1f);
+            g.drawString(font, String.valueOf(i + 1), 0, 0, 0xFFE8C46A, true);
+            g.pose().popPose();
+        }
     }
 
     @Override
@@ -275,6 +285,16 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
                         .withStyle(ChatFormatting.GRAY));
             }
             g.renderComponentTooltip(font, lines, mx, my);
+        }
+        if (hoveredSlot != null && !hoveredSlot.hasItem() && menu.getCarried().isEmpty()
+                && hoveredSlot.index < def.slots.size() && def.outputSlots().length >= 2) {
+            int[] outs = def.outputSlots();
+            for (int i = 0; i < outs.length && i < 3; i++) {
+                if (outs[i] == hoveredSlot.index) {
+                    g.renderComponentTooltip(font, List.of(Component.translatable("gui.kontur.out_slot", i + 1),
+                            Component.translatable("gui.kontur.out_slot_hint", i + 1).withStyle(ChatFormatting.GRAY)), mx, my);
+                }
+            }
         }
         if (def.hasCooler() && hoveredSlot != null && hoveredSlot.index == def.coolerSlot()
                 && !hoveredSlot.hasItem() && menu.getCarried().isEmpty()) {

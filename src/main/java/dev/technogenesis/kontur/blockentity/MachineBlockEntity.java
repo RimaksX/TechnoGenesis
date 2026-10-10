@@ -317,15 +317,15 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
             return;
         }
         for (Direction d : Direction.values()) {
-            if (!mode(TransferType.ITEMS, d).canOutput()) {
-                continue;
-            }
             IItemHandler target = level.getCapability(Capabilities.ItemHandler.BLOCK, worldPosition.relative(d),
                     d.getOpposite());
             if (target == null) {
                 continue;
             }
             for (int slot : def.outputSlots()) {
+                if (!mode(outputChannel(slot), d).canOutput()) {
+                    continue;
+                }
                 ItemStack present = inventory.getStackInSlot(slot);
                 if (present.isEmpty()) {
                     continue;
@@ -401,12 +401,46 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
     }
 
     /** Типы передачи, которые у машины вообще есть. */
-    private boolean supports(TransferType type) {
+    public boolean supports(TransferType type) {
         return switch (type) {
-            case ITEMS -> def.hasItems();
+            case ITEMS -> def.inputSlot() >= 0 || hasFuelSlot();
             case FLUIDS -> def.hasFluids();
             case ENERGY -> def.energyCapacity > 0;
+            case OUT1, OUT2, OUT3 -> def.outputSlots().length > type.outputIndex();
         };
+    }
+
+    private boolean hasFuelSlot() {
+        for (MachineDefinition.SlotDef s : def.slots) {
+            if (s.role() == SlotRole.FUEL) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /** Канал выхода, которому принадлежит выходной слот: по порядку выходов, не больше трёх. */
+    private TransferType outputChannel(int slot) {
+        int[] outs = def.outputSlots();
+        for (int i = 0; i < outs.length; i++) {
+            if (outs[i] == slot) {
+                return TransferType.OUTPUTS[Math.min(i, TransferType.OUTPUTS.length - 1)];
+            }
+        }
+        return TransferType.OUT1;
+    }
+
+    /** Есть ли на грани хоть что-то для предметов: вход или любой выход. */
+    private boolean itemsAccessible(@Nullable Direction side) {
+        if (side == null) {
+            return true;
+        }
+        for (TransferType t : TransferType.values()) {
+            if ((t == TransferType.ITEMS || t.isOutputChannel()) && supports(t) && mode(t, side) != IoMode.NONE) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /** Сводный режим грани по всем имеющимся типам (так же рисуется рамка гнезда). */
@@ -435,7 +469,7 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
             result = reverse ? now.prev() : now.next();
             for (TransferType t : TransferType.values()) {
                 if (supports(t)) {
-                    sides.set(t, side, result);
+                    sides.set(t, side, SideConfig.coerce(t, result));
                 }
             }
         } else {
@@ -569,7 +603,7 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
 
     @Nullable
     public IItemHandler getItemHandler(@Nullable Direction side) {
-        if (!def.hasItems() || mode(TransferType.ITEMS, side) == IoMode.NONE) {
+        if (!def.hasItems() || !itemsAccessible(side)) {
             return null;
         }
         return itemViews[side == null ? 6 : side.ordinal()];
@@ -619,7 +653,7 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
 
         @Override
         public ItemStack extractItem(int slot, int amount, boolean simulate) {
-            if (!mode(TransferType.ITEMS, side).canOutput() || def.slots.get(slot).role() != SlotRole.OUTPUT) {
+            if (def.slots.get(slot).role() != SlotRole.OUTPUT || !mode(outputChannel(slot), side).canOutput()) {
                 return ItemStack.EMPTY;
             }
             return inventory.extractItem(slot, amount, simulate);

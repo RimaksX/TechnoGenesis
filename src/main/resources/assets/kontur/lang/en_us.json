@@ -248,7 +248,7 @@
   "gui.kontur.module_slot": "Overclock module slot",
   "gui.kontur.module_line": "%s: x%s speed, %s%% energy",
   "wrench.kontur.mode.all": "All types",
-  "wrench.kontur.mode.items": "Items",
+  "wrench.kontur.mode.items": "Items: inputs",
   "wrench.kontur.mode.fluids": "Fluids",
   "wrench.kontur.mode.energy": "Energy",
   "wrench.kontur.mode.eject": "Auto-eject",
@@ -257,7 +257,7 @@
   "wrench.kontur.hint_side": "Right-click a machine face: next port mode",
   "wrench.kontur.hint_shift": "Shift + right-click: previous mode",
   "wrench.kontur.hint_air": "Right-click in air: change wrench mode",
-  "wrench.kontur.side_set": "%s: %s",
+  "wrench.kontur.side_set": "%s: %s%s",
   "wrench.kontur.front": "Machine front: no port",
   "wrench.kontur.unsupported": "This machine has no \"%s\"",
   "wrench.kontur.eject_on": "Auto-eject on",
@@ -319,5 +319,10 @@
   "gui.kontur.cooler_slot": "Radiator slot",
   "gui.kontur.cooler_line": "%s: +%s cooling per tick",
   "block.kontur.water_pump": "Water Pump",
-  "item.kontur.water_pump": "Water Pump"
+  "item.kontur.water_pump": "Water Pump",
+  "wrench.kontur.mode.out1": "Items: output 1",
+  "wrench.kontur.mode.out2": "Items: output 2",
+  "wrench.kontur.mode.out3": "Items: output 3",
+  "gui.kontur.out_slot": "Output %s",
+  "gui.kontur.out_slot_hint": "The sides of this output are set with the wrench in the \"Items: output %s\" mode"
 }

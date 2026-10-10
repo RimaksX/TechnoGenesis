@@ -58,6 +58,9 @@ public class WrenchItem extends Item {
         return switch (mode) {
             case ALL -> 0xF5C542;
             case ITEMS -> 0xD2D2D8;
+            case OUT1 -> 0xE8C46A;
+            case OUT2 -> 0xE09A5A;
+            case OUT3 -> 0xD07A6A;
             case FLUIDS -> 0x4696E6;
             case ENERGY -> 0xEB463C;
             case EJECT -> 0x46C864;
@@ -77,6 +80,11 @@ public class WrenchItem extends Item {
     public static MutableComponent modeName(WrenchMode mode) {
         return Component.translatable("wrench.kontur.mode." + mode.key)
                 .withStyle(s -> s.withColor(modeColor(mode)).withBold(true));
+    }
+
+    /** Что именно переключено: для общего режима пусто, для отдельных каналов - их название. */
+    private static Component modeTitle(WrenchMode mode) {
+        return mode.type == null ? Component.empty() : Component.literal("[").append(modeName(mode)).append("] ");
     }
 
     private static MutableComponent colored(String key, int color, Object... args) {
@@ -137,7 +145,7 @@ public class WrenchItem extends Item {
         } else {
             player.displayClientMessage(Component.translatable("wrench.kontur.side_set",
                     Component.translatable("gui.kontur.side." + side.key).withStyle(ChatFormatting.GRAY),
-                    colored("gui.kontur.mode." + result.key, ioColor(result))), true);
+                    modeTitle(mode), colored("gui.kontur.mode." + result.key, ioColor(result))), true);
         }
         return InteractionResult.CONSUME;
     }

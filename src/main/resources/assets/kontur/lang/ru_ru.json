@@ -248,7 +248,7 @@
   "gui.kontur.module_slot": "Слот модуля форсирования",
   "gui.kontur.module_line": "%s: ×%s скорость, %s%% энергии",
   "wrench.kontur.mode.all": "Все типы",
-  "wrench.kontur.mode.items": "Предметы",
+  "wrench.kontur.mode.items": "Предметы: входы",
   "wrench.kontur.mode.fluids": "Жидкости",
   "wrench.kontur.mode.energy": "Энергия",
   "wrench.kontur.mode.eject": "Авто-вывод",
@@ -257,7 +257,7 @@
   "wrench.kontur.hint_side": "ПКМ по грани машины: следующий режим гнезда",
   "wrench.kontur.hint_shift": "Shift + ПКМ: предыдущий режим",
   "wrench.kontur.hint_air": "ПКМ в воздухе: сменить режим ключа",
-  "wrench.kontur.side_set": "%s: %s",
+  "wrench.kontur.side_set": "%s: %s%s",
   "wrench.kontur.front": "Лицо машины: гнезда нет",
   "wrench.kontur.unsupported": "У этой машины нет типа «%s»",
   "wrench.kontur.eject_on": "Авто-вывод включён",
@@ -319,5 +319,10 @@
   "gui.kontur.cooler_slot": "Слот радиатора",
   "gui.kontur.cooler_line": "%s: +%s остывания за тик",
   "block.kontur.water_pump": "Водяной насос",
-  "item.kontur.water_pump": "Водяной насос"
+  "item.kontur.water_pump": "Водяной насос",
+  "wrench.kontur.mode.out1": "Предметы: выход 1",
+  "wrench.kontur.mode.out2": "Предметы: выход 2",
+  "wrench.kontur.mode.out3": "Предметы: выход 3",
+  "gui.kontur.out_slot": "Выход %s",
+  "gui.kontur.out_slot_hint": "Грани этого выхода настраиваются ключом в режиме «Предметы: выход %s»"
 }
