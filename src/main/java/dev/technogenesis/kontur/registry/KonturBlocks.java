@@ -87,7 +87,7 @@ public final class KonturBlocks {
     private static DeferredBlock<MachineBlock> machine(MachineKind kind) {
         DeferredBlock<MachineBlock> holder = block(kind.id, () -> new MachineBlock(
                 BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(3.5f, 6.0f).sound(SoundType.METAL)
-                        .requiresCorrectToolForDrops()
+                        .requiresCorrectToolForDrops().noOcclusion()
                         .lightLevel(state -> state.hasProperty(MachineBlock.ACTIVE) && state.getValue(MachineBlock.ACTIVE) ? 8 : 0),
                 kind));
         MACHINES.put(kind, holder);

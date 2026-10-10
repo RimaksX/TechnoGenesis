@@ -71,3 +71,11 @@ jobs:
             --prerelease \
             --title "Контур ${VERSION} (сборка ${{ github.run_number }})" \
             --notes "Автоматическая сборка. Положите jar в папку mods клиента NeoForge 1.21.1 (21.1.x). JEI необязателен."
+
+      - name: Prune old builds
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release list --limit 100 --json tagName,isPrerelease --jq '.[] | select(.isPrerelease) | .tagName' \
+            | tail -n +4 \
+            | while read -r tag; do gh release delete "$tag" --cleanup-tag --yes || true; done

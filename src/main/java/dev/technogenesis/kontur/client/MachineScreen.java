@@ -41,6 +41,10 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
 
     private static final int CELL_W = 22;
     private static final int CELL_H = 15;
+    /** Настраиваются все стороны, кроме передней (лица машины). */
+    private static final RelativeSide[] CONFIG_SIDES = {RelativeSide.BACK, RelativeSide.LEFT, RelativeSide.RIGHT,
+            RelativeSide.TOP, RelativeSide.BOTTOM};
+    private static final int SIDE_ROWS = CONFIG_SIDES.length;
     private static final int CFG_W = 112;
 
     private boolean configOpen;
@@ -68,7 +72,7 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
     }
 
     private int cfgHeight() {
-        return 32 + 6 * (CELL_H + 1) + 6 + (def.hasItems() ? 14 : 0) + (def.hasFluids() ? 14 : 0) + 8;
+        return 32 + SIDE_ROWS * (CELL_H + 1) + 6 + (def.hasItems() ? 14 : 0) + (def.hasFluids() ? 14 : 0) + 8;
     }
 
     // ------------------------------------------------------------------ отрисовка
@@ -217,7 +221,7 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
     }
 
     private int ejectY(int i) {
-        return cfgRowsTop() + 6 * (CELL_H + 1) + 6 + i * 14;
+        return cfgRowsTop() + SIDE_ROWS * (CELL_H + 1) + 6 + i * 14;
     }
 
     private void drawConfigPanel(GuiGraphics g, int mx, int my) {
@@ -235,7 +239,7 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
             g.renderItem(icon, cfgCellX(c) + 3, py + 13);
         }
         SideConfig cfg = menu.sides();
-        RelativeSide[] sides = RelativeSide.values();
+        RelativeSide[] sides = CONFIG_SIDES;
         for (int r = 0; r < sides.length; r++) {
             g.drawString(font, Component.translatable("gui.kontur.side." + sides[r].key), px + 8, cfgCellY(r) + 4, 0xFF404040, false);
             for (int c = 0; c < cols.size(); c++) {
@@ -326,7 +330,7 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
 
     private void cellTooltip(GuiGraphics g, int mx, int my) {
         List<TransferType> cols = columns();
-        RelativeSide[] sides = RelativeSide.values();
+        RelativeSide[] sides = CONFIG_SIDES;
         for (int r = 0; r < sides.length; r++) {
             for (int c = 0; c < cols.size(); c++) {
                 if (hoverCell(mx, my, c, r)) {
@@ -357,11 +361,11 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
         }
         if (configOpen) {
             List<TransferType> cols = columns();
-            for (int r = 0; r < 6; r++) {
+            for (int r = 0; r < SIDE_ROWS; r++) {
                 for (int c = 0; c < cols.size(); c++) {
                     if (hoverCell((int) mx, (int) my, c, r)) {
                         int type = cols.get(c).ordinal();
-                        sendButton(100 + ((type * 6 + r) * 2 + (button == 1 ? 1 : 0)));
+                        sendButton(100 + ((type * 6 + CONFIG_SIDES[r].ordinal()) * 2 + (button == 1 ? 1 : 0)));
                         return true;
                     }
                 }
