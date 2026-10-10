@@ -24,6 +24,36 @@ jobs:
       - name: Build
         run: ./gradlew build --no-daemon --stacktrace
 
+      - name: Smoke test (dedicated server)
+        run: |
+          mkdir -p run run/server
+          echo "eula=true" > run/eula.txt
+          echo "eula=true" > run/server/eula.txt
+          ./gradlew runServer --no-daemon > server.log 2>&1 &
+          PID=$!
+          for i in $(seq 1 120); do
+            sleep 5
+            if grep -q 'Done (' server.log; then break; fi
+            if ! kill -0 $PID 2>/dev/null; then break; fi
+          done
+          sleep 5
+          pkill -f 'net.neoforged' || true
+          kill $PID 2>/dev/null || true
+          echo "=== server.log (tail) ==="
+          tail -n 120 server.log
+          echo "=== problems ==="
+          grep -E '\[(ERROR|FATAL)\]|Exception|Failed to|Couldn.t parse|Parsing error|Missing|unknown' server.log | grep -v -i 'authlib\|session\|profile' | head -80 || true
+          grep -q 'Done (' server.log
+          ! grep -E 'Couldn.t parse|Parsing error|Failed to load recipe|Failed to parse|Exception loading|Missing registry' server.log
+
+      - name: Upload server log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: server-log
+          path: server.log
+          if-no-files-found: ignore
+
       - name: Upload jar
         uses: actions/upload-artifact@v4
         with:
