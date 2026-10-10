@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " A ",
+    "ARA",
+    " A "
+  ],
+  "key": {
+    "A": {
+      "item": "kontur:aluminum_ingot"
+    },
+    "R": {
+      "item": "kontur:radiator_copper"
+    }
+  },
+  "result": {
+    "id": "kontur:radiator_aluminum",
+    "count": 1
+  }
+}

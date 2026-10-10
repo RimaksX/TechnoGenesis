@@ -3,6 +3,7 @@ package dev.technogenesis.kontur.blockentity;
 import dev.technogenesis.kontur.block.CableBlock;
 import dev.technogenesis.kontur.block.MachineBlock;
 import dev.technogenesis.kontur.item.ModuleItem;
+import dev.technogenesis.kontur.item.RadiatorItem;
 import dev.technogenesis.kontur.machine.IoMode;
 import dev.technogenesis.kontur.machine.KonturEnergyStorage;
 import dev.technogenesis.kontur.machine.MachineDefinition;
@@ -77,6 +78,7 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
     protected int heat;
     protected boolean overheated;
     protected int cooledFaces;
+    private int radiatorCool;
 
     private final IItemHandler[] itemViews = new IItemHandler[7];
     private final IFluidHandler[] fluidViews = new IFluidHandler[7];
@@ -111,7 +113,7 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
     /** Слоты вкладки (модуль, покрытие) доступны только игроку, но не трубам и воронкам. */
     protected boolean isServiceSlot(int slot) {
         SlotRole role = def.slots.get(slot).role();
-        return role == SlotRole.MODULE || role == SlotRole.COATING;
+        return role == SlotRole.MODULE || role == SlotRole.COATING || role == SlotRole.COOLER;
     }
 
     /** Читает модуль из слота: меняет скорость и увеличивает буфер энергии и предел приёма во столько же раз. */
@@ -125,6 +127,9 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
         }
         moduleSpeed = speed;
         moduleEnergyPercent = percent;
+        int coolerSlot = def.coolerSlot();
+        radiatorCool = coolerSlot >= 0 && inventory.getStackInSlot(coolerSlot).getItem() instanceof RadiatorItem r
+                ? r.tier().cooling : 0;
         moduleHeat = slot >= 0 && inventory.getStackInSlot(slot).getItem() instanceof ModuleItem mm ? mm.tier().heatPerTick : 0;
         if (speed == 1) {
             overheated = false;
@@ -156,6 +161,9 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
         }
         if (s.role() == SlotRole.COATING) {
             return stack.getItem() instanceof dev.technogenesis.kontur.item.CoatingItem;
+        }
+        if (s.role() == SlotRole.COOLER) {
+            return stack.getItem() instanceof dev.technogenesis.kontur.item.RadiatorItem;
         }
         return s.role() != SlotRole.OUTPUT && acceptsItem(slot, stack);
     }
@@ -212,8 +220,8 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
     }
 
     /**
-     * Нагрев от модуля: работающая машина греется на heatPerTick, остывает на COOL_PASSIVE плюс COOL_PER_FACE за каждую
-     * грань, касающуюся воды, льда или снега. При HEAT_MAX модуль отключается (машина работает как без него), и он
+     * Нагрев от модуля: работающая машина греется на heatPerTick, остывает на COOL_PASSIVE плюс остывание радиатора
+     * плюс COOL_PER_FACE за каждую грань, касающуюся воды, льда или снега (последнее - необязательный бонус). При HEAT_MAX модуль отключается (машина работает как без него), и он
      * включается обратно, когда нагрев упал до HEAT_RESUME.
      */
     private void updateHeat() {
@@ -227,7 +235,7 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
             return;
         }
         int gain = status == MachineStatus.RUNNING && !overheated ? moduleHeat : 0;
-        int cool = ModuleTier.COOL_PASSIVE + ModuleTier.COOL_PER_FACE * cooledFaces;
+        int cool = coolingPerTick();
         heat = Math.max(0, Math.min(ModuleTier.HEAT_MAX, heat + gain - cool));
         if (heat >= ModuleTier.HEAT_MAX) {
             overheated = true;
@@ -235,6 +243,11 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
             overheated = false;
         }
         setChanged();
+    }
+
+    /** Остывание за тик: собственное, радиатор и грани с водой, льдом или снегом. */
+    protected final int coolingPerTick() {
+        return ModuleTier.COOL_PASSIVE + radiatorCool + ModuleTier.COOL_PER_FACE * cooledFaces;
     }
 
     private int countCooledFaces() {
@@ -377,7 +390,7 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
         extraSync(d);
         d[8] = moduleSpeed;
         d[9] = moduleEnergyPercent;
-        d[12] = cooledFaces;
+        d[12] = coolingPerTick();
         d[15] = overheated ? 1 : 0;
         d[16] = heat * 100 / ModuleTier.HEAT_MAX;
         for (int i = 0; i < tanks.length; i++) {
@@ -534,7 +547,8 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
         @Override
         protected void onContentsChanged(int slot) {
             setChanged();
-            if (def.slots.get(slot).role() == SlotRole.MODULE) {
+            SlotRole role = def.slots.get(slot).role();
+            if (role == SlotRole.MODULE || role == SlotRole.COOLER) {
                 refreshModule();
             }
         }

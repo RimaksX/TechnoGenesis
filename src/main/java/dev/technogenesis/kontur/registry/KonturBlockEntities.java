@@ -58,6 +58,7 @@ public final class KonturBlockEntities {
             case STEAM_TURBINE -> new dev.technogenesis.kontur.blockentity.SteamTurbineBlockEntity(pos, state);
             case SOLAR_PANEL, SOLAR_PANEL_ADVANCED ->
                     new dev.technogenesis.kontur.blockentity.SolarPanelBlockEntity(kind, pos, state);
+            case WATER_PUMP -> new dev.technogenesis.kontur.blockentity.WaterPumpBlockEntity(pos, state);
             case SOLAR_FARM -> new dev.technogenesis.kontur.blockentity.SolarFarmBlockEntity(pos, state);
             default -> new ProcessingMachineBlockEntity(kind, pos, state);
         };

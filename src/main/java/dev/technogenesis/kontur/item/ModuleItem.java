@@ -25,7 +25,7 @@ public class ModuleItem extends Item {
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
         tooltip.add(Component.translatable("tooltip.kontur.module.speed", tier.speed).withStyle(ChatFormatting.GREEN));
         tooltip.add(Component.translatable("tooltip.kontur.module.energy", tier.energyPercent).withStyle(ChatFormatting.GOLD));
-        tooltip.add(Component.translatable("tooltip.kontur.module.heat", tier.heatPerTick, tier.facesNeeded())
+        tooltip.add(Component.translatable("tooltip.kontur.module.heat", tier.heatPerTick, tier.coolingNeeded())
                 .withStyle(ChatFormatting.RED));
         tooltip.add(Component.translatable("tooltip.kontur.module.hint").withStyle(ChatFormatting.DARK_GRAY));
     }

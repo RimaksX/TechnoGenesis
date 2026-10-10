@@ -5,7 +5,7 @@ import java.util.List;
 
 /** Описание машины: слоты, баки, энергия и расположение элементов в интерфейсе. Общее для сервера и клиента. */
 public final class MachineDefinition {
-    public enum SlotRole { INPUT, OUTPUT, FUEL, MODULE, COATING }
+    public enum SlotRole { INPUT, OUTPUT, FUEL, MODULE, COATING, COOLER }
 
     public enum EnergyKind { CONSUMER, GENERATOR, STORAGE }
 
@@ -45,7 +45,7 @@ public final class MachineDefinition {
     /** Есть ли обычные слоты (кроме служебных слотов модуля и покрытия на вкладке). */
     public boolean hasItems() {
         for (SlotDef s : slots) {
-            if (s.role() != SlotRole.MODULE && s.role() != SlotRole.COATING) {
+            if (s.role() != SlotRole.MODULE && s.role() != SlotRole.COATING && s.role() != SlotRole.COOLER) {
                 return true;
             }
         }
@@ -69,6 +69,20 @@ public final class MachineDefinition {
     public int coatingSlot() {
         for (int i = 0; i < slots.size(); i++) {
             if (slots.get(i).role() == SlotRole.COATING) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /** Есть ли слот радиатора (охлаждение модуля). */
+    public boolean hasCooler() {
+        return coolerSlot() >= 0;
+    }
+
+    public int coolerSlot() {
+        for (int i = 0; i < slots.size(); i++) {
+            if (slots.get(i).role() == SlotRole.COOLER) {
                 return i;
             }
         }
@@ -155,6 +169,12 @@ public final class MachineDefinition {
         /** Слот модуля: добавляется последним, вне рабочей области (на вкладке слева от окна). */
         public Builder module(int x, int y) {
             slots.add(new SlotDef(x, y, SlotRole.MODULE));
+            return this;
+        }
+
+        /** Слот радиатора: на вкладке слева под слотом модуля. */
+        public Builder cooler(int x, int y) {
+            slots.add(new SlotDef(x, y, SlotRole.COOLER));
             return this;
         }
 

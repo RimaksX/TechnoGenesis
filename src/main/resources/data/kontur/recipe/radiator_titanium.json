@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " T ",
+    "TRT",
+    " T "
+  ],
+  "key": {
+    "T": {
+      "item": "kontur:titanium_ingot"
+    },
+    "R": {
+      "item": "kontur:radiator_aluminum"
+    }
+  },
+  "result": {
+    "id": "kontur:radiator_titanium",
+    "count": 1
+  }
+}

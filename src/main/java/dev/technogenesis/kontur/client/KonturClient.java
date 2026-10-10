@@ -12,6 +12,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import dev.technogenesis.kontur.registry.KonturBlockEntities;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.ModelEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
@@ -35,6 +36,11 @@ public final class KonturClient {
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
         KonturBlockEntities.MACHINES.values().forEach(type -> event.registerBlockEntityRenderer(type.get(), MachinePortRenderer::new));
         event.registerBlockEntityRenderer(KonturBlockEntities.PIPE.get(), ConduitPortRenderer::new);
+    }
+
+    @SubscribeEvent
+    public static void registerExtraModels(ModelEvent.RegisterAdditional event) {
+        event.register(WindBladesRenderer.BLADES);
     }
 
     @SubscribeEvent

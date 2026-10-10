@@ -55,6 +55,7 @@
     "kontur:tailings_mill",
     "kontur:thermal_generator",
     "kontur:washing_drum",
+    "kontur:water_pump",
     "kontur:wind_rotor",
     "kontur:wolframite_ore"
   ]

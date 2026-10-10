@@ -24,6 +24,8 @@ public final class KonturItems {
     public static final Map<Form, Map<Metal, DeferredItem<Item>>> FORMS = new EnumMap<>(Form.class);
 
     public static final Map<ModuleTier, DeferredItem<Item>> MODULES = new EnumMap<>(ModuleTier.class);
+    public static final Map<dev.technogenesis.kontur.machine.RadiatorTier, DeferredItem<Item>> RADIATORS =
+            new EnumMap<>(dev.technogenesis.kontur.machine.RadiatorTier.class);
     public static final Map<dev.technogenesis.kontur.machine.CoatingTier, DeferredItem<Item>> COATINGS =
             new EnumMap<>(dev.technogenesis.kontur.machine.CoatingTier.class);
     public static final DeferredItem<Item> WRENCH = ITEMS.register("wrench", () -> new WrenchItem(new Item.Properties()));
@@ -49,6 +51,10 @@ public final class KonturItems {
         for (dev.technogenesis.kontur.machine.CoatingTier tier : dev.technogenesis.kontur.machine.CoatingTier.values()) {
             COATINGS.put(tier, ITEMS.register(tier.itemId(),
                     () -> new dev.technogenesis.kontur.item.CoatingItem(new Item.Properties(), tier)));
+        }
+        for (dev.technogenesis.kontur.machine.RadiatorTier tier : dev.technogenesis.kontur.machine.RadiatorTier.values()) {
+            RADIATORS.put(tier, ITEMS.register(tier.itemId(),
+                    () -> new dev.technogenesis.kontur.item.RadiatorItem(new Item.Properties(), tier)));
         }
         for (ModuleTier tier : ModuleTier.values()) {
             MODULES.put(tier, ITEMS.register(tier.itemId(), () -> new ModuleItem(new Item.Properties(), tier)));

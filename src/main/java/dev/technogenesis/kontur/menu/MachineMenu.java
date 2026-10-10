@@ -116,7 +116,8 @@ public class MachineMenu extends AbstractContainerMenu {
 
         @Override
         public int getMaxStackSize() {
-            return role == SlotRole.MODULE || role == SlotRole.COATING ? 1 : super.getMaxStackSize();
+            return role == SlotRole.MODULE || role == SlotRole.COATING || role == SlotRole.COOLER ? 1
+                    : super.getMaxStackSize();
         }
 
         @Override
@@ -129,6 +130,9 @@ public class MachineMenu extends AbstractContainerMenu {
             }
             if (role == SlotRole.COATING) {
                 return stack.getItem() instanceof dev.technogenesis.kontur.item.CoatingItem;
+            }
+            if (role == SlotRole.COOLER) {
+                return stack.getItem() instanceof dev.technogenesis.kontur.item.RadiatorItem;
             }
             return be == null || be.isItemValidForSlot(getSlotIndex(), stack);
         }
@@ -226,7 +230,8 @@ public class MachineMenu extends AbstractContainerMenu {
         return def.hasModule() ? sync[16] : 0;
     }
 
-    public int cooledFaces() {
+    /** Остывание за тик: собственное плюс радиатор плюс вода, лёд или снег рядом. */
+    public int cooling() {
         return sync[12];
     }
 

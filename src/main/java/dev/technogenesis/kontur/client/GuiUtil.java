@@ -51,7 +51,7 @@ public final class GuiUtil {
         ResourceLocation sprite = role == null ? SLOT : switch (role) {
             case INPUT, FUEL -> SLOT_IN;
             case OUTPUT -> SLOT_OUT;
-            case MODULE, COATING -> SLOT_MODULE;
+            case MODULE, COATING, COOLER -> SLOT_MODULE;
         };
         g.blitSprite(sprite, x - 1, y - 1, 18, 18);
     }
@@ -107,8 +107,8 @@ public final class GuiUtil {
         }
     }
 
-    /** Держатель вкладки слева от окна 30x36 (правые 4 пикселя ложатся на край окна). */
-    public static void holder(GuiGraphics g, int x, int y) {
-        g.blitSprite(HOLDER, x, y, 30, 36);
+    /** Держатель вкладки слева от окна шириной 30 (правые 4 пикселя ложатся на край окна). */
+    public static void holder(GuiGraphics g, int x, int y, int height) {
+        g.blitSprite(HOLDER, x, y, 30, height);
     }
 }

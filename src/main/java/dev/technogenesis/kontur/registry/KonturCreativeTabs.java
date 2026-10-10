@@ -55,6 +55,9 @@ public final class KonturCreativeTabs {
                         for (dev.technogenesis.kontur.machine.ModuleTier tier : dev.technogenesis.kontur.machine.ModuleTier.values()) {
                             out.accept(KonturItems.MODULES.get(tier));
                         }
+                        for (dev.technogenesis.kontur.machine.RadiatorTier tier : dev.technogenesis.kontur.machine.RadiatorTier.values()) {
+                            out.accept(KonturItems.RADIATORS.get(tier));
+                        }
                         out.accept(KonturBlocks.JAW_CRUSHER);
                         out.accept(KonturBlocks.WASHING_DRUM);
                         out.accept(KonturBlocks.MAGNETIC_SEPARATOR);
@@ -63,6 +66,7 @@ public final class KonturCreativeTabs {
                         out.accept(KonturBlocks.WIND_ROTOR);
                         out.accept(KonturBlocks.THERMAL_GENERATOR);
                         out.accept(KonturBlocks.STEAM_TURBINE);
+                        out.accept(KonturBlocks.WATER_PUMP);
                         out.accept(KonturBlocks.SOLAR_PANEL);
                         out.accept(KonturBlocks.SOLAR_PANEL_ADVANCED);
                         out.accept(KonturBlocks.SOLAR_FARM);

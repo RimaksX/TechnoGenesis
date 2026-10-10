@@ -4,6 +4,9 @@ import dev.technogenesis.kontur.machine.MachineKind;
 import dev.technogenesis.kontur.machine.MachineStatus;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
 /**
@@ -13,6 +16,12 @@ import net.minecraft.world.level.block.state.BlockState;
  */
 public class WindRotorBlockEntity extends PassiveGeneratorBlockEntity {
     private boolean exposed;
+    /** Мощность ветра, округлённая до 8: по ней клиент вращает лопасти. Заряд буфера на вращение не влияет. */
+    private int spin;
+    private int wind;
+    /** Только клиент: накопленный угол лопастей и время последней отрисовки. */
+    public float bladeAngle;
+    public float lastRenderTick;
 
     public WindRotorBlockEntity(BlockPos pos, BlockState state) {
         super(MachineKind.WIND_ROTOR, pos, state);
@@ -37,8 +46,41 @@ public class WindRotorBlockEntity extends PassiveGeneratorBlockEntity {
         return (int) Math.round(24 + 72 * t);
     }
 
+    public int spin() {
+        return spin;
+    }
+
+    @Override
+    protected void tickMachine() {
+        super.tickMachine();
+        int q = wind / 8 * 8;
+        if (q != spin) {
+            spin = q;
+            level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Block.UPDATE_CLIENTS);
+        }
+    }
+
+    @Override
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+        CompoundTag tag = super.getUpdateTag(registries);
+        tag.putInt("spin", spin);
+        return tag;
+    }
+
+    @Override
+    public void handleUpdateTag(CompoundTag tag, HolderLookup.Provider registries) {
+        super.handleUpdateTag(tag, registries);
+        spin = tag.getInt("spin");
+    }
+
     @Override
     protected int output() {
+        int out = computeOutput();
+        wind = out;
+        return out;
+    }
+
+    private int computeOutput() {
         if (level.getGameTime() % 20 == 0 || rate == 0 && !exposed) {
             exposed = checkExposure();
         }

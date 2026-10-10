@@ -1,0 +1,184 @@
+{
+  "variants": {
+    "active=false,charge=0,facing=north": {
+      "model": "kontur:block/water_pump"
+    },
+    "active=false,charge=0,facing=east": {
+      "model": "kontur:block/water_pump",
+      "y": 90
+    },
+    "active=false,charge=0,facing=south": {
+      "model": "kontur:block/water_pump",
+      "y": 180
+    },
+    "active=false,charge=0,facing=west": {
+      "model": "kontur:block/water_pump",
+      "y": 270
+    },
+    "active=false,charge=1,facing=north": {
+      "model": "kontur:block/water_pump"
+    },
+    "active=false,charge=1,facing=east": {
+      "model": "kontur:block/water_pump",
+      "y": 90
+    },
+    "active=false,charge=1,facing=south": {
+      "model": "kontur:block/water_pump",
+      "y": 180
+    },
+    "active=false,charge=1,facing=west": {
+      "model": "kontur:block/water_pump",
+      "y": 270
+    },
+    "active=false,charge=2,facing=north": {
+      "model": "kontur:block/water_pump"
+    },
+    "active=false,charge=2,facing=east": {
+      "model": "kontur:block/water_pump",
+      "y": 90
+    },
+    "active=false,charge=2,facing=south": {
+      "model": "kontur:block/water_pump",
+      "y": 180
+    },
+    "active=false,charge=2,facing=west": {
+      "model": "kontur:block/water_pump",
+      "y": 270
+    },
+    "active=false,charge=3,facing=north": {
+      "model": "kontur:block/water_pump"
+    },
+    "active=false,charge=3,facing=east": {
+      "model": "kontur:block/water_pump",
+      "y": 90
+    },
+    "active=false,charge=3,facing=south": {
+      "model": "kontur:block/water_pump",
+      "y": 180
+    },
+    "active=false,charge=3,facing=west": {
+      "model": "kontur:block/water_pump",
+      "y": 270
+    },
+    "active=false,charge=4,facing=north": {
+      "model": "kontur:block/water_pump"
+    },
+    "active=false,charge=4,facing=east": {
+      "model": "kontur:block/water_pump",
+      "y": 90
+    },
+    "active=false,charge=4,facing=south": {
+      "model": "kontur:block/water_pump",
+      "y": 180
+    },
+    "active=false,charge=4,facing=west": {
+      "model": "kontur:block/water_pump",
+      "y": 270
+    },
+    "active=false,charge=5,facing=north": {
+      "model": "kontur:block/water_pump"
+    },
+    "active=false,charge=5,facing=east": {
+      "model": "kontur:block/water_pump",
+      "y": 90
+    },
+    "active=false,charge=5,facing=south": {
+      "model": "kontur:block/water_pump",
+      "y": 180
+    },
+    "active=false,charge=5,facing=west": {
+      "model": "kontur:block/water_pump",
+      "y": 270
+    },
+    "active=true,charge=0,facing=north": {
+      "model": "kontur:block/water_pump_on"
+    },
+    "active=true,charge=0,facing=east": {
+      "model": "kontur:block/water_pump_on",
+      "y": 90
+    },
+    "active=true,charge=0,facing=south": {
+      "model": "kontur:block/water_pump_on",
+      "y": 180
+    },
+    "active=true,charge=0,facing=west": {
+      "model": "kontur:block/water_pump_on",
+      "y": 270
+    },
+    "active=true,charge=1,facing=north": {
+      "model": "kontur:block/water_pump_on"
+    },
+    "active=true,charge=1,facing=east": {
+      "model": "kontur:block/water_pump_on",
+      "y": 90
+    },
+    "active=true,charge=1,facing=south": {
+      "model": "kontur:block/water_pump_on",
+      "y": 180
+    },
+    "active=true,charge=1,facing=west": {
+      "model": "kontur:block/water_pump_on",
+      "y": 270
+    },
+    "active=true,charge=2,facing=north": {
+      "model": "kontur:block/water_pump_on"
+    },
+    "active=true,charge=2,facing=east": {
+      "model": "kontur:block/water_pump_on",
+      "y": 90
+    },
+    "active=true,charge=2,facing=south": {
+      "model": "kontur:block/water_pump_on",
+      "y": 180
+    },
+    "active=true,charge=2,facing=west": {
+      "model": "kontur:block/water_pump_on",
+      "y": 270
+    },
+    "active=true,charge=3,facing=north": {
+      "model": "kontur:block/water_pump_on"
+    },
+    "active=true,charge=3,facing=east": {
+      "model": "kontur:block/water_pump_on",
+      "y": 90
+    },
+    "active=true,charge=3,facing=south": {
+      "model": "kontur:block/water_pump_on",
+      "y": 180
+    },
+    "active=true,charge=3,facing=west": {
+      "model": "kontur:block/water_pump_on",
+      "y": 270
+    },
+    "active=true,charge=4,facing=north": {
+      "model": "kontur:block/water_pump_on"
+    },
+    "active=true,charge=4,facing=east": {
+      "model": "kontur:block/water_pump_on",
+      "y": 90
+    },
+    "active=true,charge=4,facing=south": {
+      "model": "kontur:block/water_pump_on",
+      "y": 180
+    },
+    "active=true,charge=4,facing=west": {
+      "model": "kontur:block/water_pump_on",
+      "y": 270
+    },
+    "active=true,charge=5,facing=north": {
+      "model": "kontur:block/water_pump_on"
+    },
+    "active=true,charge=5,facing=east": {
+      "model": "kontur:block/water_pump_on",
+      "y": 90
+    },
+    "active=true,charge=5,facing=south": {
+      "model": "kontur:block/water_pump_on",
+      "y": 180
+    },
+    "active=true,charge=5,facing=west": {
+      "model": "kontur:block/water_pump_on",
+      "y": 270
+    }
+  }
+}

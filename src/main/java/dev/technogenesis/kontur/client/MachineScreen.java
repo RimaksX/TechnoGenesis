@@ -85,7 +85,7 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
     public List<Rect2i> extraAreas() {
         List<Rect2i> areas = new ArrayList<>();
         if (def.tabSlot() >= 0) {
-            areas.add(new Rect2i(leftPos + HOLDER_X, topPos + HOLDER_Y, 30, 36));
+            areas.add(new Rect2i(leftPos + HOLDER_X, topPos + HOLDER_Y, 30, holderHeight()));
         }
         return areas;
     }
@@ -112,14 +112,14 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
         int y = topPos;
         GuiUtil.background(g, x, y, imageWidth, imageHeight);
         if (def.tabSlot() >= 0) {
-            GuiUtil.holder(g, x + HOLDER_X, y + HOLDER_Y);
+            GuiUtil.holder(g, x + HOLDER_X, y + HOLDER_Y, holderHeight());
         }
         for (Slot slot : menu.slots) {
             MachineDefinition.SlotRole role = slot.index < def.slots.size() ? def.slots.get(slot.index).role() : null;
             GuiUtil.slot(g, x + slot.x, y + slot.y, role);
         }
         if (def.hasModule() && (menu.slots.get(def.moduleSlot()).hasItem() || menu.heatPercent() > 0)) {
-            GuiUtil.heatBar(g, x + HOLDER_X + 4, y + HOLDER_Y + 25, menu.heatPercent());
+            GuiUtil.heatBar(g, x + HOLDER_X + 4, y + HOLDER_Y + heatBarOffset(), menu.heatPercent());
         }
         if (def.energyCapacity > 0) {
             GuiUtil.powerBar(g, x + ENERGY_X, y + ENERGY_Y, menu.energy(), menu.energyCapacity());
@@ -256,10 +256,10 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
                 && menu.totalTime() > 0) {
             g.renderTooltip(font, Component.translatable("gui.kontur.progress", 100 * menu.progress() / menu.totalTime()), mx, my);
         }
-        if (def.hasModule() && inRect(mx, my, x + HOLDER_X + 4, y + HOLDER_Y + 25, 18, 6)) {
+        if (def.hasModule() && inRect(mx, my, x + HOLDER_X + 4, y + HOLDER_Y + heatBarOffset(), 18, 6)) {
             List<Component> lines = new ArrayList<>();
             lines.add(Component.translatable("gui.kontur.heat", menu.heatPercent()));
-            lines.add(Component.translatable("gui.kontur.cooling", menu.cooledFaces()).withStyle(ChatFormatting.GRAY));
+            lines.add(Component.translatable("gui.kontur.cooling", menu.cooling()).withStyle(ChatFormatting.GRAY));
             if (menu.overheated()) {
                 lines.add(Component.translatable("gui.kontur.overheat_hint").withStyle(ChatFormatting.RED));
             }
@@ -276,6 +276,17 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
             }
             g.renderComponentTooltip(font, lines, mx, my);
         }
+        if (def.hasCooler() && hoveredSlot != null && hoveredSlot.index == def.coolerSlot()
+                && !hoveredSlot.hasItem() && menu.getCarried().isEmpty()) {
+            List<Component> lines = new ArrayList<>();
+            lines.add(Component.translatable("gui.kontur.cooler_slot"));
+            for (dev.technogenesis.kontur.machine.RadiatorTier tier : dev.technogenesis.kontur.machine.RadiatorTier.values()) {
+                lines.add(Component.translatable("gui.kontur.cooler_line",
+                        Component.translatable("item.kontur." + tier.itemId()), tier.cooling)
+                        .withStyle(ChatFormatting.GRAY));
+            }
+            g.renderComponentTooltip(font, lines, mx, my);
+        }
         if (def.hasModule() && hoveredSlot != null && hoveredSlot.index == def.moduleSlot()
                 && !hoveredSlot.hasItem() && menu.getCarried().isEmpty()) {
             List<Component> lines = new ArrayList<>();
@@ -287,6 +298,15 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
             }
             g.renderComponentTooltip(font, lines, mx, my);
         }
+    }
+
+    /** Вкладка: слот модуля, слот радиатора и полоса нагрева (у панелей - только слот покрытия). */
+    private int holderHeight() {
+        return def.hasCooler() ? 58 : 36;
+    }
+
+    private int heatBarOffset() {
+        return def.hasCooler() ? 47 : 25;
     }
 
     private static boolean inRect(int mx, int my, int x, int y, int w, int h) {

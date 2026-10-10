@@ -13,7 +13,7 @@ public enum ModuleTier {
     public static final int HEAT_MAX = 1000;
     /** Модуль включается снова, когда машина остыла до этого значения. */
     public static final int HEAT_RESUME = 400;
-    /** Остывание за тик само по себе и от каждой грани, касающейся воды, льда или снега. */
+    /** Остывание за тик само по себе, от радиатора и от каждой грани, касающейся воды, льда или снега. */
     public static final int COOL_PASSIVE = 2;
     public static final int COOL_PER_FACE = 4;
 
@@ -33,9 +33,8 @@ public enum ModuleTier {
         return "module_" + id;
     }
 
-    /** Сколько граней с охлаждающим блоком нужно, чтобы машина не грелась бесконечно. */
-    public int facesNeeded() {
-        int over = heatPerTick - COOL_PASSIVE;
-        return over <= 0 ? 0 : (over + COOL_PER_FACE - 1) / COOL_PER_FACE;
+    /** Сколько остывания за тик нужно, чтобы машина с этим модулем не грелась бесконечно (с учётом собственного). */
+    public int coolingNeeded() {
+        return Math.max(0, heatPerTick - COOL_PASSIVE);
     }
 }
