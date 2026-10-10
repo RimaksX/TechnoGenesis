@@ -181,7 +181,7 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
             MachineDefinition.SlotRole role = slot.index < def.slots.size() ? def.slots.get(slot.index).role() : null;
             GuiUtil.slot(g, x + slot.x, y + slot.y, role);
         }
-        if (def.hasModule() && (menu.slots.get(def.moduleSlot()).hasItem() || menu.heatPercent() > 0)) {
+        if (heatBarVisible()) {
             GuiUtil.heatBar(g, x + HOLDER_X + 6, y + HOLDER_Y + heatBarOffset(), menu.heatPercent());
         }
         if (hasConfigTab()) {
@@ -311,11 +311,11 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
             g.renderComponentTooltip(font, List.of(Component.translatable("gui.kontur.config_tab"),
                     Component.translatable("gui.kontur.config_tab_hint").withStyle(ChatFormatting.GRAY)), mx, my);
         }
-        if (menu.configOpen()) {
+        boolean cfg = menu.configOpen();
+        if (cfg) {
             renderConfigTooltips(g, x, y, mx, my);
-            return;
         }
-        if (def.energyCapacity > 0 && inRect(mx, my, x + ENERGY_X, y + ENERGY_Y, GuiUtil.POWER_W, GuiUtil.POWER_H)) {
+        if (!cfg && def.energyCapacity > 0 && inRect(mx, my, x + ENERGY_X, y + ENERGY_Y, GuiUtil.POWER_W, GuiUtil.POWER_H)) {
             List<Component> lines = new ArrayList<>();
             lines.add(Component.translatable("gui.kontur.energy"));
             lines.add(Component.translatable("gui.kontur.energy_value", fe(menu.energy()), fe(menu.energyCapacity())));
@@ -326,7 +326,7 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
             }
             g.renderComponentTooltip(font, lines, mx, my);
         }
-        for (int i = 0; i < def.tanks.size(); i++) {
+        for (int i = 0; !cfg && i < def.tanks.size(); i++) {
             TankDef t = def.tanks.get(i);
             if (inRect(mx, my, x + t.x(), y + t.y(), t.width(), t.height())) {
                 FluidStack f = menu.fluid(i);
@@ -340,11 +340,11 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
                 g.renderComponentTooltip(font, lines, mx, my);
             }
         }
-        if (def.hasArrow() && inRect(mx, my, x + def.arrowX, y + def.arrowY - 2, GuiUtil.ARROW_W, GuiUtil.ARROW_H + 4)
+        if (!cfg && def.hasArrow() && inRect(mx, my, x + def.arrowX, y + def.arrowY - 2, GuiUtil.ARROW_W, GuiUtil.ARROW_H + 4)
                 && menu.totalTime() > 0) {
             g.renderTooltip(font, Component.translatable("gui.kontur.progress", 100 * menu.progress() / menu.totalTime()), mx, my);
         }
-        if (def.hasModule() && inRect(mx, my, x + HOLDER_X + 6, y + HOLDER_Y + heatBarOffset(), 18, 6)) {
+        if (heatBarVisible() && inRect(mx, my, x + HOLDER_X + 6, y + HOLDER_Y + heatBarOffset(), 18, 6)) {
             List<Component> lines = new ArrayList<>();
             lines.add(Component.translatable("gui.kontur.heat", menu.heatPercent()));
             lines.add(Component.translatable("gui.kontur.cooling", menu.cooling()).withStyle(ChatFormatting.GRAY));
@@ -401,6 +401,23 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
     // ------------------------------------------------------------------ панель настройки сторон
 
     private static final int CFG_TAB_H = 30;
+
+    /** Вкладки слева лежат вне окна, но кликать по ним можно: иначе предмет с курсора выбросился бы в мир. */
+    @Override
+    protected boolean hasClickedOutside(double mouseX, double mouseY, int guiLeft, int guiTop, int mouseButton) {
+        for (Rect2i r : extraAreas()) {
+            if (mouseX >= r.getX() && mouseX < r.getX() + r.getWidth() && mouseY >= r.getY()
+                    && mouseY < r.getY() + r.getHeight()) {
+                return false;
+            }
+        }
+        return super.hasClickedOutside(mouseX, mouseY, guiLeft, guiTop, mouseButton);
+    }
+
+    /** Авто-вывод нужен только тем, у кого есть предметы или жидкости. */
+    private boolean hasEject() {
+        return def.hasItems() || def.hasFluids();
+    }
 
     /** Есть ли у машины хоть одна грань с разъёмом (у фермы разъёмы особые, панель ей не нужна). */
     private boolean hasConfigTab() {
@@ -494,11 +511,14 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
             int ly = y + 48 + i * 10;
             g.fill(x + LG_X, ly, x + LG_X + 8, ly + 8, 0xFF10131A);
             g.fill(x + LG_X + 1, ly + 1, x + LG_X + 7, ly + 7, cellColor(modes[i]));
-            g.drawString(font, fit(Component.translatable("gui.kontur.mode." + modes[i].key).getString(), 54),
+            g.drawString(font, fit(Component.translatable("gui.kontur.legend." + modes[i].key).getString(), 54),
                     x + LG_X + 12, ly, 0xFFC4CCDA, false);
         }
         // авто-вывод
         boolean eject = cfg.ejectItems || cfg.ejectFluids;
+        if (!hasEject()) {
+            return;
+        }
         drawButton(g, x + EJ_X, y + EJ_Y, EJ_W, EJ_H, eject ? 0xFF3C7A56 : 0xFF3A404E, inRect(mx, my, x + EJ_X, y + EJ_Y, EJ_W, EJ_H));
         String label = fit(Component.translatable("gui.kontur.eject_short").getString(), EJ_W - 4);
         g.drawString(font, label, x + EJ_X + (EJ_W - font.width(label)) / 2, y + EJ_Y + 1, eject ? 0xFFD8F5E4 : 0xFF9AA4B8, false);
@@ -536,7 +556,7 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
     }
 
     private void renderConfigTooltips(GuiGraphics g, int x, int y, int mx, int my) {
-        if (inRect(mx, my, x + EJ_X, y + EJ_Y, EJ_W, EJ_H)) {
+        if (hasEject() && inRect(mx, my, x + EJ_X, y + EJ_Y, EJ_W, EJ_H)) {
             g.renderComponentTooltip(font, List.of(Component.translatable("gui.kontur.eject"),
                     Component.translatable("gui.kontur.eject_hint").withStyle(ChatFormatting.GRAY)), mx, my);
             return;
@@ -587,12 +607,13 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
         int mx = (int) Math.floor(mouseX);
         int my = (int) Math.floor(mouseY);
         if (hasConfigTab() && button == 0 && inRect(mx, my, x + HOLDER_X + 5, y + configTabY() + 5, 20, 20)) {
-            menu.setConfigOpen(!menu.configOpen());
-            click();
+            boolean open = !menu.configOpen();
+            menu.setConfigOpen(open);
+            sendButton(open ? MachineMenu.CONFIG_OPEN_BUTTON : MachineMenu.CONFIG_CLOSE_BUTTON);
             return true;
         }
         if (menu.configOpen()) {
-            if (button == 0 && inRect(mx, my, x + EJ_X, y + EJ_Y, EJ_W, EJ_H)) {
+            if (hasEject() && button == 0 && inRect(mx, my, x + EJ_X, y + EJ_Y, EJ_W, EJ_H)) {
                 sendButton(MachineMenu.EJECT_BUTTON);
                 return true;
             }
@@ -630,6 +651,10 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
     /** Вкладка: слот модуля, слот радиатора и полоса нагрева (у панелей - только слот покрытия). */
     private int holderHeight() {
         return def.hasCooler() ? 61 : def.hasModule() ? 39 : 30;
+    }
+
+    private boolean heatBarVisible() {
+        return def.hasModule() && (menu.slots.get(def.moduleSlot()).hasItem() || menu.heatPercent() > 0);
     }
 
     private int heatBarOffset() {

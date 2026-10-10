@@ -110,7 +110,7 @@ public final class ConduitPortRenderer implements BlockEntityRenderer<ConduitBlo
             if (toPipe || (!connected && !(wrench && mode == ConduitMode.OFF))) {
                 continue;
             }
-            MachinePortRenderer.bevelRing(vc, pose, dir, 4f, 12f, mode.color, lit, -LIFT);
+            MachinePortRenderer.bevelRing(vc, pose, dir, 4f, 12f, mode.color, lit, LIFT);
         }
     }
 }

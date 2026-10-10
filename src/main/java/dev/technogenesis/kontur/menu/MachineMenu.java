@@ -48,6 +48,9 @@ public class MachineMenu extends AbstractContainerMenu {
     private final int[] sync = new int[SYNC_SIZE];
     /** Кнопка авто-вывода на панели настройки сторон. */
     public static final int EJECT_BUTTON = 255;
+    /** Кнопки 253 и 254: панель настройки открыта или закрыта (сервер должен знать, что рабочие слоты скрыты). */
+    public static final int CONFIG_OPEN_BUTTON = 253;
+    public static final int CONFIG_CLOSE_BUTTON = 254;
     /** Кнопки 200..203: слить соответствующий бак (Shift + клик по баку). */
     public static final int VOID_TANK_BUTTON = 200;
     /** Только клиент: открыта ли панель настройки сторон (рабочие слоты тогда выключены). */
@@ -188,6 +191,10 @@ public class MachineMenu extends AbstractContainerMenu {
         if (be == null) {
             return false;
         }
+        if (id == CONFIG_OPEN_BUTTON || id == CONFIG_CLOSE_BUTTON) {
+            configOpen = id == CONFIG_OPEN_BUTTON;
+            return true;
+        }
         if (id == EJECT_BUTTON) {
             be.toggleEject();
             return true;
@@ -223,7 +230,7 @@ public class MachineMenu extends AbstractContainerMenu {
         } else {
             boolean moved = false;
             for (int i = 0; i < machineCount && !moved; i++) {
-                if (def.slots.get(i).role() != SlotRole.OUTPUT) {
+                if (def.slots.get(i).role() != SlotRole.OUTPUT && slots.get(i).isActive()) {
                     moved = moveItemStackTo(stack, i, i + 1, false);
                 }
             }

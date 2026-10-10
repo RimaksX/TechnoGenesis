@@ -340,15 +340,13 @@
   "gui.kontur.cell_hint": "Left click: next mode, right click: previous",
   "gui.kontur.no_port": "No port on this side",
   "gui.kontur.void_tank": "Shift + left click: void the tank",
-  "gui.kontur.tab.items": "In",
-  "gui.kontur.tab.out1": "Out1",
-  "gui.kontur.tab.out2": "Out2",
-  "gui.kontur.tab.out3": "Out3",
-  "gui.kontur.tab.fluids": "Fluid",
-  "gui.kontur.tab.energy": "FE",
   "gui.kontur.letter.top": "T",
   "gui.kontur.letter.bottom": "B",
   "gui.kontur.letter.right": "R",
   "gui.kontur.letter.left": "L",
-  "gui.kontur.letter.back": "K"
+  "gui.kontur.letter.back": "K",
+  "gui.kontur.legend.none": "Closed",
+  "gui.kontur.legend.input": "Input",
+  "gui.kontur.legend.output": "Output",
+  "gui.kontur.legend.all": "Both"
 }

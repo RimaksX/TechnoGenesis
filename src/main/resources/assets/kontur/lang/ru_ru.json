@@ -340,15 +340,13 @@
   "gui.kontur.cell_hint": "ЛКМ - следующий режим, ПКМ - предыдущий",
   "gui.kontur.no_port": "Разъёма на этой стороне нет",
   "gui.kontur.void_tank": "Shift + ЛКМ: слить бак в никуда",
-  "gui.kontur.tab.items": "Вход",
-  "gui.kontur.tab.out1": "Вых1",
-  "gui.kontur.tab.out2": "Вых2",
-  "gui.kontur.tab.out3": "Вых3",
-  "gui.kontur.tab.fluids": "Жидк",
-  "gui.kontur.tab.energy": "Энер",
   "gui.kontur.letter.top": "В",
   "gui.kontur.letter.bottom": "Н",
   "gui.kontur.letter.right": "П",
   "gui.kontur.letter.left": "Л",
-  "gui.kontur.letter.back": "З"
+  "gui.kontur.letter.back": "З",
+  "gui.kontur.legend.none": "Закрыто",
+  "gui.kontur.legend.input": "Вход",
+  "gui.kontur.legend.output": "Выход",
+  "gui.kontur.legend.all": "Оба"
 }

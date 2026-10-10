@@ -88,7 +88,7 @@ public final class MachinePortRenderer implements BlockEntityRenderer<MachineBlo
     private static void frontLight(VertexConsumer vc, PoseStack.Pose pose, Direction dir, MachineStatus status, int light) {
         int color = status == MachineStatus.RUNNING ? 0x46C864 : status.problem ? 0xEB463C
                 : status == MachineStatus.IDLE ? 0x4A5060 : 0xF0B432;
-        rect(vc, pose, dir, 5f, 13f, 11f, 14f, color, LightTexture.pack(15, 15), LIFT);
+        rect(vc, pose, dir, 5f, 14f, 11f, 15f, color, LightTexture.pack(15, 15), LIFT);
     }
 
     /** Режим ключа, если игрок держит его в любой руке; иначе null. */
