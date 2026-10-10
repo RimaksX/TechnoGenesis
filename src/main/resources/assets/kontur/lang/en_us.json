@@ -373,5 +373,11 @@
   "gui.kontur.miner_layer": "Layer %s, done %s%%",
   "gui.kontur.miner_no_tip": "No tip",
   "gui.kontur.miner_no_tip_hint": "The head will take one from the depot in front of the core",
-  "gui.kontur.miner_tip_durability": "Durability: %s / %s"
+  "gui.kontur.miner_tip_durability": "Durability: %s / %s",
+  "status.kontur.not_checked": "Not checked: hit the core with the wrench",
+  "wrench.kontur.miner_ok": "The miner is built: the carriage appears, and the wrench now configures the sides.",
+  "wrench.kontur.miner_fail": "The miner is not ready: %s.",
+  "wrench.kontur.miner_missing": "Missing rails: %s (blue cells are shown while holding the wrench).",
+  "wrench.kontur.miner_obstacles": "Blocks in the way: %s (red marks are shown while holding the wrench).",
+  "wrench.kontur.miner_again": "Fix it and hit the miner with the wrench again: until the check passes, the wrench only checks."
 }

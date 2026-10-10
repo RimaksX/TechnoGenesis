@@ -9,6 +9,9 @@ import dev.technogenesis.kontur.network.ConduitMode;
 import dev.technogenesis.kontur.network.PipeNetwork;
 import dev.technogenesis.kontur.network.PipeNetworkManager;
 import dev.technogenesis.kontur.blockentity.MachineBlockEntity;
+import dev.technogenesis.kontur.blockentity.MinerBlockEntity;
+import dev.technogenesis.kontur.machine.MachineStatus;
+import dev.technogenesis.kontur.miner.MinerScan;
 import dev.technogenesis.kontur.machine.IoMode;
 import dev.technogenesis.kontur.machine.RelativeSide;
 import dev.technogenesis.kontur.machine.WrenchMode;
@@ -132,6 +135,10 @@ public class WrenchItem extends Item {
         if (!(level.getBlockEntity(pos) instanceof MachineBlockEntity be)) {
             return InteractionResult.PASS;
         }
+        if (be instanceof MinerBlockEntity miner && !miner.isVerified()) {
+            reportMinerCheck(miner, player);          // пока постройка не проверена, ключ только проверяет
+            return InteractionResult.CONSUME;
+        }
         WrenchMode mode = mode(ctx.getItemInHand());
         if (mode == WrenchMode.EJECT) {
             boolean on = be.toggleEject();
@@ -158,6 +165,26 @@ public class WrenchItem extends Item {
                     modeTitle(mode), colored("gui.kontur.mode." + result.key, ioColor(result))), true);
         }
         return InteractionResult.CONSUME;
+    }
+
+    private static void reportMinerCheck(MinerBlockEntity miner, Player player) {
+        MachineStatus bad = miner.check();
+        if (bad == null) {
+            player.sendSystemMessage(Component.translatable("wrench.kontur.miner_ok").withStyle(ChatFormatting.GREEN));
+            return;
+        }
+        player.sendSystemMessage(Component.translatable("wrench.kontur.miner_fail", bad.text())
+                .withStyle(ChatFormatting.RED));
+        MinerScan scan = miner.lastScan();
+        if (scan != null && scan.missing.length > 0) {
+            player.sendSystemMessage(Component.translatable("wrench.kontur.miner_missing", scan.missing.length)
+                    .withStyle(ChatFormatting.AQUA));
+        }
+        if (scan != null && scan.obstacles.length > 0) {
+            player.sendSystemMessage(Component.translatable("wrench.kontur.miner_obstacles", scan.obstacles.length)
+                    .withStyle(ChatFormatting.GOLD));
+        }
+        player.sendSystemMessage(Component.translatable("wrench.kontur.miner_again").withStyle(ChatFormatting.GRAY));
     }
 
     /** Сторона трубы под курсором: по самой далёкой от центра оси точки клика. */

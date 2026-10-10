@@ -72,6 +72,9 @@ public class MinerBlockEntity extends MachineBlockEntity {
     private long lastScan = Long.MIN_VALUE;
     private boolean depotOk;
     private boolean syncDirty;
+    /** Постройка проверена ключом: только после этого появляется каретка и начинается работа. */
+    private boolean verified;
+    private boolean viewVerified;
 
     // --- то, что видит клиент
     private MinerScan viewScan;
@@ -127,8 +130,19 @@ public class MinerBlockEntity extends MachineBlockEntity {
             rescan(now);
         }
         if (scan.error != MinerScan.Error.NONE) {
+            if (verified) {                      // рамку сломали: проверку нужно пройти заново
+                verified = false;
+                syncDirty = true;
+                setChanged();
+            }
             clearCracks();
             setStatus(frameStatus(scan.error));
+            finishTick(now);
+            return;
+        }
+        if (!verified) {                         // собран, но проверка ключом ещё не пройдена: каретки нет, работы нет
+            clearCracks();
+            setStatus(MachineStatus.NOT_CHECKED);
             finishTick(now);
             return;
         }
@@ -180,6 +194,42 @@ public class MinerBlockEntity extends MachineBlockEntity {
             depotOk = depot;
             syncDirty = true;
         }
+    }
+
+    public boolean isVerified() {
+        return verified;
+    }
+
+    public boolean viewVerified() {
+        return viewVerified;
+    }
+
+    /** Последняя проверка постройки (для сообщений ключа). */
+    @Nullable
+    public MinerScan lastScan() {
+        return scan;
+    }
+
+    /** Проверка ключом: рамка, область, склад. Возвращает причину отказа или null, если всё собрано. */
+    @Nullable
+    public MachineStatus check() {
+        long now = level.getGameTime();
+        MinerScan fresh = MinerScan.scan(level, worldPosition, facing(), MAX_OUTER);
+        scan = fresh;
+        lastScan = now;
+        depotOk = depotHandler() != null;
+        MachineStatus bad = null;
+        if (fresh.error != MinerScan.Error.NONE) {
+            bad = frameStatus(fresh.error);
+        } else if (fresh.unloaded) {
+            bad = MachineStatus.UNLOADED;
+        } else if (!depotOk) {
+            bad = MachineStatus.NO_DEPOT;
+        }
+        verified = bad == null;
+        setChanged();
+        pushSync(now);
+        return bad;
     }
 
     private static MachineStatus frameStatus(MinerScan.Error error) {
@@ -456,6 +506,7 @@ public class MinerBlockEntity extends MachineBlockEntity {
         syncTip = tip.getItem() instanceof DrillTipItem t ? t.tier().code() : 0;
         viewScan = scan;
         viewDepot = depotOk;
+        viewVerified = verified;
         syncDirty = false;
         level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Block.UPDATE_CLIENTS);
     }
@@ -473,6 +524,7 @@ public class MinerBlockEntity extends MachineBlockEntity {
             tag.putLongArray("obstacles", viewScan.obstacles);
         }
         tag.putBoolean("depot", viewDepot);
+        tag.putBoolean("verified", viewVerified);
         tag.putDouble("hx", syncHead.x);
         tag.putDouble("hy", syncHead.y);
         tag.putDouble("hz", syncHead.z);
@@ -499,6 +551,7 @@ public class MinerBlockEntity extends MachineBlockEntity {
                     tag.getBoolean("scanUnloaded"));
         }
         viewDepot = tag.getBoolean("depot");
+        viewVerified = tag.getBoolean("verified");
         syncHead = new Vec3(tag.getDouble("hx"), tag.getDouble("hy"), tag.getDouble("hz"));
         syncTarget = new Vec3(tag.getDouble("tx"), tag.getDouble("ty"), tag.getDouble("tz"));
         syncVia = tag.getBoolean("via");
@@ -589,6 +642,7 @@ public class MinerBlockEntity extends MachineBlockEntity {
         tag.putInt("mLayer", layer);
         tag.putInt("mCell", cell);
         tag.putInt("mPhase", phase.ordinal());
+        tag.putBoolean("mVerified", verified);
         tag.putBoolean("mVia", viaPlane);
         if (headSet) {
             tag.putDouble("mhx", head.x);
@@ -608,6 +662,7 @@ public class MinerBlockEntity extends MachineBlockEntity {
         super.loadAdditional(tag, registries);
         layer = tag.getInt("mLayer");
         cell = tag.getInt("mCell");
+        verified = tag.getBoolean("mVerified");
         int p = tag.getInt("mPhase");
         // после загрузки цель и блок не хранятся: фаза движения и ломки начинается с выбора блока
         phase = p == Phase.FETCH.ordinal() || p == Phase.HOME.ordinal() ? Phase.HOME : Phase.SELECT;

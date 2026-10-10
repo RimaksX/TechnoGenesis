@@ -67,8 +67,8 @@ public final class MinerRenderer {
         }
         renderHologram(be, stack, buffers);
         MinerScan scan = be.viewScan();
-        if (scan == null || scan.frame == null || scan.error != MinerScan.Error.NONE) {
-            return;
+        if (!be.viewVerified() || scan == null || scan.frame == null || scan.error != MinerScan.Error.NONE) {
+            return;                      // каретка рисуется только после проверки ключом
         }
         MinerFrame f = scan.frame;
         BlockPos core = be.getBlockPos();

@@ -8,7 +8,7 @@ public enum MachineStatus {
     NO_FUEL(true), FULL(false), CHARGING(false), NO_SKY(true), NO_SUN(false), NO_HEAT(true), NO_WATER(true),
     // шахтёр
     FRAME_OPEN(true), FRAME_EXTRA(true), FRAME_SIZE(true), FRAME_CORNER(true), FRAME_FRONT(true), AREA_BLOCKED(true),
-    NO_TIPS(true), NO_DEPOT(true), LIQUID(true), MINE_DONE(false), UNLOADED(true), TIP_SWAP(false);
+    NO_TIPS(true), NO_DEPOT(true), LIQUID(true), MINE_DONE(false), UNLOADED(true), TIP_SWAP(false), NOT_CHECKED(true);
 
     public final boolean problem;
 

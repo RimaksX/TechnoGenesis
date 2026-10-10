@@ -373,5 +373,11 @@
   "gui.kontur.miner_layer": "Слой %s, пройдено %s%%",
   "gui.kontur.miner_no_tip": "Наконечника нет",
   "gui.kontur.miner_no_tip_hint": "Головка возьмёт его из склада перед ядром",
-  "gui.kontur.miner_tip_durability": "Прочность: %s / %s"
+  "gui.kontur.miner_tip_durability": "Прочность: %s / %s",
+  "status.kontur.not_checked": "Не проверен: ударьте ключом по ядру",
+  "wrench.kontur.miner_ok": "Шахтёр собран: каретка появилась, дальше ключ настраивает грани.",
+  "wrench.kontur.miner_fail": "Шахтёр не готов: %s.",
+  "wrench.kontur.miner_missing": "Не хватает направляющих: %s (голубые клетки видны с ключом в руке).",
+  "wrench.kontur.miner_obstacles": "Мешающих блоков: %s (красные метки видны с ключом в руке).",
+  "wrench.kontur.miner_again": "Исправьте и ударьте ключом по шахтёру ещё раз: пока проверка не пройдена, ключ только проверяет."
 }
