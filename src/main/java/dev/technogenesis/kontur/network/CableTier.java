@@ -4,13 +4,14 @@ import net.minecraft.util.StringRepresentable;
 
 /**
  * Классы кабелей и их пропускная способность (FE/t) - на сколько кабель может пустить через сеть за тик.
- * Шаг между классами в 4 раза: медный тянет несколько машин без модулей, сверхпроводящий - целую базу.
+ * Шаг между классами в 4 раза, запас сделан с избытком: медный тянет пять машин без модулей, сверхпроводящий -
+ * большую базу с модулями.
  */
 public enum CableTier implements StringRepresentable {
-    COPPER("copper_wire", 128),
-    CERAMIC("ceramic_cable", 512),
-    ARMORED("armored_cable", 2048),
-    SUPERCONDUCTING("superconducting_cable", 8192);
+    COPPER("copper_wire", 384),
+    CERAMIC("ceramic_cable", 1536),
+    ARMORED("armored_cable", 6144),
+    SUPERCONDUCTING("superconducting_cable", 24576);
 
     public final String id;
     public final int throughput;

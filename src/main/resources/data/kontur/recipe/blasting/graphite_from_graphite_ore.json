@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "ingredient": {
+    "item": "kontur:graphite_ore"
+  },
+  "result": {
+    "id": "kontur:graphite"
+  },
+  "experience": 0.5,
+  "cookingtime": 100
+}

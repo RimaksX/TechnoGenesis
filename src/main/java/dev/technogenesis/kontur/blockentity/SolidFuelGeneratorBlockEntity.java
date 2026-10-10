@@ -11,12 +11,12 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.state.BlockState;
 
 /**
- * Твердотопливный электрогенератор: 48 FE/t. Топливо горит в 8 раз быстрее печи, поэтому 1 уголь = 200 тиков
- * = 9 600 FE. Часть топлива оставляет золу; если её некуда выгрузить, генератор не начинает новое горение.
+ * Твердотопливный электрогенератор: 128 FE/t. Топливо горит в 8 раз быстрее печи, поэтому 1 уголь = 200 тиков
+ * = 25 600 FE. Часть топлива оставляет золу; если её некуда выгрузить, генератор не начинает новое горение.
  * Если буфер полон, топливо не расходуется.
  */
 public class SolidFuelGeneratorBlockEntity extends MachineBlockEntity {
-    public static final int OUTPUT_PER_TICK = 48;
+    public static final int OUTPUT_PER_TICK = 128;
     public static final int BURN_SPEEDUP = 8;
     public static final float ASH_CHANCE = 0.25f;
 

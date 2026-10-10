@@ -2,9 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "pattern": [
-    "III",
+    "INI",
     "CCC",
-    "III"
+    "INI"
   ],
   "key": {
     "I": {
@@ -12,6 +12,9 @@
     },
     "C": {
       "item": "kontur:ceramic_cable"
+    },
+    "N": {
+      "item": "kontur:nickel_ingot"
     }
   },
   "result": {

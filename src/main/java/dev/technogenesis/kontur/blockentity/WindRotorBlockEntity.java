@@ -7,7 +7,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.state.BlockState;
 
 /**
- * Ветряной ротор: 8 FE/t у земли и до 32 FE/t на большой высоте (линейно от Y=64 до Y=192); дождь добавляет 25%,
+ * Ветряной ротор: 24 FE/t у земли и до 96 FE/t на большой высоте (линейно от Y=64 до Y=192); дождь добавляет 25%,
  * гроза 50%, порывы ветра качают выработку на +-15%. Нужны открытое небо над ротором и не более одной глухой
  * стенки рядом: в тесноте ветра нет.
  */
@@ -31,10 +31,10 @@ public class WindRotorBlockEntity extends PassiveGeneratorBlockEntity {
         return blocked <= 1;
     }
 
-    /** Мощность ветра для высоты y: 8..32 FE/t. */
+    /** Мощность ветра для высоты y: 24..96 FE/t. */
     public static int baseOutput(int y) {
         double t = Math.max(0, Math.min(1, (y - 64) / 128.0));
-        return (int) Math.round(8 + 24 * t);
+        return (int) Math.round(24 + 72 * t);
     }
 
     @Override

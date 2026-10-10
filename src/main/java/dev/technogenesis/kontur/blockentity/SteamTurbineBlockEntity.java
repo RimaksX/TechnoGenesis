@@ -9,12 +9,12 @@ import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction;
 
 /**
- * Паровая турбина: 128 FE/t. Топливо греет котёл и горит в 10 раз быстрее печи, поэтому 1 уголь даёт около 20 500 FE,
+ * Паровая турбина: 384 FE/t. Топливо греет котёл и горит в 10 раз быстрее печи, поэтому 1 уголь даёт около 61 400 FE,
  * вдвое больше твердотопливного генератора. Расход воды 2 мБ на тик работы (у модуля пропорционально скорости);
  * воду принимает бак слева, её можно лить из ведра или подавать трубой. Без воды турбина стоит и ничего не расходует.
  */
 public class SteamTurbineBlockEntity extends SolidFuelGeneratorBlockEntity {
-    public static final int OUTPUT = 128;
+    public static final int OUTPUT = 384;
     public static final int SPEEDUP = 10;
     public static final int WATER_PER_TICK = 2;
 

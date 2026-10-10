@@ -10,12 +10,12 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 
 /**
- * Тепловой генератор: лава под блоком и вода сбоку. 40 FE/t за каждую из четырёх боковых граней, касающуюся воды,
- * то есть от 40 до 160 FE/t. Лава остывает: раз в минуту с шансом 1 к 20 лавовый исток под генератором превращается
+ * Тепловой генератор: лава под блоком и вода сбоку. 120 FE/t за каждую из четырёх боковых граней, касающуюся воды,
+ * то есть от 120 до 480 FE/t. Лава остывает: раз в минуту с шансом 1 к 20 лавовый исток под генератором превращается
  * в обсидиан, поэтому в среднем один исток живёт около 20 минут и его надо возобновлять.
  */
 public class ThermalGeneratorBlockEntity extends PassiveGeneratorBlockEntity {
-    public static final int PER_WATER_SIDE = 40;
+    public static final int PER_WATER_SIDE = 120;
     private static final int COOL_INTERVAL = 1200;
     private static final int COOL_CHANCE = 20;
 
