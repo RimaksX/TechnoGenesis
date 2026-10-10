@@ -107,8 +107,8 @@ public final class GuiUtil {
         }
     }
 
-    /** Держатель вкладки слева от окна шириной 30 (правые 4 пикселя ложатся на край окна). */
+    /** Держатель вкладки слева от окна шириной 29 (правые 4 пикселя ложатся на край окна). */
     public static void holder(GuiGraphics g, int x, int y, int height) {
-        g.blitSprite(HOLDER, x, y, 30, height);
+        g.blitSprite(HOLDER, x, y, 29, height);
     }
 }

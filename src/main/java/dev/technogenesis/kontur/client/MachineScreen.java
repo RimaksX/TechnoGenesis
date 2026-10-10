@@ -9,7 +9,6 @@ import dev.technogenesis.kontur.machine.MachineStatus;
 import dev.technogenesis.kontur.machine.RelativeSide;
 import dev.technogenesis.kontur.machine.SideConfig;
 import dev.technogenesis.kontur.machine.TransferType;
-import dev.technogenesis.kontur.registry.KonturItems;
 import dev.technogenesis.kontur.menu.MachineMenu;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -20,7 +19,6 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.Rect2i;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -55,29 +53,42 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
     static final int TITLE_Y = 6;
     static final int INV_LABEL_Y = 92;
 
-    // вкладка слота модуля слева: держатель 30x36 перекрывает край окна на 4 пикселя; слот и шкала нагрева лежат на нём
-    private static final int HOLDER_X = -26;
+    // вкладка слота модуля слева: держатель шириной 29 перекрывает край окна на 4 пикселя; слот и шкала нагрева лежат на нём
+    private static final int HOLDER_X = -25;
     private static final int HOLDER_Y = 34;
 
-    // панель настройки сторон: перекрывает рабочую область окна; строки - типы, столбцы - грани
+    // панель настройки сторон перекрывает рабочую область окна: сверху кнопки типов, слева развёртка куба из пяти клеток
+    // (верх, низ, право, лево, зад; лицевой нет), справа пояснение цветов и кнопка авто-вывода
     private static final int CFG_X = 8;
     private static final int CFG_Y = 16;
     private static final int CFG_W = 160;
     private static final int CFG_H = 84;
-    private static final int COL0 = 64;
-    private static final int COL_STEP = 20;
-    private static final int CELL_W = 16;
-    private static final int CELL_H = 9;
-    private static final int ROW0 = 32;
-    private static final int ROW_STEP = 11;
-    private static final int EJ_X = 12;
-    private static final int EJ_Y = 18;
-    private static final int EJ_W = 30;
-    private static final int EJ_H = 11;
-    private static final RelativeSide[] COLS = {RelativeSide.BACK, RelativeSide.LEFT, RelativeSide.RIGHT,
-            RelativeSide.TOP, RelativeSide.BOTTOM};
+    private static final int TB_X = 12;
+    private static final int TB_Y = 19;
+    private static final int TB_W = 24;
+    private static final int TB_H = 11;
+    private static final int TB_STEP = 26;
+    private static final int NET_X = 14;
+    private static final int NET_Y = 38;
+    private static final int CELL = 18;
+    private static final int NET_STEP = 20;
+    private static final int LG_X = 102;
+    private static final int EJ_X = 102;
+    private static final int EJ_Y = 88;
+    private static final int EJ_W = 40;
+    private static final int EJ_H = 10;
+    private static final RelativeSide[] NET_SIDES = {RelativeSide.TOP, RelativeSide.LEFT, RelativeSide.RIGHT,
+            RelativeSide.BACK, RelativeSide.BOTTOM};
+    /** Колонка и строка клетки в развёртке: верх над лицом, низ под ним, лево и право по бокам, зад справа от права. */
+    private static final int[][] NET_POS = {{1, 0}, {0, 1}, {2, 1}, {3, 1}, {1, 2}};
     private static final TransferType[] ROW_ORDER = {TransferType.ITEMS, TransferType.OUT1, TransferType.OUT2,
             TransferType.OUT3, TransferType.FLUIDS, TransferType.ENERGY};
+    /** Только клиент: какой тип сейчас настраивает панель. */
+    private TransferType cfgType;
+
+    private static final net.minecraft.resources.ResourceLocation WRENCH_ICON =
+            net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(dev.technogenesis.kontur.Kontur.MODID,
+                    "textures/item/wrench.png");
 
     private final MachineDefinition def;
 
@@ -114,10 +125,10 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
     public List<Rect2i> extraAreas() {
         List<Rect2i> areas = new ArrayList<>();
         if (def.tabSlot() >= 0) {
-            areas.add(new Rect2i(leftPos + HOLDER_X, topPos + HOLDER_Y, 30, holderHeight()));
+            areas.add(new Rect2i(leftPos + HOLDER_X, topPos + HOLDER_Y, 29, holderHeight()));
         }
         if (hasConfigTab()) {
-            areas.add(new Rect2i(leftPos + HOLDER_X, topPos + configTabY(), 30, CFG_TAB_H));
+            areas.add(new Rect2i(leftPos + HOLDER_X, topPos + configTabY(), 29, CFG_TAB_H));
         }
         return areas;
     }
@@ -171,15 +182,15 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
             GuiUtil.slot(g, x + slot.x, y + slot.y, role);
         }
         if (def.hasModule() && (menu.slots.get(def.moduleSlot()).hasItem() || menu.heatPercent() > 0)) {
-            GuiUtil.heatBar(g, x + HOLDER_X + 4, y + HOLDER_Y + heatBarOffset(), menu.heatPercent());
+            GuiUtil.heatBar(g, x + HOLDER_X + 5, y + HOLDER_Y + heatBarOffset(), menu.heatPercent());
         }
         if (hasConfigTab()) {
             boolean open = menu.configOpen();
-            g.renderItem(new ItemStack(KonturItems.WRENCH.get()), x + HOLDER_X + 5, y + configTabY() + 5);
-            if (open || inRect(mouseX, mouseY, x + HOLDER_X + 3, y + configTabY() + 3, 20, 20)) {
-                g.fill(x + HOLDER_X + 3, y + configTabY() + 3, x + HOLDER_X + 23, y + configTabY() + 23,
+            if (open || inRect(mouseX, mouseY, x + HOLDER_X + 4, y + configTabY() + 3, 20, 20)) {
+                g.fill(x + HOLDER_X + 4, y + configTabY() + 3, x + HOLDER_X + 24, y + configTabY() + 23,
                         open ? 0x40F5C542 : 0x30FFFFFF);
             }
+            g.blit(WRENCH_ICON, x + HOLDER_X + 6, y + configTabY() + 5, 0f, 0f, 16, 16, 16, 16);
         }
         if (menu.configOpen()) {
             drawConfig(g, x, y, mouseX, mouseY);
@@ -296,7 +307,7 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
     private void renderCustomTooltips(GuiGraphics g, int mx, int my) {
         int x = leftPos;
         int y = topPos;
-        if (hasConfigTab() && inRect(mx, my, x + HOLDER_X + 3, y + configTabY() + 3, 20, 20)) {
+        if (hasConfigTab() && inRect(mx, my, x + HOLDER_X + 4, y + configTabY() + 3, 20, 20)) {
             g.renderComponentTooltip(font, List.of(Component.translatable("gui.kontur.config_tab"),
                     Component.translatable("gui.kontur.config_tab_hint").withStyle(ChatFormatting.GRAY)), mx, my);
         }
@@ -333,7 +344,7 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
                 && menu.totalTime() > 0) {
             g.renderTooltip(font, Component.translatable("gui.kontur.progress", 100 * menu.progress() / menu.totalTime()), mx, my);
         }
-        if (def.hasModule() && inRect(mx, my, x + HOLDER_X + 4, y + HOLDER_Y + heatBarOffset(), 18, 6)) {
+        if (def.hasModule() && inRect(mx, my, x + HOLDER_X + 5, y + HOLDER_Y + heatBarOffset(), 18, 6)) {
             List<Component> lines = new ArrayList<>();
             lines.add(Component.translatable("gui.kontur.heat", menu.heatPercent()));
             lines.add(Component.translatable("gui.kontur.cooling", menu.cooling()).withStyle(ChatFormatting.GRAY));
@@ -393,7 +404,7 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
 
     /** Есть ли у машины хоть одна грань с разъёмом (у фермы разъёмы особые, панель ей не нужна). */
     private boolean hasConfigTab() {
-        for (RelativeSide s : COLS) {
+        for (RelativeSide s : NET_SIDES) {
             if (menu.kind.hasPort(s)) {
                 return true;
             }
@@ -416,6 +427,26 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
         return rows;
     }
 
+    /** Выбранный тип: по умолчанию первый из имеющихся у машины. */
+    private TransferType selectedType() {
+        List<TransferType> rows = configRows();
+        if (cfgType == null || !rows.contains(cfgType)) {
+            cfgType = rows.isEmpty() ? TransferType.ENERGY : rows.get(0);
+        }
+        return cfgType;
+    }
+
+    /** Режимы, которые для типа вообще бывают: для входов и выходов предметов только открыто или закрыто. */
+    private static IoMode[] modesOf(TransferType t) {
+        if (t == TransferType.ITEMS) {
+            return new IoMode[]{IoMode.NONE, IoMode.INPUT};
+        }
+        if (t.isOutputChannel()) {
+            return new IoMode[]{IoMode.NONE, IoMode.OUTPUT};
+        }
+        return new IoMode[]{IoMode.NONE, IoMode.INPUT, IoMode.OUTPUT, IoMode.ALL};
+    }
+
     private static int cellColor(IoMode mode) {
         return 0xFF000000 | switch (mode) {
             case NONE -> 0x2A2F3B;
@@ -429,47 +460,73 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
         return 0xFF000000 | rgb;
     }
 
+    private int netX(int i) {
+        return NET_X + NET_POS[i][0] * NET_STEP;
+    }
+
+    private int netY(int i) {
+        return NET_Y + NET_POS[i][1] * NET_STEP;
+    }
+
     private void drawConfig(GuiGraphics g, int x, int y, int mx, int my) {
         GuiUtil.gauge(g, x + CFG_X, y + CFG_Y, CFG_W, CFG_H);
         SideConfig cfg = menu.sides();
+        TransferType sel = selectedType();
+        // кнопки типов
+        List<TransferType> rows = configRows();
+        for (int i = 0; i < rows.size(); i++) {
+            TransferType t = rows.get(i);
+            int bx = x + TB_X + i * TB_STEP;
+            boolean on = t == sel;
+            drawButton(g, bx, y + TB_Y, TB_W, TB_H, on ? 0xFF4F6A9A : 0xFF353B4A, !on && inRect(mx, my, bx, y + TB_Y, TB_W, TB_H));
+            String label = fit(Component.translatable("gui.kontur.tab." + t.key).getString(), TB_W - 2);
+            g.drawString(font, label, bx + (TB_W - font.width(label)) / 2, y + TB_Y + 2, on ? 0xFFF2F6FF : 0xFF9AA4B8, false);
+        }
+        // развёртка куба; лицевая сторона стоит в центре тёмной клеткой, чтобы форма читалась
+        drawCell(g, x + NET_X + NET_STEP, y + NET_Y + NET_STEP, 0xFF171A21, false, "");
+        for (int i = 0; i < NET_SIDES.length; i++) {
+            RelativeSide side = NET_SIDES[i];
+            boolean port = menu.kind.hasPort(side);
+            int cx = x + netX(i);
+            int cy = y + netY(i);
+            String letter = Component.translatable("gui.kontur.letter." + side.key).getString();
+            drawCell(g, cx, cy, port ? cellColor(cfg.get(sel, side)) : 0xFF171A21, port && inRect(mx, my, cx, cy, CELL, CELL),
+                    port ? letter : "");
+        }
+        // справа: что означают цвета для этого типа
+        g.drawString(font, fit(Component.translatable("gui.kontur.row." + sel.key).getString(), CFG_X + CFG_W - LG_X - 4),
+                x + LG_X, y + 36, 0xFFF5C542, false);
+        IoMode[] modes = modesOf(sel);
+        for (int i = 0; i < modes.length; i++) {
+            int ly = y + 48 + i * 10;
+            g.fill(x + LG_X, ly, x + LG_X + 8, ly + 8, 0xFF10131A);
+            g.fill(x + LG_X + 1, ly + 1, x + LG_X + 7, ly + 7, cellColor(modes[i]));
+            g.drawString(font, fit(Component.translatable("gui.kontur.mode." + modes[i].key).getString(), 54),
+                    x + LG_X + 12, ly, 0xFFC4CCDA, false);
+        }
         // авто-вывод
         boolean eject = cfg.ejectItems || cfg.ejectFluids;
-        drawButton(g, x + EJ_X, y + EJ_Y, EJ_W, EJ_H, eject ? 0xFF3C7A56 : 0xFF3A404E,
-                inRect(mx, my, x + EJ_X, y + EJ_Y, EJ_W, EJ_H));
+        drawButton(g, x + EJ_X, y + EJ_Y, EJ_W, EJ_H, eject ? 0xFF3C7A56 : 0xFF3A404E, inRect(mx, my, x + EJ_X, y + EJ_Y, EJ_W, EJ_H));
         String label = fit(Component.translatable("gui.kontur.eject_short").getString(), EJ_W - 4);
-        g.drawString(font, label, x + EJ_X + (EJ_W - font.width(label)) / 2, y + EJ_Y + 2,
-                eject ? 0xFFD8F5E4 : 0xFF9AA4B8, false);
-        // заголовки столбцов
-        for (int c = 0; c < COLS.length; c++) {
-            String name = Component.translatable("gui.kontur.side_short." + COLS[c].key).getString();
-            g.drawString(font, name, x + COL0 + c * COL_STEP + (CELL_W - font.width(name)) / 2, y + 20, 0xFF8C98AC, false);
-        }
-        List<TransferType> rows = configRows();
-        for (int r = 0; r < rows.size(); r++) {
-            TransferType t = rows.get(r);
-            int ry = y + ROW0 + r * ROW_STEP;
-            g.drawString(font, fit(Component.translatable("gui.kontur.row." + t.key).getString(), COL0 - 16), x + 12, ry + 1,
-                    0xFFC4CCDA, false);
-            for (int c = 0; c < COLS.length; c++) {
-                int cx = x + COL0 + c * COL_STEP;
-                boolean port = menu.kind.hasPort(COLS[c]);
-                drawCell(g, cx, ry, port ? cellColor(cfg.get(t, COLS[c])) : 0xFF171A21, port && inRect(mx, my, cx, ry, CELL_W, CELL_H));
-            }
-        }
+        g.drawString(font, label, x + EJ_X + (EJ_W - font.width(label)) / 2, y + EJ_Y + 1, eject ? 0xFFD8F5E4 : 0xFF9AA4B8, false);
     }
 
-    /** Клетка 16x9: контур, цвет режима и фаска (верх и лево светлее, низ и право темнее). */
-    private static void drawCell(GuiGraphics g, int x, int y, int color, boolean hover) {
+    /** Клетка развёртки: контур, цвет режима, фаска (верх и лево светлее, низ и право темнее) и буква грани. */
+    private void drawCell(GuiGraphics g, int x, int y, int color, boolean hover, String letter) {
         int light = withAlpha(MachinePortRenderer.shade(color & 0xFFFFFF, 1.18f));
         int dark = withAlpha(MachinePortRenderer.shade(color & 0xFFFFFF, 0.78f));
-        g.fill(x, y, x + CELL_W, y + CELL_H, 0xFF10131A);
-        g.fill(x + 1, y + 1, x + CELL_W - 1, y + CELL_H - 1, color);
-        g.fill(x + 1, y + 1, x + CELL_W - 1, y + 2, light);
-        g.fill(x + 1, y + 1, x + 2, y + CELL_H - 1, light);
-        g.fill(x + 1, y + CELL_H - 2, x + CELL_W - 1, y + CELL_H - 1, dark);
-        g.fill(x + CELL_W - 2, y + 1, x + CELL_W - 1, y + CELL_H - 1, dark);
+        g.fill(x, y, x + CELL, y + CELL, 0xFF10131A);
+        g.fill(x + 1, y + 1, x + CELL - 1, y + CELL - 1, color);
+        g.fill(x + 1, y + 1, x + CELL - 1, y + 2, light);
+        g.fill(x + 1, y + 1, x + 2, y + CELL - 1, light);
+        g.fill(x + 1, y + CELL - 2, x + CELL - 1, y + CELL - 1, dark);
+        g.fill(x + CELL - 2, y + 1, x + CELL - 1, y + CELL - 1, dark);
         if (hover) {
-            g.fill(x + 1, y + 1, x + CELL_W - 1, y + CELL_H - 1, 0x38FFFFFF);
+            g.fill(x + 1, y + 1, x + CELL - 1, y + CELL - 1, 0x38FFFFFF);
+        }
+        if (!letter.isEmpty()) {
+            boolean closed = (color & 0xFFFFFF) == 0x2A2F3B;
+            g.drawString(font, letter, x + (CELL - font.width(letter)) / 2, y + 5, closed ? 0xFF7C879C : 0xFF1A1E28, false);
         }
     }
 
@@ -491,27 +548,30 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
                     Component.translatable("gui.kontur.eject_hint").withStyle(ChatFormatting.GRAY)), mx, my);
             return;
         }
-        SideConfig cfg = menu.sides();
         List<TransferType> rows = configRows();
-        for (int r = 0; r < rows.size(); r++) {
-            for (int c = 0; c < COLS.length; c++) {
-                if (!inRect(mx, my, x + COL0 + c * COL_STEP, y + ROW0 + r * ROW_STEP, CELL_W, CELL_H)) {
-                    continue;
-                }
-                RelativeSide side = COLS[c];
-                if (!menu.kind.hasPort(side)) {
-                    g.renderTooltip(font, Component.translatable("gui.kontur.no_port"), mx, my);
-                    return;
-                }
-                TransferType t = rows.get(r);
-                g.renderComponentTooltip(font, List.of(
-                        Component.translatable("gui.kontur.cell_title",
-                                Component.translatable("gui.kontur.side." + side.key),
-                                Component.translatable("gui.kontur.row." + t.key)),
-                        Component.translatable("gui.kontur.mode." + cfg.get(t, side).key).withStyle(ChatFormatting.GOLD),
-                        Component.translatable("gui.kontur.cell_hint").withStyle(ChatFormatting.GRAY)), mx, my);
+        for (int i = 0; i < rows.size(); i++) {
+            if (inRect(mx, my, x + TB_X + i * TB_STEP, y + TB_Y, TB_W, TB_H)) {
+                g.renderTooltip(font, Component.translatable("gui.kontur.row." + rows.get(i).key), mx, my);
                 return;
             }
+        }
+        SideConfig cfg = menu.sides();
+        TransferType sel = selectedType();
+        for (int i = 0; i < NET_SIDES.length; i++) {
+            if (!inRect(mx, my, x + netX(i), y + netY(i), CELL, CELL)) {
+                continue;
+            }
+            RelativeSide side = NET_SIDES[i];
+            if (!menu.kind.hasPort(side)) {
+                g.renderTooltip(font, Component.translatable("gui.kontur.no_port"), mx, my);
+                return;
+            }
+            g.renderComponentTooltip(font, List.of(
+                    Component.translatable("gui.kontur.cell_title", Component.translatable("gui.kontur.side." + side.key),
+                            Component.translatable("gui.kontur.row." + sel.key)),
+                    Component.translatable("gui.kontur.mode." + cfg.get(sel, side).key).withStyle(ChatFormatting.GOLD),
+                    Component.translatable("gui.kontur.cell_hint").withStyle(ChatFormatting.GRAY)), mx, my);
+            return;
         }
     }
 
@@ -520,7 +580,11 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
         if (mc.gameMode != null) {
             mc.gameMode.handleInventoryButtonClick(menu.containerId, id);
         }
-        mc.getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1.0f));
+        click();
+    }
+
+    private static void click() {
+        Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1.0f));
     }
 
     @Override
@@ -529,9 +593,9 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
         int y = topPos;
         int mx = (int) Math.floor(mouseX);
         int my = (int) Math.floor(mouseY);
-        if (hasConfigTab() && button == 0 && inRect(mx, my, x + HOLDER_X + 3, y + configTabY() + 3, 20, 20)) {
+        if (hasConfigTab() && button == 0 && inRect(mx, my, x + HOLDER_X + 4, y + configTabY() + 3, 20, 20)) {
             menu.setConfigOpen(!menu.configOpen());
-            Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1.0f));
+            click();
             return true;
         }
         if (menu.configOpen()) {
@@ -540,14 +604,19 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
                 return true;
             }
             List<TransferType> rows = configRows();
-            for (int r = 0; r < rows.size(); r++) {
-                for (int c = 0; c < COLS.length; c++) {
-                    if (inRect(mx, my, x + COL0 + c * COL_STEP, y + ROW0 + r * ROW_STEP, CELL_W, CELL_H)) {
-                        if ((button == 0 || button == 1) && menu.kind.hasPort(COLS[c])) {
-                            sendButton(MachineMenu.sideButton(rows.get(r), COLS[c], button == 1));
-                        }
-                        return true;
+            for (int i = 0; i < rows.size(); i++) {
+                if (button == 0 && inRect(mx, my, x + TB_X + i * TB_STEP, y + TB_Y, TB_W, TB_H)) {
+                    cfgType = rows.get(i);
+                    click();
+                    return true;
+                }
+            }
+            for (int i = 0; i < NET_SIDES.length; i++) {
+                if (inRect(mx, my, x + netX(i), y + netY(i), CELL, CELL)) {
+                    if ((button == 0 || button == 1) && menu.kind.hasPort(NET_SIDES[i])) {
+                        sendButton(MachineMenu.sideButton(selectedType(), NET_SIDES[i], button == 1));
                     }
+                    return true;
                 }
             }
             if (inRect(mx, my, x + CFG_X, y + CFG_Y, CFG_W, CFG_H)) {
