@@ -2,6 +2,9 @@ package dev.technogenesis.kontur.registry;
 
 import dev.technogenesis.kontur.Kontur;
 import dev.technogenesis.kontur.block.CableBlock;
+import dev.technogenesis.kontur.block.ConduitBlock;
+import dev.technogenesis.kontur.network.CableTier;
+import dev.technogenesis.kontur.network.PipeTier;
 import dev.technogenesis.kontur.block.MachineBlock;
 import dev.technogenesis.kontur.machine.MachineKind;
 import dev.technogenesis.kontur.material.Mineral;
@@ -47,11 +50,21 @@ public final class KonturBlocks {
     public static final DeferredBlock<MachineBlock> ACID_REGENERATION_COLUMN =
             machine(MachineKind.ACID_REGENERATION_COLUMN);
 
-    public static final DeferredBlock<CableBlock> COPPER_WIRE = block("copper_wire", () -> new CableBlock(
-            BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_ORANGE).strength(1.0f, 3.0f)
-                    .sound(SoundType.METAL).noOcclusion(), dev.technogenesis.kontur.network.CableTier.COPPER));
+    /** Кабели по классам (энергия) и трубы по видам и скоростям (предметы, жидкости). */
+    public static final Map<CableTier, DeferredBlock<CableBlock>> CABLES = new EnumMap<>(CableTier.class);
+    public static final Map<PipeTier, DeferredBlock<ConduitBlock>> PIPES = new EnumMap<>(PipeTier.class);
 
     static {
+        for (CableTier tier : CableTier.values()) {
+            CABLES.put(tier, block(tier.id, () -> new CableBlock(
+                    BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BLACK).strength(1.0f, 3.0f)
+                            .sound(SoundType.WOOL).noOcclusion(), tier)));
+        }
+        for (PipeTier tier : PipeTier.values()) {
+            PIPES.put(tier, block(tier.id, () -> new ConduitBlock(
+                    BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(1.5f, 4.0f)
+                            .sound(SoundType.METAL).noOcclusion(), tier)));
+        }
         for (Mineral mineral : Mineral.values()) {
             float hardness = mineral.hardness;
             UniformInt xp = UniformInt.of(mineral.xpMin, mineral.xpMax);

@@ -67,7 +67,12 @@ public final class KonturCreativeTabs {
                         out.accept(KonturBlocks.FILTER_PRESS);
                         out.accept(KonturBlocks.PRECIPITATION_REACTOR);
                         out.accept(KonturBlocks.ACID_REGENERATION_COLUMN);
-                        out.accept(KonturBlocks.COPPER_WIRE);
+                        for (dev.technogenesis.kontur.network.CableTier tier : dev.technogenesis.kontur.network.CableTier.values()) {
+                            out.accept(KonturBlocks.CABLES.get(tier));
+                        }
+                        for (dev.technogenesis.kontur.network.PipeTier tier : dev.technogenesis.kontur.network.PipeTier.values()) {
+                            out.accept(KonturBlocks.PIPES.get(tier));
+                        }
                         for (KonturFluids.FluidSet fluid : KonturFluids.ALL) {
                             if (fluid.bucket != null) {
                                 out.accept(fluid.bucket);

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "MMM",
+    "AAA",
+    "MMM"
+  ],
+  "key": {
+    "M": {
+      "item": "kontur:molybdenum_ingot"
+    },
+    "A": {
+      "item": "kontur:armored_cable"
+    }
+  },
+  "result": {
+    "id": "kontur:superconducting_cable",
+    "count": 2
+  }
+}

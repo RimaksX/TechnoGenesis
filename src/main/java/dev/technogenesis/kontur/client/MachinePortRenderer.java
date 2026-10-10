@@ -6,6 +6,7 @@ import dev.technogenesis.kontur.Kontur;
 import dev.technogenesis.kontur.block.MachineBlock;
 import dev.technogenesis.kontur.blockentity.MachineBlockEntity;
 import dev.technogenesis.kontur.machine.IoMode;
+import dev.technogenesis.kontur.machine.MachineStatus;
 import dev.technogenesis.kontur.machine.RelativeSide;
 import dev.technogenesis.kontur.item.WrenchItem;
 import dev.technogenesis.kontur.machine.TransferType;
@@ -53,6 +54,7 @@ public final class MachinePortRenderer implements BlockEntityRenderer<MachineBlo
         for (Direction dir : Direction.values()) {
             RelativeSide rs = RelativeSide.of(facing, dir);
             if (rs == RelativeSide.FRONT) {
+                frontLight(vc, pose, dir, be.status(), lit);
                 continue;
             }
             boolean in = false;
@@ -90,8 +92,15 @@ public final class MachinePortRenderer implements BlockEntityRenderer<MachineBlo
         }
     }
 
+    /** Световой индикатор состояния на передней грани: зелёный - работает, красный - неполадка, жёлтый - полный или заряжается. */
+    private static void frontLight(VertexConsumer vc, PoseStack.Pose pose, Direction dir, MachineStatus status, int light) {
+        int color = status == MachineStatus.RUNNING ? 0x46C864 : status.problem ? 0xEB463C
+                : status == MachineStatus.IDLE ? 0x4A5060 : 0xF0B432;
+        rect(vc, pose, dir, 5f, 13f, 11f, 14f, color, LightTexture.pack(15, 15), LIFT);
+    }
+
     /** Режим ключа, если игрок держит его в любой руке; иначе null. */
-    private static WrenchMode heldWrenchMode() {
+    static WrenchMode heldWrenchMode() {
         var player = Minecraft.getInstance().player;
         if (player == null) {
             return null;
@@ -104,7 +113,7 @@ public final class MachinePortRenderer implements BlockEntityRenderer<MachineBlo
         return null;
     }
 
-    private static void ring(VertexConsumer vc, PoseStack.Pose pose, Direction dir, float lo, float hi, float t,
+    static void ring(VertexConsumer vc, PoseStack.Pose pose, Direction dir, float lo, float hi, float t,
                              int color, int light, float lift) {
         rect(vc, pose, dir, lo, lo, hi, lo + t, color, light, lift);
         rect(vc, pose, dir, lo, hi - t, hi, hi, color, light, lift);
@@ -113,7 +122,7 @@ public final class MachinePortRenderer implements BlockEntityRenderer<MachineBlo
     }
 
     /** Прямоугольник на грани блока; a/b - координаты вдоль касательных осей грани в единицах 1/16. */
-    private static void rect(VertexConsumer vc, PoseStack.Pose pose, Direction dir, float a0, float b0, float a1,
+    static void rect(VertexConsumer vc, PoseStack.Pose pose, Direction dir, float a0, float b0, float a1,
                              float b1, int color, int light, float lift) {
         float[][] p = new float[4][3];
         float[] ua = {a0, a1, a1, a0};

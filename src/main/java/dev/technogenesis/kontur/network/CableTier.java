@@ -2,12 +2,15 @@ package dev.technogenesis.kontur.network;
 
 import net.minecraft.util.StringRepresentable;
 
-/** Классы кабелей и их пропускная способность (FE/t). Пропускная способность не создаёт энергию. */
+/**
+ * Классы кабелей и их пропускная способность (FE/t) - на сколько кабель может пустить через сеть за тик.
+ * Шаг между классами в 4 раза: медный тянет несколько машин без модулей, сверхпроводящий - целую базу.
+ */
 public enum CableTier implements StringRepresentable {
-    COPPER("copper_wire", 32),
-    CERAMIC("ceramic_cable", 128),
-    ARMORED("armored_cable", 512),
-    SUPERCONDUCTING("superconducting_cable", 4096);
+    COPPER("copper_wire", 128),
+    CERAMIC("ceramic_cable", 512),
+    ARMORED("armored_cable", 2048),
+    SUPERCONDUCTING("superconducting_cable", 8192);
 
     public final String id;
     public final int throughput;

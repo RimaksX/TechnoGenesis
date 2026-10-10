@@ -21,12 +21,12 @@ public final class GuiUtil {
     public static final ResourceLocation HOLDER = sprite("holder");
     public static final ResourceLocation ARROW_OFF = sprite("arrow_off");
     public static final ResourceLocation ARROW_ON = sprite("arrow_on");
-    public static final ResourceLocation FLAME_OFF = sprite("flame_off");
-    public static final ResourceLocation FLAME_ON = sprite("flame_on");
+    /** Пламя из ванильного меню печи. */
+    public static final ResourceLocation FLAME = ResourceLocation.withDefaultNamespace("container/furnace/lit_progress");
 
     public static final int ARROW_W = 28;
     public static final int ARROW_H = 8;
-    public static final int FLAME_SIZE = 13;
+    public static final int FLAME_SIZE = 14;
     public static final int POWER_W = 8;
     public static final int POWER_H = 56;
 
@@ -86,12 +86,14 @@ public final class GuiUtil {
         }
     }
 
-    /** Пламя 13x13: серое, поверх цветное, убывающее сверху вниз. */
+    /** Пламя 14x14 из меню печи: тёмный силуэт, поверх цветное, убывающее сверху вниз. */
     public static void flame(GuiGraphics g, int x, int y, int left, int total) {
-        g.blitSprite(FLAME_OFF, x, y, FLAME_SIZE, FLAME_SIZE);
+        g.setColor(0.22f, 0.25f, 0.31f, 1f);
+        g.blitSprite(FLAME, x, y, FLAME_SIZE, FLAME_SIZE);
+        g.setColor(1f, 1f, 1f, 1f);
         if (total > 0 && left > 0) {
             int k = Math.max(1, FLAME_SIZE * left / total);
-            g.blitSprite(FLAME_ON, FLAME_SIZE, FLAME_SIZE, 0, FLAME_SIZE - k, x, y + FLAME_SIZE - k, FLAME_SIZE, k);
+            g.blitSprite(FLAME, FLAME_SIZE, FLAME_SIZE, 0, FLAME_SIZE - k, x, y + FLAME_SIZE - k, FLAME_SIZE, k);
         }
     }
 
@@ -105,8 +107,8 @@ public final class GuiUtil {
         }
     }
 
-    /** Держатель вкладки слева от окна 26x26 (правые 4 пикселя ложатся на край окна). */
+    /** Держатель вкладки слева от окна 30x36 (правые 4 пикселя ложатся на край окна). */
     public static void holder(GuiGraphics g, int x, int y) {
-        g.blitSprite(HOLDER, x, y, 26, 26);
+        g.blitSprite(HOLDER, x, y, 30, 36);
     }
 }

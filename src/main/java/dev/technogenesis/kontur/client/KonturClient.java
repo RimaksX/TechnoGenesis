@@ -34,6 +34,7 @@ public final class KonturClient {
     @SubscribeEvent
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
         KonturBlockEntities.MACHINES.values().forEach(type -> event.registerBlockEntityRenderer(type.get(), MachinePortRenderer::new));
+        event.registerBlockEntityRenderer(KonturBlockEntities.PIPE.get(), ConduitPortRenderer::new);
     }
 
     @SubscribeEvent

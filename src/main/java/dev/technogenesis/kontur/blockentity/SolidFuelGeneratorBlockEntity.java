@@ -44,7 +44,7 @@ public class SolidFuelGeneratorBlockEntity extends MachineBlockEntity {
                 setStatus(MachineStatus.NO_FUEL);
                 return;
             }
-            if (energy.space() < OUTPUT_PER_TICK) {
+            if (energy.space() < OUTPUT_PER_TICK * activeSpeed()) {
                 setStatus(MachineStatus.FULL);
                 return;
             }
@@ -67,12 +67,15 @@ public class SolidFuelGeneratorBlockEntity extends MachineBlockEntity {
             burnLeft = burnTotal;
             setChanged();
         }
-        if (energy.space() < OUTPUT_PER_TICK) {
+        // модуль форсирования: горит и вырабатывает в speed раз быстрее, на единицу топлива энергии столько же
+        int speed = Math.max(1, Math.min(activeSpeed(), burnLeft));
+        int output = OUTPUT_PER_TICK * speed;
+        if (energy.space() < output) {
             setStatus(MachineStatus.FULL);
             return;
         }
-        energy.produce(OUTPUT_PER_TICK);
-        burnLeft--;
+        energy.produce(output);
+        burnLeft -= speed;
         setStatus(MachineStatus.RUNNING);
         setChanged();
     }
@@ -81,7 +84,7 @@ public class SolidFuelGeneratorBlockEntity extends MachineBlockEntity {
     protected void extraSync(int[] data) {
         data[5] = burnLeft;
         data[6] = burnTotal;
-        data[7] = status == MachineStatus.RUNNING ? OUTPUT_PER_TICK : 0;
+        data[7] = status == MachineStatus.RUNNING ? OUTPUT_PER_TICK * activeSpeed() : 0;
     }
 
     @Override
@@ -98,7 +101,7 @@ public class SolidFuelGeneratorBlockEntity extends MachineBlockEntity {
 
     @Override
     protected void updateBlockState() {
-        boolean active = status == MachineStatus.RUNNING;
+        boolean active = shown == MachineStatus.RUNNING;
         BlockState state = getBlockState();
         if (state.getValue(MachineBlock.ACTIVE) != active) {
             level.setBlock(worldPosition, state.setValue(MachineBlock.ACTIVE, active), 3);

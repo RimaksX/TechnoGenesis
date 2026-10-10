@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "BBB",
+    "WWW",
+    "BBB"
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:brick"
+    },
+    "W": {
+      "item": "kontur:copper_wire"
+    }
+  },
+  "result": {
+    "id": "kontur:ceramic_cable",
+    "count": 4
+  }
+}

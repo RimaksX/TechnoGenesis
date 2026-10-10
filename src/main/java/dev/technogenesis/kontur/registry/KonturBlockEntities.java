@@ -3,6 +3,7 @@ package dev.technogenesis.kontur.registry;
 import dev.technogenesis.kontur.Kontur;
 import dev.technogenesis.kontur.blockentity.CableBlockEntity;
 import dev.technogenesis.kontur.blockentity.CapacitorBlockEntity;
+import dev.technogenesis.kontur.blockentity.ConduitBlockEntity;
 import dev.technogenesis.kontur.blockentity.MachineBlockEntity;
 import dev.technogenesis.kontur.blockentity.ProcessingMachineBlockEntity;
 import dev.technogenesis.kontur.blockentity.SolidFuelGeneratorBlockEntity;
@@ -11,6 +12,7 @@ import java.util.EnumMap;
 import java.util.Map;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.capabilities.Capabilities;
@@ -28,7 +30,13 @@ public final class KonturBlockEntities {
 
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CableBlockEntity>> CABLE =
             BLOCK_ENTITIES.register("cable", () -> BlockEntityType.Builder
-                    .of(CableBlockEntity::new, KonturBlocks.COPPER_WIRE.get()).build(null));
+                    .of(CableBlockEntity::new, KonturBlocks.CABLES.values().stream()
+                            .map(b -> (Block) b.get()).toArray(Block[]::new)).build(null));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ConduitBlockEntity>> PIPE =
+            BLOCK_ENTITIES.register("pipe", () -> BlockEntityType.Builder
+                    .of(ConduitBlockEntity::new, KonturBlocks.PIPES.values().stream()
+                            .map(b -> (Block) b.get()).toArray(Block[]::new)).build(null));
 
     static {
         for (MachineKind kind : MachineKind.values()) {

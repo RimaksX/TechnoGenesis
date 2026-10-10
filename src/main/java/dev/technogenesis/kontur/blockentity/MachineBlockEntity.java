@@ -62,7 +62,12 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
     public final KonturEnergyStorage energy;
     public final SideConfig sides;
 
+    private static final int STATUS_HOLD = 10;
+
     protected MachineStatus status = MachineStatus.IDLE;
+    protected MachineStatus shown = MachineStatus.IDLE;
+    private MachineStatus pending = MachineStatus.IDLE;
+    private int pendingTicks;
     protected int progress;
     protected int totalTime;
     /** Действие модуля форсирования: во сколько раз быстрее и сколько процентов энергии. */
@@ -118,13 +123,13 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
         if (speed == 1) {
             overheated = false;
         }
-        if (def.energyKind == EnergyKind.CONSUMER) {
-            energy.setLimits(def.energyCapacity * speed, def.maxReceive * speed);
+        if (def.energyKind != EnergyKind.STORAGE) {
+            energy.setLimits(def.energyCapacity * speed, def.maxReceive * speed, def.maxExtract * speed);
         }
     }
 
     public MachineStatus status() {
-        return status;
+        return shown;
     }
 
     protected Direction facing() {
@@ -178,6 +183,7 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
             return;
         }
         tickMachine();
+        debounceStatus();
         updateHeat();
         pushEnergy();
         if (lvl.getGameTime() % 8 == 0) {
@@ -233,6 +239,29 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
         return n;
     }
 
+    /**
+     * Показываемое состояние меняется, только когда новое продержалось STATUS_HOLD тиков подряд: состояния, которые
+     * мигают каждый тик (буфер у края, нехватка энергии на тик), не заставляют мерцать ни текстуру блока, ни меню.
+     */
+    private void debounceStatus() {
+        if (status == shown) {
+            pendingTicks = 0;
+            return;
+        }
+        if (status != pending) {
+            pending = status;
+            pendingTicks = 1;
+        } else {
+            pendingTicks++;
+        }
+        if (pendingTicks >= STATUS_HOLD) {
+            shown = status;
+            pendingTicks = 0;
+            // индикатор на передней грани читает состояние на клиенте
+            level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Block.UPDATE_CLIENTS);
+        }
+    }
+
     protected final void setStatus(MachineStatus s) {
         this.status = s;
     }
@@ -256,7 +285,7 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
             if (target == null || !target.canReceive()) {
                 continue;
             }
-            int offer = Math.min(def.maxExtract, energy.getEnergyStored());
+            int offer = Math.min(energy.maxExtractNow(), energy.getEnergyStored());
             energy.consume(target.receiveEnergy(offer, false));
         }
     }
@@ -335,12 +364,13 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
         d[1] = energy.getMaxEnergyStored();
         d[2] = progress;
         d[3] = totalTime;
-        d[4] = status.ordinal();
+        d[4] = shown.ordinal();
         extraSync(d);
+        d[8] = moduleSpeed;
+        d[9] = moduleEnergyPercent;
         d[12] = cooledFaces;
         d[15] = overheated ? 1 : 0;
-        d[8] = sides.packA();
-        d[9] = sides.packB();
+        d[16] = heat * 100 / ModuleTier.HEAT_MAX;
         for (int i = 0; i < tanks.length; i++) {
             FluidStack f = tanks[i].getFluid();
             d[10 + i * 3] = f.isEmpty() ? 0 : BuiltInRegistries.FLUID.getId(f.getFluid());
@@ -421,12 +451,15 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
     public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
         CompoundTag tag = new CompoundTag();
         tag.put("sides", sides.save());
+        tag.putInt("status", shown.ordinal());
         return tag;
     }
 
     @Override
     public void handleUpdateTag(CompoundTag tag, HolderLookup.Provider registries) {
         sides.load(tag.getCompound("sides"));
+        int o = tag.getInt("status");
+        shown = o >= 0 && o < MachineStatus.values().length ? MachineStatus.values()[o] : MachineStatus.IDLE;
     }
 
     @Override

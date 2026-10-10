@@ -7,7 +7,6 @@ import dev.technogenesis.kontur.machine.MachineDefinition.SlotDef;
 import dev.technogenesis.kontur.machine.MachineDefinition.SlotRole;
 import dev.technogenesis.kontur.machine.MachineKind;
 import dev.technogenesis.kontur.machine.MachineStatus;
-import dev.technogenesis.kontur.machine.SideConfig;
 import dev.technogenesis.kontur.registry.KonturBlocks;
 import dev.technogenesis.kontur.registry.KonturMenus;
 import net.minecraft.core.BlockPos;
@@ -33,7 +32,7 @@ import org.jetbrains.annotations.Nullable;
  * 32-битными числами через пары 16-битных DataSlot: ванильный пакет передаёт только short.
  */
 public class MachineMenu extends AbstractContainerMenu {
-    public static final int SYNC_SIZE = 16;
+    public static final int SYNC_SIZE = 20;
     public static final int PLAYER_INV_Y = 102;
 
     public final MachineKind kind;
@@ -43,7 +42,6 @@ public class MachineMenu extends AbstractContainerMenu {
     private final MachineBlockEntity be;
     private final ContainerLevelAccess access;
     private final int[] sync = new int[SYNC_SIZE];
-    private final SideConfig clientSides;
 
     /** Серверный конструктор. */
     public MachineMenu(int id, Inventory inv, MachineBlockEntity be) {
@@ -63,7 +61,6 @@ public class MachineMenu extends AbstractContainerMenu {
         this.def = kind.definition;
         this.pos = pos;
         this.be = be;
-        this.clientSides = kind.defaultSides();
         this.access = be != null && be.getLevel() != null ? ContainerLevelAccess.create(be.getLevel(), pos)
                 : ContainerLevelAccess.NULL;
 
@@ -214,16 +211,16 @@ public class MachineMenu extends AbstractContainerMenu {
 
     /** Множитель скорости от модуля (1, если модуля нет). */
     public int moduleSpeed() {
-        return def.hasModule() ? Math.max(1, sync[5]) : 1;
+        return def.hasModule() ? Math.max(1, sync[8]) : 1;
     }
 
     public int moduleEnergyPercent() {
-        return def.hasModule() && sync[6] > 0 ? sync[6] : 100;
+        return def.hasModule() && sync[9] > 0 ? sync[9] : 100;
     }
 
     /** Нагрев модуля в процентах от предела. */
     public int heatPercent() {
-        return def.hasModule() ? sync[7] : 0;
+        return def.hasModule() ? sync[16] : 0;
     }
 
     public int cooledFaces() {
@@ -253,8 +250,5 @@ public class MachineMenu extends AbstractContainerMenu {
         return f == Fluids.EMPTY || amount <= 0 ? FluidStack.EMPTY : new FluidStack(f, amount);
     }
 
-    public SideConfig sides() {
-        clientSides.unpack(sync[8], sync[9]);
-        return clientSides;
-    }
+
 }

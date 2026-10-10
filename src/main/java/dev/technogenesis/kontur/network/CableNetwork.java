@@ -23,6 +23,10 @@ public final class CableNetwork {
     final Map<BlockPos, CableTier> cables = new HashMap<>();
     private final List<BlockCapabilityCache<IEnergyStorage, Direction>> endpoints = new ArrayList<>();
     private boolean dirty = true;
+    private int lastSources;
+    private int lastSinks;
+    private int lastStorages;
+    private int lastMoved;
     private long lastRefresh = Long.MIN_VALUE;
 
     CableNetwork(ServerLevel level) {
@@ -31,6 +35,20 @@ public final class CableNetwork {
 
     void markDirty() {
         dirty = true;
+    }
+
+    /** Для диагностики ключом: слабейший кабель, число кабелей, источников, потребителей, накопителей и перенос за тик. */
+    public record Info(CableTier weakest, int cables, int sources, int sinks, int storages, int moved) {
+    }
+
+    public Info info() {
+        CableTier weakest = null;
+        for (CableTier t : cables.values()) {
+            if (weakest == null || t.throughput < weakest.throughput) {
+                weakest = t;
+            }
+        }
+        return new Info(weakest, cables.size(), lastSources, lastSinks, lastStorages, lastMoved);
     }
 
     public int throughput() {
@@ -82,13 +100,20 @@ public final class CableNetwork {
             }
         }
         int cap = throughput();
-        int left = cap - move(sources, sinks, cap);
+        lastSources = sources.size();
+        lastSinks = sinks.size();
+        lastStorages = storages.size();
+        int moved = move(sources, sinks, cap);
+        int left = cap - moved;
         if (left > 0 && !storages.isEmpty()) {
-            left -= move(sources, storages, left);
+            int toStorage = move(sources, storages, left);
+            moved += toStorage;
+            left -= toStorage;
             if (left > 0) {
-                move(storages, sinks, left);
+                moved += move(storages, sinks, left);
             }
         }
+        lastMoved = moved;
     }
 
     /** Переносит до limit FE; возвращает перенесённое. */

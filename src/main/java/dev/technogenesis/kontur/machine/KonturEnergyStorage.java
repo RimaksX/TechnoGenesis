@@ -22,10 +22,16 @@ public class KonturEnergyStorage extends EnergyStorage {
         return added;
     }
 
-    /** Меняет ёмкость и предел приёма (модуль форсирования), лишний заряд отбрасывается. */
-    public void setLimits(int newCapacity, int newMaxReceive) {
+    /** Предел отдачи за операцию. */
+    public int maxExtractNow() {
+        return maxExtract;
+    }
+
+    /** Меняет ёмкость и пределы приёма и отдачи (модуль форсирования), лишний заряд отбрасывается. */
+    public void setLimits(int newCapacity, int newMaxReceive, int newMaxExtract) {
         this.capacity = newCapacity;
         this.maxReceive = newMaxReceive;
+        this.maxExtract = newMaxExtract;
         if (energy > capacity) {
             energy = capacity;
         }

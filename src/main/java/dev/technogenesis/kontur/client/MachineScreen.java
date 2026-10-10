@@ -46,8 +46,8 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
     static final int TITLE_Y = 6;
     static final int INV_LABEL_Y = 92;
 
-    // вкладка слота модуля слева: держатель 26x26 перекрывает край окна на 4 пикселя, слот лежит на нём
-    private static final int HOLDER_X = -22;
+    // вкладка слота модуля слева: держатель 30x36 перекрывает край окна на 4 пикселя; слот и шкала нагрева лежат на нём
+    private static final int HOLDER_X = -26;
     private static final int HOLDER_Y = 34;
 
     private final MachineDefinition def;
@@ -85,7 +85,7 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
     public List<Rect2i> extraAreas() {
         List<Rect2i> areas = new ArrayList<>();
         if (def.hasModule()) {
-            areas.add(new Rect2i(leftPos + HOLDER_X, topPos + HOLDER_Y, 26, 26));
+            areas.add(new Rect2i(leftPos + HOLDER_X, topPos + HOLDER_Y, 30, 36));
         }
         return areas;
     }
@@ -119,7 +119,7 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
             GuiUtil.slot(g, x + slot.x, y + slot.y, role);
         }
         if (def.hasModule() && (menu.slots.get(def.moduleSlot()).hasItem() || menu.heatPercent() > 0)) {
-            GuiUtil.heatBar(g, x + HOLDER_X + 4, y + HOLDER_Y + 28, menu.heatPercent());
+            GuiUtil.heatBar(g, x + HOLDER_X + 4, y + HOLDER_Y + 25, menu.heatPercent());
         }
         if (def.energyCapacity > 0) {
             GuiUtil.powerBar(g, x + ENERGY_X, y + ENERGY_Y, menu.energy(), menu.energyCapacity());
@@ -249,7 +249,7 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
                 && menu.totalTime() > 0) {
             g.renderTooltip(font, Component.translatable("gui.kontur.progress", 100 * menu.progress() / menu.totalTime()), mx, my);
         }
-        if (def.hasModule() && inRect(mx, my, x + HOLDER_X + 4, y + HOLDER_Y + 28, 18, 6)) {
+        if (def.hasModule() && inRect(mx, my, x + HOLDER_X + 4, y + HOLDER_Y + 25, 18, 6)) {
             List<Component> lines = new ArrayList<>();
             lines.add(Component.translatable("gui.kontur.heat", menu.heatPercent()));
             lines.add(Component.translatable("gui.kontur.cooling", menu.cooledFaces()).withStyle(ChatFormatting.GRAY));

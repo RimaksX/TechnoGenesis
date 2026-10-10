@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "III",
+    "CCC",
+    "III"
+  ],
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "C": {
+      "item": "kontur:ceramic_cable"
+    }
+  },
+  "result": {
+    "id": "kontur:armored_cable",
+    "count": 4
+  }
+}

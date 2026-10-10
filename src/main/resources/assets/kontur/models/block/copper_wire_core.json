@@ -1,6 +1,6 @@
 {
   "textures": {
-    "wire": "kontur:block/copper_wire",
+    "t": "kontur:block/copper_wire",
     "particle": "kontur:block/copper_wire"
   },
   "elements": [
@@ -17,22 +17,22 @@
       ],
       "faces": {
         "north": {
-          "texture": "#wire"
+          "texture": "#t"
         },
         "south": {
-          "texture": "#wire"
+          "texture": "#t"
         },
         "east": {
-          "texture": "#wire"
+          "texture": "#t"
         },
         "west": {
-          "texture": "#wire"
+          "texture": "#t"
         },
         "up": {
-          "texture": "#wire"
+          "texture": "#t"
         },
         "down": {
-          "texture": "#wire"
+          "texture": "#t"
         }
       }
     }

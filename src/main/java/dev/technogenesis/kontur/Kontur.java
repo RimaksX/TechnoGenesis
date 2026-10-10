@@ -1,6 +1,7 @@
 package dev.technogenesis.kontur;
 
 import dev.technogenesis.kontur.network.CableNetworkManager;
+import dev.technogenesis.kontur.network.PipeNetworkManager;
 import dev.technogenesis.kontur.registry.KonturBlockEntities;
 import dev.technogenesis.kontur.registry.KonturBlocks;
 import dev.technogenesis.kontur.registry.KonturCreativeTabs;
@@ -37,12 +38,16 @@ public class Kontur {
 
         modBus.addListener(KonturBlockEntities::registerCapabilities);
         NeoForge.EVENT_BUS.addListener(this::onLevelTick);
-        NeoForge.EVENT_BUS.addListener((ServerStoppedEvent e) -> CableNetworkManager.clear());
+        NeoForge.EVENT_BUS.addListener((ServerStoppedEvent e) -> {
+            CableNetworkManager.clear();
+            PipeNetworkManager.clear();
+        });
     }
 
     private void onLevelTick(LevelTickEvent.Post event) {
         if (!event.getLevel().isClientSide()) {
             CableNetworkManager.tick(event.getLevel());
+            PipeNetworkManager.tick(event.getLevel());
         }
     }
 }

@@ -3,7 +3,6 @@ package dev.technogenesis.kontur.blockentity;
 import dev.technogenesis.kontur.block.MachineBlock;
 import dev.technogenesis.kontur.machine.MachineKind;
 import dev.technogenesis.kontur.machine.MachineStatus;
-import dev.technogenesis.kontur.machine.ModuleTier;
 import dev.technogenesis.kontur.recipe.MachineRecipe;
 import dev.technogenesis.kontur.recipe.MachineRecipeInput;
 import java.util.List;
@@ -155,17 +154,9 @@ public class ProcessingMachineBlockEntity extends MachineBlockEntity {
         }
     }
 
-    /** Для интерфейса: индексы 5 и 6 - действие модуля (скорость и процент энергии). */
-    @Override
-    protected void extraSync(int[] data) {
-        data[5] = moduleSpeed;
-        data[6] = moduleEnergyPercent;
-        data[7] = heat * 100 / ModuleTier.HEAT_MAX;
-    }
-
     @Override
     protected void updateBlockState() {
-        boolean active = status == MachineStatus.RUNNING;
+        boolean active = shown == MachineStatus.RUNNING;
         BlockState state = getBlockState();
         if (state.getValue(MachineBlock.ACTIVE) != active) {
             level.setBlock(worldPosition, state.setValue(MachineBlock.ACTIVE, active), 3);

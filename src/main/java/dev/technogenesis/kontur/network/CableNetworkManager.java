@@ -50,6 +50,20 @@ public final class CableNetworkManager {
         }
     }
 
+    /** Сведения о сети, в которой стоит кабель (для ключа). */
+    public static CableNetwork.Info info(Level level, BlockPos pos) {
+        if (level instanceof ServerLevel sl) {
+            Manager m = MANAGERS.get(sl.dimension());
+            if (m != null) {
+                CableNetwork n = m.byPos.get(pos);
+                if (n != null) {
+                    return n.info();
+                }
+            }
+        }
+        return null;
+    }
+
     public static void tick(Level level) {
         if (level instanceof ServerLevel sl) {
             Manager m = MANAGERS.get(sl.dimension());

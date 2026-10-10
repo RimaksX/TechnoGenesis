@@ -1,6 +1,7 @@
 {
+  "parent": "minecraft:block/block",
   "textures": {
-    "wire": "kontur:block/copper_wire",
+    "t": "kontur:block/copper_wire",
     "particle": "kontur:block/copper_wire"
   },
   "display": {
@@ -59,86 +60,86 @@
       ],
       "faces": {
         "north": {
-          "texture": "#wire"
+          "texture": "#t"
         },
         "south": {
-          "texture": "#wire"
+          "texture": "#t"
         },
         "east": {
-          "texture": "#wire"
+          "texture": "#t"
         },
         "west": {
-          "texture": "#wire"
+          "texture": "#t"
         },
         "up": {
-          "texture": "#wire"
+          "texture": "#t"
         },
         "down": {
-          "texture": "#wire"
+          "texture": "#t"
         }
       }
     },
     {
       "from": [
         0,
-        5.5,
-        5.5
+        6,
+        6
       ],
       "to": [
         5,
-        10.5,
-        10.5
+        10,
+        10
       ],
       "faces": {
         "north": {
-          "texture": "#wire"
+          "texture": "#t"
         },
         "south": {
-          "texture": "#wire"
+          "texture": "#t"
         },
         "east": {
-          "texture": "#wire"
+          "texture": "#t"
         },
         "west": {
-          "texture": "#wire"
+          "texture": "#t"
         },
         "up": {
-          "texture": "#wire"
+          "texture": "#t"
         },
         "down": {
-          "texture": "#wire"
+          "texture": "#t"
         }
       }
     },
     {
       "from": [
         11,
-        5.5,
-        5.5
+        6,
+        6
       ],
       "to": [
         16,
-        10.5,
-        10.5
+        10,
+        10
       ],
       "faces": {
         "north": {
-          "texture": "#wire"
+          "texture": "#t"
         },
         "south": {
-          "texture": "#wire"
+          "texture": "#t"
         },
         "east": {
-          "texture": "#wire"
+          "texture": "#t"
         },
         "west": {
-          "texture": "#wire"
+          "texture": "#t"
         },
         "up": {
-          "texture": "#wire"
+          "texture": "#t"
         },
         "down": {
-          "texture": "#wire"
+          "texture": "#t"
         }
       }
     }
