@@ -5,9 +5,9 @@ package dev.technogenesis.kontur.machine;
  * выделяет работающая машина. Без охлаждения нагрев копится и при перегреве модуль отключается, пока машина не остынет.
  */
 public enum ModuleTier {
-    WORKER("worker", 2, 100, 1),
-    INDUSTRIAL("industrial", 4, 125, 5),
-    PEAK("peak", 8, 150, 12);
+    WORKER("worker", 2, 120, 1),
+    INDUSTRIAL("industrial", 4, 180, 5),
+    PEAK("peak", 8, 300, 12);
 
     /** Предел нагрева; при его достижении модуль отключается. */
     public static final int HEAT_MAX = 1000;

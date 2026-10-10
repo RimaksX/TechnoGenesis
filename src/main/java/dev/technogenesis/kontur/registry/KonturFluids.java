@@ -92,7 +92,7 @@ public final class KonturFluids {
         private BaseFlowingFluid.Properties props() {
             if (properties == null) {
                 properties = new BaseFlowingFluid.Properties(type, source, flowing)
-                        .slopeFindDistance(3).levelDecreasePerBlock(2);
+                        .slopeFindDistance(4).levelDecreasePerBlock(1);
                 if (block != null) {
                     properties.block(block);
                 }

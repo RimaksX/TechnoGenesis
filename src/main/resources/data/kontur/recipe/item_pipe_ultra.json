@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "TPT",
+    "PRP",
+    "TPT"
+  ],
+  "key": {
+    "T": {
+      "item": "kontur:tungsten_ingot"
+    },
+    "P": {
+      "item": "kontur:item_pipe_express"
+    },
+    "R": {
+      "item": "minecraft:redstone_block"
+    }
+  },
+  "result": {
+    "id": "kontur:item_pipe_ultra",
+    "count": 4
+  }
+}

@@ -106,6 +106,14 @@ public enum MachineKind implements StringRepresentable {
         return id;
     }
 
+    /** Нарисован ли на модели разъём с этой стороны (ферма не имеет разъёмов, у панелей нет верхнего). */
+    public boolean hasPort(RelativeSide side) {
+        if (side == RelativeSide.FRONT || this == SOLAR_FARM) {
+            return false;
+        }
+        return !(side == RelativeSide.TOP && (this == SOLAR_PANEL || this == SOLAR_PANEL_ADVANCED));
+    }
+
     public SideConfig defaultSides() {
         IoMode energy = switch (definition.energyKind) {
             case CONSUMER -> IoMode.INPUT;

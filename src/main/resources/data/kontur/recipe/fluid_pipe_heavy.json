@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "NPN",
+    "PRP",
+    "NPN"
+  ],
+  "key": {
+    "N": {
+      "item": "kontur:nickel_ingot"
+    },
+    "P": {
+      "item": "kontur:fluid_pipe_fast"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    }
+  },
+  "result": {
+    "id": "kontur:fluid_pipe_heavy",
+    "count": 4
+  }
+}

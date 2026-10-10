@@ -1,4 +1,5 @@
 {
+  "render_type": "minecraft:translucent",
   "textures": {
     "t": "kontur:block/fluid_pipe",
     "particle": "kontur:block/fluid_pipe"
@@ -18,54 +19,54 @@
       "faces": {
         "north": {
           "uv": [
+            12,
             0,
-            0,
-            4,
+            16,
             4
           ],
           "texture": "#t"
         },
         "south": {
           "uv": [
+            12,
             0,
-            0,
-            4,
+            16,
             4
           ],
           "texture": "#t"
         },
         "east": {
           "uv": [
+            12,
             0,
-            0,
-            4,
+            16,
             4
           ],
           "texture": "#t"
         },
         "west": {
           "uv": [
+            12,
             0,
-            0,
-            4,
+            16,
             4
           ],
           "texture": "#t"
         },
         "up": {
           "uv": [
+            12,
             0,
-            0,
-            4,
+            16,
             4
           ],
           "texture": "#t"
         },
         "down": {
           "uv": [
+            12,
             0,
-            0,
-            4,
+            16,
             4
           ],
           "texture": "#t"
@@ -142,13 +143,13 @@
     },
     {
       "from": [
-        4.5,
-        4.5,
+        4,
+        4,
         2
       ],
       "to": [
-        11.5,
-        11.5,
+        12,
+        12,
         3
       ],
       "faces": {

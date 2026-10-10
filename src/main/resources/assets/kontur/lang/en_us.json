@@ -305,5 +305,9 @@
   "gui.kontur.coating_line": "%s: %s%% output",
   "tooltip.kontur.coating.efficiency": "Panel output: %s%%",
   "tooltip.kontur.coating.hint": "Goes into the coating slot of the advanced panel or the solar farm",
-  "message.kontur.farm_no_space": "The solar farm needs a free 3x2 area"
+  "message.kontur.farm_no_space": "The solar farm needs a free 3x2 area",
+  "block.kontur.item_pipe_express": "Express Item Pipe",
+  "block.kontur.item_pipe_ultra": "Trunk Item Pipe",
+  "block.kontur.fluid_pipe_heavy": "Heavy Fluid Pipe",
+  "block.kontur.fluid_pipe_ultra": "Trunk Fluid Pipe"
 }

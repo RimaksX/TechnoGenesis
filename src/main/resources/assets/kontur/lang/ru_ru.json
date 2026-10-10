@@ -305,5 +305,9 @@
   "gui.kontur.coating_line": "%s: %s%% выработки",
   "tooltip.kontur.coating.efficiency": "Выработка панели: %s%%",
   "tooltip.kontur.coating.hint": "Ставится в слот покрытия улучшенной панели или солнечной фермы",
-  "message.kontur.farm_no_space": "Для солнечной фермы нужно свободное место 3x2"
+  "message.kontur.farm_no_space": "Для солнечной фермы нужно свободное место 3x2",
+  "block.kontur.item_pipe_express": "Экспресс-труба предметов",
+  "block.kontur.item_pipe_ultra": "Магистральная труба предметов",
+  "block.kontur.fluid_pipe_heavy": "Тяжёлая труба жидкостей",
+  "block.kontur.fluid_pipe_ultra": "Магистральная труба жидкостей"
 }

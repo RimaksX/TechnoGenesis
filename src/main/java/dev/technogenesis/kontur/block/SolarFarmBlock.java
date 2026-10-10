@@ -11,7 +11,11 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -72,6 +76,52 @@ public class SolarFarmBlock extends MachineBlock {
         int idx = state.getValue(PART);
         Direction facing = state.getValue(FACING);
         return pos.relative(facing.getCounterClockWise(), idx % 3).relative(facing, idx / 3);
+    }
+
+    private static VoxelShape stairs(int... tops) {
+        VoxelShape shape = Shapes.empty();
+        for (int i = 0; i < tops.length; i++) {
+            shape = Shapes.or(shape, Block.box(0, 0, i * 4, 16, tops[i], i * 4 + 4));
+        }
+        return shape;
+    }
+
+    /** Форма совпадает с моделью: четыре ступени, передние плитки ниже, задние выше; шкаф инвертора у части 0. */
+    private static final VoxelShape FRONT_SHAPE = stairs(3, 5, 7, 9);
+    private static final VoxelShape BACK_SHAPE = stairs(11, 13, 15, 16);
+    private static final VoxelShape MASTER_SHAPE = Shapes.or(FRONT_SHAPE, Block.box(4, 3, 0, 12, 6, 4));
+
+    private static VoxelShape shapeOf(BlockState state) {
+        int part = state.getValue(PART);
+        return part == 0 ? MASTER_SHAPE : part < 3 ? FRONT_SHAPE : BACK_SHAPE;
+    }
+
+    /** Форма части для facing north; для других сторон поворачивается вокруг вертикали. */
+    private static VoxelShape rotated(VoxelShape north, Direction facing) {
+        int turns = switch (facing) {
+            case EAST -> 1;
+            case SOUTH -> 2;
+            case WEST -> 3;
+            default -> 0;
+        };
+        VoxelShape out = north;
+        for (int i = 0; i < turns; i++) {
+            VoxelShape[] acc = {Shapes.empty()};
+            out.forAllBoxes((x0, y0, z0, x1, y1, z1) ->
+                    acc[0] = Shapes.or(acc[0], Shapes.box(1 - z1, y0, x0, 1 - z0, y1, x1)));
+            out = acc[0];
+        }
+        return out;
+    }
+
+    @Override
+    protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        return rotated(shapeOf(state), state.getValue(FACING));
+    }
+
+    @Override
+    protected VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        return getShape(state, level, pos, context);
     }
 
     @Nullable

@@ -44,6 +44,9 @@ public final class MachinePortRenderer implements BlockEntityRenderer<MachineBlo
     @Override
     public void render(MachineBlockEntity be, float partialTick, PoseStack stack, MultiBufferSource buffers,
                        int light, int overlay) {
+        if (be.kind() == dev.technogenesis.kontur.machine.MachineKind.SOLAR_FARM) {
+            return;
+        }
         Direction facing = be.getBlockState().getValue(MachineBlock.FACING);
         VertexConsumer vc = buffers.getBuffer(RenderType.entityCutoutNoCull(TEXTURE));
         PoseStack.Pose pose = stack.last();
@@ -55,6 +58,9 @@ public final class MachinePortRenderer implements BlockEntityRenderer<MachineBlo
             RelativeSide rs = RelativeSide.of(facing, dir);
             if (rs == RelativeSide.FRONT) {
                 frontLight(vc, pose, dir, be.status(), lit);
+                continue;
+            }
+            if (!be.kind().hasPort(rs)) {
                 continue;
             }
             boolean in = false;

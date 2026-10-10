@@ -9,6 +9,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.capabilities.BlockCapabilityCache;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.fluids.FluidStack;
@@ -33,6 +35,8 @@ public final class PipeNetwork {
     private long lastRefresh = Long.MIN_VALUE;
     private int rotation;
     private int lastMoved;
+    private int idleOps;
+    private Fluid lastFluid = Fluids.EMPTY;
 
     private record Endpoint<T>(BlockPos pipe, Direction dir, ConduitMode mode, BlockCapabilityCache<T, Direction> cache) {
         T handler() {
@@ -123,6 +127,23 @@ public final class PipeNetwork {
         }
         rotation++;
         lastMoved = kind == ConduitKind.ITEMS ? moveItems(weak.amount) : moveFluids(weak.amount);
+        if (kind == ConduitKind.FLUIDS) {
+            // по прозрачным трубам видно, что течёт: жидкость гаснет, если перенос стоит несколько секунд
+            if (lastMoved > 0) {
+                idleOps = 0;
+                showFluid(lastFluid);
+            } else if (++idleOps * weak.interval >= 60) {
+                showFluid(Fluids.EMPTY);
+            }
+        }
+    }
+
+    private void showFluid(Fluid fluid) {
+        for (BlockPos pos : pipes.keySet()) {
+            if (level.getBlockEntity(pos) instanceof ConduitBlockEntity be) {
+                be.setDisplayFluid(fluid);
+            }
+        }
     }
 
     private int moveItems(int budget) {
@@ -222,6 +243,9 @@ public final class PipeNetwork {
                     from.fill(drained.copyWithAmount(drained.getAmount() - filled), IFluidHandler.FluidAction.EXECUTE);
                 }
                 left -= filled;
+                if (filled > 0) {
+                    lastFluid = drained.getFluid();
+                }
                 break;
             }
         }

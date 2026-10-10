@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "CPC",
+    "PRP",
+    "CPC"
+  ],
+  "key": {
+    "C": {
+      "item": "kontur:chromium_ingot"
+    },
+    "P": {
+      "item": "kontur:fluid_pipe_heavy"
+    },
+    "R": {
+      "item": "minecraft:redstone_block"
+    }
+  },
+  "result": {
+    "id": "kontur:fluid_pipe_ultra",
+    "count": 4
+  }
+}

@@ -8,6 +8,10 @@ import dev.technogenesis.kontur.registry.KonturBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
@@ -21,6 +25,8 @@ import org.jetbrains.annotations.Nullable;
 /** Узел сети труб: хранит режим каждой стороны, регистрируется в сети при загрузке и покидает её при удалении. */
 public class ConduitBlockEntity extends BlockEntity {
     private final ConduitMode[] modes = new ConduitMode[6];
+    /** Какая жидкость сейчас течёт по трубе (для отрисовки внутри стеклянной трубы); пусто - ничего. */
+    private Fluid displayFluid = Fluids.EMPTY;
 
     public ConduitBlockEntity(BlockPos pos, BlockState state) {
         super(KonturBlockEntities.PIPE.get(), pos, state);
@@ -40,6 +46,21 @@ public class ConduitBlockEntity extends BlockEntity {
         setChanged();
         if (level != null) {
             level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Block.UPDATE_CLIENTS);
+        }
+    }
+
+    public Fluid displayFluid() {
+        return displayFluid;
+    }
+
+    /** Меняет показываемую жидкость; клиентам сообщает только при изменении. */
+    public void setDisplayFluid(Fluid fluid) {
+        if (fluid != displayFluid) {
+            displayFluid = fluid;
+            setChanged();
+            if (level != null) {
+                level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Block.UPDATE_CLIENTS);
+            }
         }
     }
 
@@ -77,6 +98,9 @@ public class ConduitBlockEntity extends BlockEntity {
             packed[i] = modes[i].ordinal();
         }
         tag.putIntArray("modes", packed);
+        if (displayFluid != Fluids.EMPTY) {
+            tag.putString("fluid", BuiltInRegistries.FLUID.getKey(displayFluid).toString());
+        }
     }
 
     @Override
@@ -85,6 +109,13 @@ public class ConduitBlockEntity extends BlockEntity {
         int[] packed = tag.getIntArray("modes");
         for (int i = 0; i < 6; i++) {
             modes[i] = i < packed.length ? ConduitMode.byOrdinal(packed[i]) : ConduitMode.PUSH;
+        }
+        displayFluid = Fluids.EMPTY;
+        if (tag.contains("fluid")) {
+            ResourceLocation id = ResourceLocation.tryParse(tag.getString("fluid"));
+            if (id != null) {
+                displayFluid = BuiltInRegistries.FLUID.get(id);
+            }
         }
     }
 
