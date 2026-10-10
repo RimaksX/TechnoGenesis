@@ -1,0 +1,29 @@
+{
+  "type": "kontur:leaching",
+  "results": [
+    {
+      "id": "kontur:chromium_wet_cake",
+      "count": 1
+    }
+  ],
+  "energy": 3500,
+  "time": 110,
+  "input": {
+    "ingredient": {
+      "item": "kontur:chromium_fine_tailings"
+    },
+    "count": 1
+  },
+  "fluid_input": {
+    "fluids": [
+      "kontur:sulfuric_acid"
+    ],
+    "amount": 250
+  },
+  "fluid_results": [
+    {
+      "fluid": "kontur:chromium_solution",
+      "amount": 250
+    }
+  ]
+}

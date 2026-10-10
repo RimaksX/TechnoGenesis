@@ -32,7 +32,36 @@ public enum MachineKind implements StringRepresentable {
             .energy(EnergyKind.GENERATOR, 24000, 0, 256, 48).flame(80, 36).build()),
     // Углеродный конденсатор: буфер ранней игры
     CARBON_CAPACITOR("carbon_capacitor", false, true, null, MachineDefinition.builder()
-            .energy(EnergyKind.STORAGE, 400_000, 256, 256, 256).build());
+            .energy(EnergyKind.STORAGE, 400_000, 256, 256, 256).build()),
+
+    // ---- ступень ×3: химическое извлечение из хвостов R1
+    // Роторная мельница хвостов: 32 FE/t, R1 -> тонкая смесь + минеральная фракция
+    TAILINGS_MILL("tailings_mill", true, false, KonturRecipes.MILLING, MachineDefinition.builder()
+            .slot(44, 35, SlotRole.INPUT).slot(110, 26, SlotRole.OUTPUT).slot(110, 46, SlotRole.OUTPUT)
+            .energy(EnergyKind.CONSUMER, 3200, 128, 0, 32).arrow(70, 35).build()),
+    // Завод серной кислоты: 32 FE/t, серный порошок + вода -> кислота
+    ACID_PLANT("acid_plant", true, false, KonturRecipes.ACID_SYNTHESIS, MachineDefinition.builder()
+            .tank(28, 17, 4000, false).slot(54, 35, SlotRole.INPUT).tank(142, 17, 4000, true)
+            .energy(EnergyKind.CONSUMER, 3200, 128, 0, 32).arrow(80, 35).build()),
+    // Реактор выщелачивания: 32 FE/t, тонкая смесь + кислота -> раствор металла + влажный кек
+    LEACHING_REACTOR("leaching_reactor", true, false, KonturRecipes.LEACHING, MachineDefinition.builder()
+            .tank(28, 17, 4000, false).slot(54, 35, SlotRole.INPUT).slot(116, 35, SlotRole.OUTPUT)
+            .tank(142, 17, 4000, true)
+            .energy(EnergyKind.CONSUMER, 3200, 128, 0, 32).arrow(80, 35).build()),
+    // Фильтр-пресс: 16 FE/t, влажный кек -> кек R2 + возвращённый раствор
+    FILTER_PRESS("filter_press", true, false, KonturRecipes.FILTERING, MachineDefinition.builder()
+            .slot(54, 35, SlotRole.INPUT).slot(116, 35, SlotRole.OUTPUT).tank(142, 17, 4000, true)
+            .energy(EnergyKind.CONSUMER, 1600, 64, 0, 16).arrow(80, 35).build()),
+    // Осадительный реактор: 32 FE/t, раствор + осадитель -> осадок металла + маточный раствор
+    PRECIPITATION_REACTOR("precipitation_reactor", true, false, KonturRecipes.PRECIPITATION, MachineDefinition.builder()
+            .tank(28, 17, 4000, false).slot(54, 35, SlotRole.INPUT).slot(116, 35, SlotRole.OUTPUT)
+            .tank(142, 17, 4000, true)
+            .energy(EnergyKind.CONSUMER, 3200, 128, 0, 32).arrow(80, 35).build()),
+    // Колонна регенерации кислот: 64 FE/t, возвращает 200 мБ кислоты из 300 мБ отработанного раствора
+    ACID_REGENERATION_COLUMN("acid_regeneration_column", true, false, KonturRecipes.ACID_REGENERATION,
+            MachineDefinition.builder()
+            .tank(36, 17, 4000, false).tank(124, 17, 4000, true).slot(80, 58, SlotRole.OUTPUT)
+            .energy(EnergyKind.CONSUMER, 6400, 256, 0, 64).arrow(76, 35).build());
 
     public static final Codec<MachineKind> CODEC = StringRepresentable.fromEnum(MachineKind::values);
 

@@ -31,7 +31,7 @@ public final class KonturClient {
 
     @SubscribeEvent
     public static void registerFluidExtensions(RegisterClientExtensionsEvent event) {
-        for (KonturFluids.FluidSet set : new KonturFluids.FluidSet[]{KonturFluids.POLLUTED_WATER, KonturFluids.TECHNICAL_WATER}) {
+        for (KonturFluids.FluidSet set : KonturFluids.ALL) {
             event.registerFluidType(new IClientFluidTypeExtensions() {
                 @Override
                 public ResourceLocation getStillTexture() {
@@ -59,7 +59,7 @@ public final class KonturClient {
     @SubscribeEvent
     public static void clientSetup(FMLClientSetupEvent event) {
         event.enqueueWork(() -> {
-            for (KonturFluids.FluidSet set : new KonturFluids.FluidSet[]{KonturFluids.POLLUTED_WATER, KonturFluids.TECHNICAL_WATER}) {
+            for (KonturFluids.FluidSet set : KonturFluids.ALL) {
                 ItemBlockRenderTypes.setRenderLayer(set.source.get(), RenderType.translucent());
                 ItemBlockRenderTypes.setRenderLayer(set.flowing.get(), RenderType.translucent());
             }

@@ -1,0 +1,34 @@
+{
+  "variants": {
+    "facing=north,active=false": {
+      "model": "kontur:block/leaching_reactor"
+    },
+    "facing=east,active=false": {
+      "model": "kontur:block/leaching_reactor",
+      "y": 90
+    },
+    "facing=south,active=false": {
+      "model": "kontur:block/leaching_reactor",
+      "y": 180
+    },
+    "facing=west,active=false": {
+      "model": "kontur:block/leaching_reactor",
+      "y": 270
+    },
+    "facing=north,active=true": {
+      "model": "kontur:block/leaching_reactor_on"
+    },
+    "facing=east,active=true": {
+      "model": "kontur:block/leaching_reactor_on",
+      "y": 90
+    },
+    "facing=south,active=true": {
+      "model": "kontur:block/leaching_reactor_on",
+      "y": 180
+    },
+    "facing=west,active=true": {
+      "model": "kontur:block/leaching_reactor_on",
+      "y": 270
+    }
+  }
+}

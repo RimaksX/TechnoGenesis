@@ -1,0 +1,16 @@
+{
+  "replace": false,
+  "values": [
+    "kontur:aluminum_precipitate",
+    "kontur:chromium_precipitate",
+    "kontur:cobalt_precipitate",
+    "kontur:copper_precipitate",
+    "kontur:gold_precipitate",
+    "kontur:iron_precipitate",
+    "kontur:manganese_precipitate",
+    "kontur:molybdenum_precipitate",
+    "kontur:nickel_precipitate",
+    "kontur:titanium_precipitate",
+    "kontur:tungsten_precipitate"
+  ]
+}

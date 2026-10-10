@@ -1,0 +1,16 @@
+{
+  "replace": false,
+  "values": [
+    "kontur:aluminum_cake_r2",
+    "kontur:chromium_cake_r2",
+    "kontur:cobalt_cake_r2",
+    "kontur:copper_cake_r2",
+    "kontur:gold_cake_r2",
+    "kontur:iron_cake_r2",
+    "kontur:manganese_cake_r2",
+    "kontur:molybdenum_cake_r2",
+    "kontur:nickel_cake_r2",
+    "kontur:titanium_cake_r2",
+    "kontur:tungsten_cake_r2"
+  ]
+}

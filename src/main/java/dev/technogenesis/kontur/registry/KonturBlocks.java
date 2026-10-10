@@ -41,6 +41,13 @@ public final class KonturBlocks {
     public static final DeferredBlock<MachineBlock> SETTLING_TANK = machine(MachineKind.SETTLING_TANK);
     public static final DeferredBlock<MachineBlock> SOLID_FUEL_GENERATOR = machine(MachineKind.SOLID_FUEL_GENERATOR);
     public static final DeferredBlock<MachineBlock> CARBON_CAPACITOR = machine(MachineKind.CARBON_CAPACITOR);
+    public static final DeferredBlock<MachineBlock> TAILINGS_MILL = machine(MachineKind.TAILINGS_MILL);
+    public static final DeferredBlock<MachineBlock> ACID_PLANT = machine(MachineKind.ACID_PLANT);
+    public static final DeferredBlock<MachineBlock> LEACHING_REACTOR = machine(MachineKind.LEACHING_REACTOR);
+    public static final DeferredBlock<MachineBlock> FILTER_PRESS = machine(MachineKind.FILTER_PRESS);
+    public static final DeferredBlock<MachineBlock> PRECIPITATION_REACTOR = machine(MachineKind.PRECIPITATION_REACTOR);
+    public static final DeferredBlock<MachineBlock> ACID_REGENERATION_COLUMN =
+            machine(MachineKind.ACID_REGENERATION_COLUMN);
 
     public static final DeferredBlock<CableBlock> COPPER_WIRE = block("copper_wire", () -> new CableBlock(
             BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_ORANGE).strength(1.0f, 3.0f)

@@ -1,0 +1,22 @@
+{
+  "type": "kontur:milling",
+  "results": [
+    {
+      "id": "kontur:nickel_fine_tailings",
+      "count": 1
+    },
+    {
+      "id": "kontur:mineral_fraction",
+      "count": 1,
+      "chance": 0.3
+    }
+  ],
+  "energy": 2000,
+  "time": 63,
+  "input": {
+    "ingredient": {
+      "item": "kontur:nickel_tailings_r1"
+    },
+    "count": 1
+  }
+}

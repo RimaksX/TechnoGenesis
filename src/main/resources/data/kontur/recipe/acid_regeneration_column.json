@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "BGB",
+    "HFH",
+    "IWI"
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:bricks"
+    },
+    "G": {
+      "item": "minecraft:glass_bottle"
+    },
+    "H": {
+      "item": "minecraft:hopper"
+    },
+    "F": {
+      "item": "kontur:machine_frame"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "W": {
+      "item": "kontur:copper_wire"
+    }
+  },
+  "result": {
+    "id": "kontur:acid_regeneration_column",
+    "count": 1
+  }
+}

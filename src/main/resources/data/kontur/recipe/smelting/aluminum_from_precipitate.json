@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "ingredient": {
+    "item": "kontur:aluminum_precipitate"
+  },
+  "result": {
+    "id": "kontur:aluminum_ingot"
+  },
+  "experience": 0.7,
+  "cookingtime": 200
+}

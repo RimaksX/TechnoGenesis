@@ -19,6 +19,12 @@ public final class KonturRecipes {
     public static final Kind WASHING = new Kind("washing");
     public static final Kind SEPARATING = new Kind("separating");
     public static final Kind SETTLING = new Kind("settling");
+    public static final Kind MILLING = new Kind("milling");
+    public static final Kind ACID_SYNTHESIS = new Kind("acid_synthesis");
+    public static final Kind LEACHING = new Kind("leaching");
+    public static final Kind FILTERING = new Kind("filtering");
+    public static final Kind PRECIPITATION = new Kind("precipitation");
+    public static final Kind ACID_REGENERATION = new Kind("acid_regeneration");
 
     private KonturRecipes() {
     }

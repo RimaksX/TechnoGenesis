@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/orientable_with_bottom",
+  "textures": {
+    "top": "kontur:block/acid_plant_top",
+    "bottom": "kontur:block/machine_bottom",
+    "side": "kontur:block/machine_side",
+    "front": "kontur:block/acid_plant_front_on"
+  }
+}

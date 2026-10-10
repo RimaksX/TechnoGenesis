@@ -1,0 +1,24 @@
+{
+  "type": "kontur:acid_regeneration",
+  "results": [
+    {
+      "id": "kontur:salt",
+      "count": 1,
+      "chance": 0.25
+    }
+  ],
+  "energy": 2000,
+  "time": 32,
+  "fluid_input": {
+    "fluids": [
+      "kontur:spent_acid"
+    ],
+    "amount": 300
+  },
+  "fluid_results": [
+    {
+      "fluid": "kontur:sulfuric_acid",
+      "amount": 200
+    }
+  ]
+}

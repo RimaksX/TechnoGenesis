@@ -1,0 +1,29 @@
+{
+  "type": "kontur:precipitation",
+  "results": [
+    {
+      "id": "kontur:copper_precipitate",
+      "count": 1
+    }
+  ],
+  "energy": 3000,
+  "time": 94,
+  "input": {
+    "ingredient": {
+      "item": "kontur:salt"
+    },
+    "count": 1
+  },
+  "fluid_input": {
+    "fluids": [
+      "kontur:copper_solution"
+    ],
+    "amount": 300
+  },
+  "fluid_results": [
+    {
+      "fluid": "kontur:spent_acid",
+      "amount": 300
+    }
+  ]
+}

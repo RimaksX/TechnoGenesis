@@ -1,0 +1,23 @@
+{
+  "type": "kontur:filtering",
+  "results": [
+    {
+      "id": "kontur:tungsten_cake_r2",
+      "count": 1
+    }
+  ],
+  "energy": 1500,
+  "time": 94,
+  "input": {
+    "ingredient": {
+      "item": "kontur:tungsten_wet_cake"
+    },
+    "count": 1
+  },
+  "fluid_results": [
+    {
+      "fluid": "kontur:tungsten_solution",
+      "amount": 50
+    }
+  ]
+}

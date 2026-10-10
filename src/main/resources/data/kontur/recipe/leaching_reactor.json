@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "BGB",
+    "CFC",
+    "IWI"
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:bricks"
+    },
+    "G": {
+      "item": "minecraft:glass"
+    },
+    "C": {
+      "item": "minecraft:copper_ingot"
+    },
+    "F": {
+      "item": "kontur:machine_frame"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "W": {
+      "item": "kontur:copper_wire"
+    }
+  },
+  "result": {
+    "id": "kontur:leaching_reactor",
+    "count": 1
+  }
+}

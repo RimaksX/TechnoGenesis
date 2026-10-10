@@ -64,6 +64,9 @@ public class KonturJeiPlugin implements IModPlugin {
         List<ItemStack> tailings = java.util.Arrays.stream(Metal.values())
                 .map(m -> new ItemStack(KonturItems.FORMS.get(Form.TAILINGS_R1).get(m).get())).toList();
         registration.addIngredientInfo(tailings, VanillaTypes.ITEM_STACK, Component.translatable("jei.kontur.info.tailings"));
+        List<ItemStack> cakes = java.util.Arrays.stream(Metal.values())
+                .map(m -> new ItemStack(KonturItems.FORMS.get(Form.CAKE_R2).get(m).get())).toList();
+        registration.addIngredientInfo(cakes, VanillaTypes.ITEM_STACK, Component.translatable("jei.kontur.info.cake_r2"));
     }
 
     @Override

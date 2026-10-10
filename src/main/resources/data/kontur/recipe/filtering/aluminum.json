@@ -1,0 +1,23 @@
+{
+  "type": "kontur:filtering",
+  "results": [
+    {
+      "id": "kontur:aluminum_cake_r2",
+      "count": 1
+    }
+  ],
+  "energy": 1500,
+  "time": 94,
+  "input": {
+    "ingredient": {
+      "item": "kontur:aluminum_wet_cake"
+    },
+    "count": 1
+  },
+  "fluid_results": [
+    {
+      "fluid": "kontur:aluminum_solution",
+      "amount": 50
+    }
+  ]
+}

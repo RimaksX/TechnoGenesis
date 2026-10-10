@@ -1,0 +1,25 @@
+{
+  "type": "kontur:acid_synthesis",
+  "results": [],
+  "energy": 1600,
+  "time": 50,
+  "input": {
+    "ingredient": {
+      "item": "kontur:sulfur_powder"
+    },
+    "count": 1
+  },
+  "fluid_input": {
+    "fluids": [
+      "minecraft:water",
+      "kontur:technical_water"
+    ],
+    "amount": 500
+  },
+  "fluid_results": [
+    {
+      "fluid": "kontur:sulfuric_acid",
+      "amount": 1000
+    }
+  ]
+}

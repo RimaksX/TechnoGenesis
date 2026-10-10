@@ -1,0 +1,16 @@
+{
+  "replace": false,
+  "values": [
+    "kontur:aluminum_wet_cake",
+    "kontur:chromium_wet_cake",
+    "kontur:cobalt_wet_cake",
+    "kontur:copper_wet_cake",
+    "kontur:gold_wet_cake",
+    "kontur:iron_wet_cake",
+    "kontur:manganese_wet_cake",
+    "kontur:molybdenum_wet_cake",
+    "kontur:nickel_wet_cake",
+    "kontur:titanium_wet_cake",
+    "kontur:tungsten_wet_cake"
+  ]
+}

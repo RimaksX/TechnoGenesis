@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "GCG",
+    "BFB",
+    "IWI"
+  ],
+  "key": {
+    "G": {
+      "item": "minecraft:glass"
+    },
+    "C": {
+      "item": "minecraft:cauldron"
+    },
+    "B": {
+      "item": "minecraft:bricks"
+    },
+    "F": {
+      "item": "kontur:machine_frame"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "W": {
+      "item": "kontur:copper_wire"
+    }
+  },
+  "result": {
+    "id": "kontur:acid_plant",
+    "count": 1
+  }
+}

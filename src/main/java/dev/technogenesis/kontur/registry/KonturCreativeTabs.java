@@ -58,9 +58,18 @@ public final class KonturCreativeTabs {
                         out.accept(KonturBlocks.SETTLING_TANK);
                         out.accept(KonturBlocks.SOLID_FUEL_GENERATOR);
                         out.accept(KonturBlocks.CARBON_CAPACITOR);
+                        out.accept(KonturBlocks.TAILINGS_MILL);
+                        out.accept(KonturBlocks.ACID_PLANT);
+                        out.accept(KonturBlocks.LEACHING_REACTOR);
+                        out.accept(KonturBlocks.FILTER_PRESS);
+                        out.accept(KonturBlocks.PRECIPITATION_REACTOR);
+                        out.accept(KonturBlocks.ACID_REGENERATION_COLUMN);
                         out.accept(KonturBlocks.COPPER_WIRE);
-                        out.accept(KonturFluids.POLLUTED_WATER.bucket);
-                        out.accept(KonturFluids.TECHNICAL_WATER.bucket);
+                        for (KonturFluids.FluidSet fluid : KonturFluids.ALL) {
+                            if (fluid.bucket != null) {
+                                out.accept(fluid.bucket);
+                            }
+                        }
                     })
                     .build());
 

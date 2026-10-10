@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "IGI",
+    "HFH",
+    "IWI"
+  ],
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "G": {
+      "item": "minecraft:grindstone"
+    },
+    "H": {
+      "item": "minecraft:hopper"
+    },
+    "F": {
+      "item": "kontur:machine_frame"
+    },
+    "W": {
+      "item": "kontur:copper_wire"
+    }
+  },
+  "result": {
+    "id": "kontur:tailings_mill",
+    "count": 1
+  }
+}
