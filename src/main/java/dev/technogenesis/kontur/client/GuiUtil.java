@@ -14,19 +14,11 @@ public final class GuiUtil {
     public static final ResourceLocation SLOT = sprite("slot");
     public static final ResourceLocation GAUGE = sprite("gauge");
     public static final ResourceLocation TANK_OVERLAY = sprite("tank_overlay");
-    public static final ResourceLocation BUTTON = sprite("button");
-    public static final ResourceLocation BUTTON_DOWN = sprite("button_down");
     public static final ResourceLocation HOLDER = sprite("holder");
     public static final ResourceLocation ARROW_OFF = sprite("arrow_off");
     public static final ResourceLocation ARROW_ON = sprite("arrow_on");
     public static final ResourceLocation FLAME_OFF = sprite("flame_off");
     public static final ResourceLocation FLAME_ON = sprite("flame_on");
-    public static final ResourceLocation ICON_CONFIG = sprite("icon_config");
-    public static final ResourceLocation ICON_ITEMS = sprite("icon_items");
-    public static final ResourceLocation ICON_FLUIDS = sprite("icon_fluids");
-    public static final ResourceLocation ICON_ENERGY = sprite("icon_energy");
-    public static final ResourceLocation ICON_EJECT = sprite("icon_eject");
-    public static final ResourceLocation ICON_CLEAR = sprite("icon_clear");
 
     public static final int ARROW_W = 28;
     public static final int ARROW_H = 8;
@@ -93,22 +85,8 @@ public final class GuiUtil {
         }
     }
 
-    /** Кнопка заданного цвета (0xRRGGBB); нажатая - с обратной фаской. */
-    public static void button(GuiGraphics g, int x, int y, int w, int h, int rgb, boolean down, boolean hover) {
-        g.setColor(((rgb >> 16) & 255) / 255f, ((rgb >> 8) & 255) / 255f, (rgb & 255) / 255f, 1f);
-        g.blitSprite(down ? BUTTON_DOWN : BUTTON, x, y, w, h);
-        g.setColor(1f, 1f, 1f, 1f);
-        if (hover) {
-            g.fill(x + 2, y + 2, x + w - 2, y + h - 2, 0x40FFFFFF);
-        }
-    }
-
     /** Держатель вкладки слева от окна 26x26 (правые 4 пикселя ложатся на край окна). */
     public static void holder(GuiGraphics g, int x, int y) {
         g.blitSprite(HOLDER, x, y, 26, 26);
-    }
-
-    public static void icon(GuiGraphics g, ResourceLocation icon, int x, int y) {
-        g.blitSprite(icon, x, y, 16, 16);
     }
 }

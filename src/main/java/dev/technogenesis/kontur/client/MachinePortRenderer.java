@@ -7,7 +7,11 @@ import dev.technogenesis.kontur.block.MachineBlock;
 import dev.technogenesis.kontur.blockentity.MachineBlockEntity;
 import dev.technogenesis.kontur.machine.IoMode;
 import dev.technogenesis.kontur.machine.RelativeSide;
+import dev.technogenesis.kontur.item.WrenchItem;
 import dev.technogenesis.kontur.machine.TransferType;
+import dev.technogenesis.kontur.machine.WrenchMode;
+import net.minecraft.client.Minecraft;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -19,7 +23,8 @@ import net.minecraft.resources.ResourceLocation;
 
 /**
  * Подсветка разъёмов машины по настройке сторон: рамка гнезда синяя (вход), оранжевая (выход) или зелёная (и то, и
- * другое); внутри - метки включённых типов (предметы, жидкости, энергия). Закрытое гнездо остаётся без подсветки.
+ * другое); внутри - метки включённых типов (предметы, жидкости, энергия). Закрытое гнездо без ключа не видно, а с
+ * ключом в руке показывается серой рамкой; с ключом в режиме одного типа цвет рамки показывает только этот тип.
  * Гнёзда лежат на гранях блока (стороны 0/16, центр 5..11), поэтому провода подходят к ним вплотную.
  */
 public final class MachinePortRenderer implements BlockEntityRenderer<MachineBlockEntity> {
@@ -29,6 +34,7 @@ public final class MachinePortRenderer implements BlockEntityRenderer<MachineBlo
     private static final int INPUT = 0x3C6EE6;
     private static final int OUTPUT = 0xEB8C28;
     private static final int BOTH = 0x46C864;
+    private static final int CLOSED = 0x6E6E78;   // закрытое гнездо видно только с ключом в руке
     private static final int[] PIPS = {0xD2D2D8, 0x4696E6, 0xEB463C};   // предметы, жидкости, энергия
 
     public MachinePortRenderer(BlockEntityRendererProvider.Context context) {
@@ -41,7 +47,9 @@ public final class MachinePortRenderer implements BlockEntityRenderer<MachineBlo
         VertexConsumer vc = buffers.getBuffer(RenderType.entityCutoutNoCull(TEXTURE));
         PoseStack.Pose pose = stack.last();
         int lit = LightTexture.pack(Math.max(LightTexture.block(light), 9), LightTexture.sky(light));
-        boolean[] has = {be.kind().definition.hasItems(), be.kind().definition.hasFluids(), true};
+        boolean[] has = {be.kind().definition.hasItems(), be.kind().definition.hasFluids(),
+                be.kind().definition.energyCapacity > 0};
+        WrenchMode wrench = heldWrenchMode();
         for (Direction dir : Direction.values()) {
             RelativeSide rs = RelativeSide.of(facing, dir);
             if (rs == RelativeSide.FRONT) {
@@ -55,14 +63,17 @@ public final class MachinePortRenderer implements BlockEntityRenderer<MachineBlo
                     continue;
                 }
                 IoMode m = be.sides.get(t, rs);
+                on[t.ordinal()] = m != IoMode.NONE;
+                if (wrench != null && wrench.type != null && wrench.type != t) {
+                    continue;   // цвет рамки только по выбранному на ключе типу
+                }
                 in |= m.canInput();
                 out |= m.canOutput();
-                on[t.ordinal()] = m != IoMode.NONE;
             }
-            if (!in && !out) {
+            if (!in && !out && wrench == null) {
                 continue;
             }
-            int color = in && out ? BOTH : in ? INPUT : OUTPUT;
+            int color = in && out ? BOTH : in ? INPUT : out ? OUTPUT : CLOSED;
             // рамка гнезда (1 пиксель = 1 кубик) и метки включённых типов в центре
             ring(vc, pose, dir, 5f, 11f, 1f, color, lit, LIFT);
             int count = 0;
@@ -77,6 +88,20 @@ public final class MachinePortRenderer implements BlockEntityRenderer<MachineBlo
                 }
             }
         }
+    }
+
+    /** Режим ключа, если игрок держит его в любой руке; иначе null. */
+    private static WrenchMode heldWrenchMode() {
+        var player = Minecraft.getInstance().player;
+        if (player == null) {
+            return null;
+        }
+        for (ItemStack held : new ItemStack[]{player.getMainHandItem(), player.getOffhandItem()}) {
+            if (held.getItem() instanceof WrenchItem) {
+                return WrenchItem.mode(held);
+            }
+        }
+        return null;
     }
 
     private static void ring(VertexConsumer vc, PoseStack.Pose pose, Direction dir, float lo, float hi, float t,

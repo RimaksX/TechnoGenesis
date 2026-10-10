@@ -102,14 +102,20 @@ public class ProcessingMachineBlockEntity extends MachineBlockEntity {
             }
         }
         // 2. энергия этого тика
-        int cost = recipe.energyForTick(progress);
+        // модуль форсирования: за тик выполняется несколько шагов цикла, энергия за них платится сразу
+        int steps = Math.max(1, Math.min(moduleSpeed, recipe.time() - progress));
+        int base = 0;
+        for (int i = 0; i < steps; i++) {
+            base += recipe.energyForTick(progress + i);
+        }
+        int cost = (int) (((long) base * moduleEnergyPercent + 99) / 100);
         if (energy.getEnergyStored() < cost) {
             setStatus(MachineStatus.NO_ENERGY);
             return;
         }
         // 3. работа
         energy.consume(cost);
-        progress++;
+        progress += steps;
         setStatus(MachineStatus.RUNNING);
         if (progress >= recipe.time()) {
             finish(recipe);
@@ -146,6 +152,13 @@ public class ProcessingMachineBlockEntity extends MachineBlockEntity {
         for (MachineRecipe.FluidOutput out : recipe.fluidResults()) {
             tanks[outputTank].fill(out.stack(), FluidAction.EXECUTE);
         }
+    }
+
+    /** Для интерфейса: индексы 5 и 6 - действие модуля (скорость и процент энергии). */
+    @Override
+    protected void extraSync(int[] data) {
+        data[5] = moduleSpeed;
+        data[6] = moduleEnergyPercent;
     }
 
     @Override

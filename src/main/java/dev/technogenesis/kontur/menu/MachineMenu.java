@@ -1,6 +1,7 @@
 package dev.technogenesis.kontur.menu;
 
 import dev.technogenesis.kontur.blockentity.MachineBlockEntity;
+import dev.technogenesis.kontur.item.ModuleItem;
 import dev.technogenesis.kontur.machine.MachineDefinition;
 import dev.technogenesis.kontur.machine.MachineDefinition.SlotDef;
 import dev.technogenesis.kontur.machine.MachineDefinition.SlotRole;
@@ -117,9 +118,17 @@ public class MachineMenu extends AbstractContainerMenu {
         }
 
         @Override
+        public int getMaxStackSize() {
+            return role == SlotRole.MODULE ? 1 : super.getMaxStackSize();
+        }
+
+        @Override
         public boolean mayPlace(ItemStack stack) {
             if (role == SlotRole.OUTPUT) {
                 return false;
+            }
+            if (role == SlotRole.MODULE) {
+                return stack.getItem() instanceof ModuleItem;
             }
             return be == null || be.isItemValidForSlot(getSlotIndex(), stack);
         }
@@ -131,15 +140,6 @@ public class MachineMenu extends AbstractContainerMenu {
             be.fillSyncData(sync);
         }
         super.broadcastChanges();
-    }
-
-    @Override
-    public boolean clickMenuButton(Player player, int id) {
-        if (be != null) {
-            be.handleButton(id);
-            return true;
-        }
-        return false;
     }
 
     @Override
@@ -210,6 +210,15 @@ public class MachineMenu extends AbstractContainerMenu {
     public MachineStatus status() {
         int o = sync[4];
         return o >= 0 && o < MachineStatus.values().length ? MachineStatus.values()[o] : MachineStatus.IDLE;
+    }
+
+    /** Множитель скорости от модуля (1, если модуля нет). */
+    public int moduleSpeed() {
+        return def.hasModule() ? Math.max(1, sync[5]) : 1;
+    }
+
+    public int moduleEnergyPercent() {
+        return def.hasModule() && sync[6] > 0 ? sync[6] : 100;
     }
 
     public int burnLeft() {

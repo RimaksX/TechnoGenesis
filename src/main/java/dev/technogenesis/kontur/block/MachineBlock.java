@@ -90,6 +90,10 @@ public class MachineBlock extends BaseEntityBlock {
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
                                               Player player, InteractionHand hand, BlockHitResult hit) {
+        // ключ настраивает стороны (работает WrenchItem.useOn), меню при этом не открывается
+        if (stack.getItem() instanceof dev.technogenesis.kontur.item.WrenchItem) {
+            return ItemInteractionResult.SKIP_DEFAULT_BLOCK_INTERACTION;
+        }
         // ведро/бак с жидкостью: наполнить или слить машину прямо кликом
         if (kind.definition.hasFluids() && !stack.isEmpty() && stack.getCapability(Capabilities.FluidHandler.ITEM) != null) {
             if (!level.isClientSide) {

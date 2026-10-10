@@ -2,6 +2,7 @@ package dev.technogenesis.kontur.blockentity;
 
 import dev.technogenesis.kontur.block.CableBlock;
 import dev.technogenesis.kontur.block.MachineBlock;
+import dev.technogenesis.kontur.item.ModuleItem;
 import dev.technogenesis.kontur.machine.IoMode;
 import dev.technogenesis.kontur.machine.KonturEnergyStorage;
 import dev.technogenesis.kontur.machine.MachineDefinition;
@@ -13,6 +14,7 @@ import dev.technogenesis.kontur.machine.MachineTank;
 import dev.technogenesis.kontur.machine.RelativeSide;
 import dev.technogenesis.kontur.machine.SideConfig;
 import dev.technogenesis.kontur.machine.TransferType;
+import dev.technogenesis.kontur.machine.WrenchMode;
 import dev.technogenesis.kontur.menu.MachineMenu;
 import dev.technogenesis.kontur.registry.KonturBlockEntities;
 import net.minecraft.core.BlockPos;
@@ -59,6 +61,9 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
     protected MachineStatus status = MachineStatus.IDLE;
     protected int progress;
     protected int totalTime;
+    /** Действие модуля форсирования: во сколько раз быстрее и сколько процентов энергии. */
+    protected int moduleSpeed = 1;
+    protected int moduleEnergyPercent = 100;
 
     private final IItemHandler[] itemViews = new IItemHandler[7];
     private final IFluidHandler[] fluidViews = new IFluidHandler[7];
@@ -77,6 +82,7 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
         }
         this.energy = new KonturEnergyStorage(def.energyCapacity, def.maxReceive, def.maxExtract);
         this.sides = kind.defaultSides();
+        refreshModule();
         for (int i = 0; i < 7; i++) {
             Direction d = i < 6 ? Direction.values()[i] : null;
             itemViews[i] = new ItemView(d);
@@ -87,6 +93,22 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
 
     public MachineKind kind() {
         return kind;
+    }
+
+    /** Читает модуль из слота: меняет скорость и увеличивает буфер энергии и предел приёма во столько же раз. */
+    protected final void refreshModule() {
+        int speed = 1;
+        int percent = 100;
+        int slot = def.moduleSlot();
+        if (slot >= 0 && inventory.getStackInSlot(slot).getItem() instanceof ModuleItem m) {
+            speed = m.tier().speed;
+            percent = m.tier().energyPercent;
+        }
+        moduleSpeed = speed;
+        moduleEnergyPercent = percent;
+        if (def.energyKind == EnergyKind.CONSUMER) {
+            energy.setLimits(def.energyCapacity * speed, def.maxReceive * speed);
+        }
     }
 
     public MachineStatus status() {
@@ -106,6 +128,9 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
     /** Можно ли положить предмет в слот извне (трубы, воронки, игрок). */
     public boolean isItemValidForSlot(int slot, ItemStack stack) {
         MachineDefinition.SlotDef s = def.slots.get(slot);
+        if (s.role() == SlotRole.MODULE) {
+            return stack.getItem() instanceof ModuleItem;
+        }
         return s.role() != SlotRole.OUTPUT && acceptsItem(slot, stack);
     }
 
@@ -262,29 +287,65 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
         }
     }
 
-    /** Кнопки интерфейса: 100+ - режим стороны (тип, сторона, направление), 200/201 - авто-вывод. */
-    public void handleButton(int id) {
-        if (id == 200) {
-            sides.ejectItems = !sides.ejectItems;
-        } else if (id == 201) {
-            sides.ejectFluids = !sides.ejectFluids;
-        } else if (id >= 300 && id < 300 + TransferType.values().length) {
-            TransferType type = TransferType.values()[id - 300];
-            for (RelativeSide side : RelativeSide.values()) {
-                sides.set(type, side, IoMode.NONE);
+    /** Типы передачи, которые у машины вообще есть. */
+    private boolean supports(TransferType type) {
+        return switch (type) {
+            case ITEMS -> def.hasItems();
+            case FLUIDS -> def.hasFluids();
+            case ENERGY -> def.energyCapacity > 0;
+        };
+    }
+
+    /** Сводный режим грани по всем имеющимся типам (так же рисуется рамка гнезда). */
+    public IoMode combinedMode(RelativeSide side) {
+        boolean in = false;
+        boolean out = false;
+        for (TransferType t : TransferType.values()) {
+            if (supports(t)) {
+                IoMode m = sides.get(t, side);
+                in |= m.canInput();
+                out |= m.canOutput();
             }
-        } else if (id >= 100 && id < 200) {
-            int v = id - 100;
-            boolean reverse = (v & 1) == 1;
-            v >>= 1;
-            int side = v % 6;
-            int type = v / 6;
-            if (type < TransferType.values().length) {
-                sides.cycle(TransferType.values()[type], RelativeSide.values()[side], reverse);
+        }
+        return in && out ? IoMode.ALL : in ? IoMode.INPUT : out ? IoMode.OUTPUT : IoMode.NONE;
+    }
+
+    /**
+     * Ключ: переключает режим грани. Режим ALL берёт сводный режим грани и ставит следующий сразу для всех типов.
+     * Возвращает новый режим или null, если у машины нет такого типа передачи.
+     */
+    @Nullable
+    public IoMode cycleSide(WrenchMode mode, RelativeSide side, boolean reverse) {
+        IoMode result;
+        if (mode.type == null) {
+            IoMode now = combinedMode(side);
+            result = reverse ? now.prev() : now.next();
+            for (TransferType t : TransferType.values()) {
+                if (supports(t)) {
+                    sides.set(t, side, result);
+                }
             }
         } else {
-            return;
+            if (!supports(mode.type)) {
+                return null;
+            }
+            sides.cycle(mode.type, side, reverse);
+            result = sides.get(mode.type, side);
         }
+        sidesChanged();
+        return result;
+    }
+
+    /** Ключ: общий переключатель авто-вывода предметов и жидкостей. */
+    public boolean toggleEject() {
+        boolean on = !(sides.ejectItems || sides.ejectFluids);
+        sides.ejectItems = on;
+        sides.ejectFluids = on;
+        sidesChanged();
+        return on;
+    }
+
+    private void sidesChanged() {
         setChanged();
         if (level != null) {
             level.invalidateCapabilities(worldPosition);
@@ -342,6 +403,7 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
         inventory.deserializeNBT(registries, tag.getCompound("inv"));
+        refreshModule();
         for (int i = 0; i < tanks.length; i++) {
             tanks[i].readFromNBT(registries, tag.getCompound("tank" + i));
         }
@@ -365,6 +427,14 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
         @Override
         protected void onContentsChanged(int slot) {
             setChanged();
+            if (def.slots.get(slot).role() == SlotRole.MODULE) {
+                refreshModule();
+            }
+        }
+
+        @Override
+        public int getSlotLimit(int slot) {
+            return def.slots.get(slot).role() == SlotRole.MODULE ? 1 : super.getSlotLimit(slot);
         }
 
         /** Роли слотов проверяют боковые обёртки; сама машина вставляет выходы напрямую. */
@@ -419,7 +489,8 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
 
         @Override
         public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-            if (!mode(TransferType.ITEMS, side).canInput() || !isItemValidForSlot(slot, stack)) {
+            if (!mode(TransferType.ITEMS, side).canInput() || def.slots.get(slot).role() == SlotRole.MODULE
+                    || !isItemValidForSlot(slot, stack)) {
                 return stack;
             }
             return inventory.insertItem(slot, stack, simulate);
@@ -440,7 +511,8 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
 
         @Override
         public boolean isItemValid(int slot, ItemStack stack) {
-            return mode(TransferType.ITEMS, side).canInput() && isItemValidForSlot(slot, stack);
+            return mode(TransferType.ITEMS, side).canInput() && def.slots.get(slot).role() != SlotRole.MODULE
+                    && isItemValidForSlot(slot, stack);
         }
     }
 

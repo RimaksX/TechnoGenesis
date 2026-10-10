@@ -2,6 +2,9 @@ package dev.technogenesis.kontur.registry;
 
 import dev.technogenesis.kontur.Kontur;
 import dev.technogenesis.kontur.item.MetalFormItem;
+import dev.technogenesis.kontur.item.ModuleItem;
+import dev.technogenesis.kontur.item.WrenchItem;
+import dev.technogenesis.kontur.machine.ModuleTier;
 import dev.technogenesis.kontur.material.Form;
 import dev.technogenesis.kontur.material.Metal;
 import dev.technogenesis.kontur.material.Mineral;
@@ -20,6 +23,8 @@ public final class KonturItems {
     public static final Map<Metal, DeferredItem<Item>> INGOT = new EnumMap<>(Metal.class);
     public static final Map<Form, Map<Metal, DeferredItem<Item>>> FORMS = new EnumMap<>(Form.class);
 
+    public static final Map<ModuleTier, DeferredItem<Item>> MODULES = new EnumMap<>(ModuleTier.class);
+    public static final DeferredItem<Item> WRENCH = ITEMS.register("wrench", () -> new WrenchItem(new Item.Properties()));
     public static final DeferredItem<Item> GANGUE = simple("gangue");
     public static final DeferredItem<Item> ASH = simple("ash");
     public static final DeferredItem<Item> WET_SLUDGE = simple("wet_sludge");
@@ -38,6 +43,9 @@ public final class KonturItems {
             if (!metal.vanilla) {
                 INGOT.put(metal, simple(metal.id() + "_ingot"));
             }
+        }
+        for (ModuleTier tier : ModuleTier.values()) {
+            MODULES.put(tier, ITEMS.register(tier.itemId(), () -> new ModuleItem(new Item.Properties(), tier)));
         }
         for (Form form : Form.values()) {
             Map<Metal, DeferredItem<Item>> byMetal = new EnumMap<>(Metal.class);

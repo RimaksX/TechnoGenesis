@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "DBD",
+    "BMB",
+    "DBD"
+  ],
+  "key": {
+    "D": {
+      "item": "minecraft:diamond"
+    },
+    "B": {
+      "item": "minecraft:redstone_block"
+    },
+    "M": {
+      "item": "kontur:module_industrial"
+    }
+  },
+  "result": {
+    "id": "kontur:module_peak",
+    "count": 1
+  }
+}

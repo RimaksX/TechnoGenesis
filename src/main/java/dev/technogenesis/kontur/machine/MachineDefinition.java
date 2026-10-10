@@ -5,7 +5,7 @@ import java.util.List;
 
 /** Описание машины: слоты, баки, энергия и расположение элементов в интерфейсе. Общее для сервера и клиента. */
 public final class MachineDefinition {
-    public enum SlotRole { INPUT, OUTPUT, FUEL }
+    public enum SlotRole { INPUT, OUTPUT, FUEL, MODULE }
 
     public enum EnergyKind { CONSUMER, GENERATOR, STORAGE }
 
@@ -48,6 +48,20 @@ public final class MachineDefinition {
 
     public boolean hasFluids() {
         return !tanks.isEmpty();
+    }
+
+    /** Есть ли слот модуля форсирования. */
+    public boolean hasModule() {
+        return moduleSlot() >= 0;
+    }
+
+    public int moduleSlot() {
+        for (int i = 0; i < slots.size(); i++) {
+            if (slots.get(i).role() == SlotRole.MODULE) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     public boolean hasArrow() {
@@ -110,6 +124,12 @@ public final class MachineDefinition {
 
         public Builder slot(int x, int y, SlotRole role) {
             slots.add(new SlotDef(x, y, role));
+            return this;
+        }
+
+        /** Слот модуля: добавляется последним, вне рабочей области (на вкладке слева от окна). */
+        public Builder module(int x, int y) {
+            slots.add(new SlotDef(x, y, SlotRole.MODULE));
             return this;
         }
 
