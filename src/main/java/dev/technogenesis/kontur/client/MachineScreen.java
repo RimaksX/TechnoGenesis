@@ -120,10 +120,11 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
     protected void renderBg(GuiGraphics g, float partialTick, int mouseX, int mouseY) {
         int x = leftPos;
         int y = topPos;
-        GuiUtil.background(g, x, y, imageWidth, imageHeight);
+        // вкладка рисуется под окном: правые 4 пикселя прячутся под его рамкой и стык выходит ровным
         if (def.tabSlot() >= 0) {
             GuiUtil.holder(g, x + HOLDER_X, y + HOLDER_Y, holderHeight());
         }
+        GuiUtil.background(g, x, y, imageWidth, imageHeight);
         for (Slot slot : menu.slots) {
             MachineDefinition.SlotRole role = slot.index < def.slots.size() ? def.slots.get(slot.index).role() : null;
             GuiUtil.slot(g, x + slot.x, y + slot.y, role);
@@ -322,7 +323,7 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
 
     /** Вкладка: слот модуля, слот радиатора и полоса нагрева (у панелей - только слот покрытия). */
     private int holderHeight() {
-        return def.hasCooler() ? 58 : 36;
+        return def.hasCooler() ? 58 : def.hasModule() ? 36 : 27;
     }
 
     private int heatBarOffset() {
