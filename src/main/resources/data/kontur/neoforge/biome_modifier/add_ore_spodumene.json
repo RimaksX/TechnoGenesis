@@ -1,0 +1,6 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "#kontur:has_spodumene",
+  "features": "kontur:ore_spodumene",
+  "step": "underground_ores"
+}

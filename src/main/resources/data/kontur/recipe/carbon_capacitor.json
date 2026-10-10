@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "GRG",
+    "GFG",
+    "CWC"
+  ],
+  "key": {
+    "G": {
+      "item": "kontur:graphite"
+    },
+    "R": {
+      "item": "minecraft:redstone_block"
+    },
+    "F": {
+      "item": "kontur:machine_frame"
+    },
+    "C": {
+      "item": "minecraft:copper_ingot"
+    },
+    "W": {
+      "item": "kontur:copper_wire"
+    }
+  },
+  "result": {
+    "id": "kontur:carbon_capacitor",
+    "count": 1
+  }
+}

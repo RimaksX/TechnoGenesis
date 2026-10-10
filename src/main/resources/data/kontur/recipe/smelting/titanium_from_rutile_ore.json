@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "ingredient": {
+    "item": "kontur:rutile_ore"
+  },
+  "result": {
+    "id": "kontur:titanium_ingot"
+  },
+  "experience": 0.7,
+  "cookingtime": 200
+}

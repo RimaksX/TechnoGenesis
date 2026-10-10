@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    "kontur:raw_bauxite",
+    "kontur:raw_chromite",
+    "kontur:raw_cobaltite",
+    "kontur:raw_garnierite",
+    "kontur:raw_graphite",
+    "kontur:raw_halite",
+    "kontur:raw_molybdenite",
+    "kontur:raw_pyrolusite",
+    "kontur:raw_rutile",
+    "kontur:raw_spodumene",
+    "kontur:raw_sulfur",
+    "kontur:raw_wolframite"
+  ]
+}

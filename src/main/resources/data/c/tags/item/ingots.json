@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "kontur:aluminum_ingot",
+    "kontur:chromium_ingot",
+    "kontur:cobalt_ingot",
+    "kontur:manganese_ingot",
+    "kontur:molybdenum_ingot",
+    "kontur:nickel_ingot",
+    "kontur:titanium_ingot",
+    "kontur:tungsten_ingot"
+  ]
+}

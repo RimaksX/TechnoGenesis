@@ -1,0 +1,16 @@
+{
+  "replace": false,
+  "values": [
+    "kontur:aluminum_crushed_ore",
+    "kontur:chromium_crushed_ore",
+    "kontur:cobalt_crushed_ore",
+    "kontur:copper_crushed_ore",
+    "kontur:gold_crushed_ore",
+    "kontur:iron_crushed_ore",
+    "kontur:manganese_crushed_ore",
+    "kontur:molybdenum_crushed_ore",
+    "kontur:nickel_crushed_ore",
+    "kontur:titanium_crushed_ore",
+    "kontur:tungsten_crushed_ore"
+  ]
+}

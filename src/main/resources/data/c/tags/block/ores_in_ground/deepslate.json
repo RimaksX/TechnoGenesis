@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    "kontur:deepslate_bauxite_ore",
+    "kontur:deepslate_chromite_ore",
+    "kontur:deepslate_cobaltite_ore",
+    "kontur:deepslate_garnierite_ore",
+    "kontur:deepslate_graphite_ore",
+    "kontur:deepslate_halite_ore",
+    "kontur:deepslate_molybdenite_ore",
+    "kontur:deepslate_native_sulfur_ore",
+    "kontur:deepslate_pyrolusite_ore",
+    "kontur:deepslate_rutile_ore",
+    "kontur:deepslate_spodumene_ore",
+    "kontur:deepslate_wolframite_ore"
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "type": "kontur:washing",
+  "results": [
+    {
+      "id": "kontur:copper_washed_ore",
+      "count": 1
+    },
+    {
+      "id": "kontur:wet_sludge",
+      "count": 1,
+      "chance": 0.25
+    }
+  ],
+  "energy": 1000,
+  "time": 84,
+  "input": {
+    "ingredient": {
+      "item": "kontur:copper_crushed_ore"
+    },
+    "count": 1
+  },
+  "fluid_input": {
+    "fluids": [
+      "minecraft:water",
+      "kontur:technical_water"
+    ],
+    "amount": 250
+  },
+  "fluid_results": [
+    {
+      "fluid": "kontur:polluted_water",
+      "amount": 200
+    }
+  ]
+}

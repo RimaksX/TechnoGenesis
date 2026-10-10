@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "kontur:block/nether_native_sulfur_ore"
+  }
+}

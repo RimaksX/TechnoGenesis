@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "GG",
+    "GG"
+  ],
+  "key": {
+    "G": {
+      "item": "kontur:mineral_fraction"
+    }
+  },
+  "result": {
+    "id": "kontur:aggregate_block",
+    "count": 2
+  }
+}

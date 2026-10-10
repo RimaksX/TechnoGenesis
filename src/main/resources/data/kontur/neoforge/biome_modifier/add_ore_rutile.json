@@ -1,0 +1,6 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "#kontur:has_rutile",
+  "features": "kontur:ore_rutile",
+  "step": "underground_ores"
+}

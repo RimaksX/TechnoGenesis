@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    "kontur:bauxite_ore",
+    "kontur:chromite_ore",
+    "kontur:cobaltite_ore",
+    "kontur:garnierite_ore",
+    "kontur:graphite_ore",
+    "kontur:halite_ore",
+    "kontur:molybdenite_ore",
+    "kontur:native_sulfur_ore",
+    "kontur:pyrolusite_ore",
+    "kontur:rutile_ore",
+    "kontur:spodumene_ore",
+    "kontur:wolframite_ore"
+  ]
+}

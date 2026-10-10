@@ -1,0 +1,6 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "#kontur:has_molybdenite",
+  "features": "kontur:ore_molybdenite",
+  "step": "underground_ores"
+}

@@ -1,0 +1,6 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "#kontur:has_chromite",
+  "features": "kontur:ore_chromite",
+  "step": "underground_ores"
+}

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "ingredient": {
+    "item": "kontur:pyrolusite_ore"
+  },
+  "result": {
+    "id": "kontur:manganese_ingot"
+  },
+  "experience": 0.7,
+  "cookingtime": 200
+}

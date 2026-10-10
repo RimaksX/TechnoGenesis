@@ -1,0 +1,16 @@
+{
+  "replace": false,
+  "values": [
+    "kontur:aluminum_tailings_r1",
+    "kontur:chromium_tailings_r1",
+    "kontur:cobalt_tailings_r1",
+    "kontur:copper_tailings_r1",
+    "kontur:gold_tailings_r1",
+    "kontur:iron_tailings_r1",
+    "kontur:manganese_tailings_r1",
+    "kontur:molybdenum_tailings_r1",
+    "kontur:nickel_tailings_r1",
+    "kontur:titanium_tailings_r1",
+    "kontur:tungsten_tailings_r1"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "type": "kontur:crushing",
+  "results": [
+    {
+      "id": "kontur:salt",
+      "count": 2
+    },
+    {
+      "id": "kontur:gangue",
+      "count": 1,
+      "chance": 0.5
+    }
+  ],
+  "energy": 1200,
+  "time": 75,
+  "input": {
+    "ingredient": {
+      "item": "kontur:raw_halite"
+    },
+    "count": 1
+  }
+}

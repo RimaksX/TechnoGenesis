@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "kontur:deepslate_graphite_ore",
+    "kontur:graphite_ore"
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/orientable_with_bottom",
+  "textures": {
+    "top": "kontur:block/carbon_capacitor_top",
+    "bottom": "kontur:block/carbon_side",
+    "side": "kontur:block/carbon_side",
+    "front": "kontur:block/carbon_capacitor_front_3"
+  }
+}

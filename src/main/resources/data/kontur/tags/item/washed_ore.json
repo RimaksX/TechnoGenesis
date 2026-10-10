@@ -1,0 +1,16 @@
+{
+  "replace": false,
+  "values": [
+    "kontur:aluminum_washed_ore",
+    "kontur:chromium_washed_ore",
+    "kontur:cobalt_washed_ore",
+    "kontur:copper_washed_ore",
+    "kontur:gold_washed_ore",
+    "kontur:iron_washed_ore",
+    "kontur:manganese_washed_ore",
+    "kontur:molybdenum_washed_ore",
+    "kontur:nickel_washed_ore",
+    "kontur:titanium_washed_ore",
+    "kontur:tungsten_washed_ore"
+  ]
+}

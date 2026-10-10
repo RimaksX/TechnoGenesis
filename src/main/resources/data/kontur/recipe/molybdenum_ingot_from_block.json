@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "kontur:molybdenum_block"
+    }
+  ],
+  "result": {
+    "id": "kontur:molybdenum_ingot",
+    "count": 9
+  }
+}

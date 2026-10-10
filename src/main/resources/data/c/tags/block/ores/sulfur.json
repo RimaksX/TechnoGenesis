@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "kontur:deepslate_native_sulfur_ore",
+    "kontur:native_sulfur_ore",
+    "kontur:nether_native_sulfur_ore"
+  ]
+}

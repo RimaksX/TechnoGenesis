@@ -1,0 +1,23 @@
+{
+  "replace": false,
+  "values": [
+    "kontur:aluminum_block",
+    "kontur:chromite_ore",
+    "kontur:chromium_block",
+    "kontur:cobalt_block",
+    "kontur:cobaltite_ore",
+    "kontur:deepslate_chromite_ore",
+    "kontur:deepslate_cobaltite_ore",
+    "kontur:deepslate_molybdenite_ore",
+    "kontur:deepslate_rutile_ore",
+    "kontur:deepslate_wolframite_ore",
+    "kontur:manganese_block",
+    "kontur:molybdenite_ore",
+    "kontur:molybdenum_block",
+    "kontur:nickel_block",
+    "kontur:rutile_ore",
+    "kontur:titanium_block",
+    "kontur:tungsten_block",
+    "kontur:wolframite_ore"
+  ]
+}

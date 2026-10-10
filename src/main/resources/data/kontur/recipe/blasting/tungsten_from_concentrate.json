@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "ingredient": {
+    "item": "kontur:tungsten_concentrate"
+  },
+  "result": {
+    "id": "kontur:tungsten_ingot"
+  },
+  "experience": 0.7,
+  "cookingtime": 100
+}

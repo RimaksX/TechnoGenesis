@@ -1,0 +1,16 @@
+{
+  "replace": false,
+  "values": [
+    "kontur:aluminum_concentrate",
+    "kontur:chromium_concentrate",
+    "kontur:cobalt_concentrate",
+    "kontur:copper_concentrate",
+    "kontur:gold_concentrate",
+    "kontur:iron_concentrate",
+    "kontur:manganese_concentrate",
+    "kontur:molybdenum_concentrate",
+    "kontur:nickel_concentrate",
+    "kontur:titanium_concentrate",
+    "kontur:tungsten_concentrate"
+  ]
+}

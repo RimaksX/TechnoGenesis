@@ -1,0 +1,26 @@
+{
+  "type": "kontur:separating",
+  "results": [
+    {
+      "id": "kontur:iron_concentrate",
+      "count": 2
+    },
+    {
+      "id": "kontur:iron_tailings_r1",
+      "count": 1
+    },
+    {
+      "id": "kontur:mineral_fraction",
+      "count": 1,
+      "chance": 0.5
+    }
+  ],
+  "energy": 1800,
+  "time": 113,
+  "input": {
+    "ingredient": {
+      "item": "kontur:iron_washed_ore"
+    },
+    "count": 1
+  }
+}

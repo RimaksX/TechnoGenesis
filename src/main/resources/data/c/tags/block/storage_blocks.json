@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "kontur:aluminum_block",
+    "kontur:chromium_block",
+    "kontur:cobalt_block",
+    "kontur:manganese_block",
+    "kontur:molybdenum_block",
+    "kontur:nickel_block",
+    "kontur:titanium_block",
+    "kontur:tungsten_block"
+  ]
+}

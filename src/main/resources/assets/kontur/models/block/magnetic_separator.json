@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/orientable_with_bottom",
+  "textures": {
+    "top": "kontur:block/magnetic_separator_top",
+    "bottom": "kontur:block/machine_bottom",
+    "side": "kontur:block/machine_side",
+    "front": "kontur:block/magnetic_separator_front"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "replace": false,
+  "values": [
+    "kontur:aggregate_block",
+    "kontur:bauxite_ore",
+    "kontur:deepslate_bauxite_ore",
+    "kontur:deepslate_garnierite_ore",
+    "kontur:deepslate_graphite_ore",
+    "kontur:deepslate_halite_ore",
+    "kontur:deepslate_native_sulfur_ore",
+    "kontur:deepslate_pyrolusite_ore",
+    "kontur:garnierite_ore",
+    "kontur:graphite_ore",
+    "kontur:halite_ore",
+    "kontur:native_sulfur_ore",
+    "kontur:nether_native_sulfur_ore",
+    "kontur:pyrolusite_ore"
+  ]
+}

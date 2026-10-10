@@ -1,0 +1,6 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "#kontur:has_halite",
+  "features": "kontur:ore_halite",
+  "step": "underground_ores"
+}

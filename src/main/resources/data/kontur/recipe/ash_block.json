@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "AA",
+    "AA"
+  ],
+  "key": {
+    "A": {
+      "item": "kontur:ash"
+    }
+  },
+  "result": {
+    "id": "kontur:ash_block",
+    "count": 1
+  }
+}
