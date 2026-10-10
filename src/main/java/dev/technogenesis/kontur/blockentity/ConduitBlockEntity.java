@@ -30,7 +30,7 @@ public class ConduitBlockEntity extends BlockEntity {
 
     public ConduitBlockEntity(BlockPos pos, BlockState state) {
         super(KonturBlockEntities.PIPE.get(), pos, state);
-        java.util.Arrays.fill(modes, ConduitMode.PUSH);
+        java.util.Arrays.fill(modes, ConduitMode.AUTO);
     }
 
     public PipeTier tier() {
@@ -108,7 +108,7 @@ public class ConduitBlockEntity extends BlockEntity {
         super.loadAdditional(tag, registries);
         int[] packed = tag.getIntArray("modes");
         for (int i = 0; i < 6; i++) {
-            modes[i] = i < packed.length ? ConduitMode.byOrdinal(packed[i]) : ConduitMode.PUSH;
+            modes[i] = i < packed.length ? ConduitMode.byOrdinal(packed[i]) : ConduitMode.AUTO;
         }
         displayFluid = Fluids.EMPTY;
         if (tag.contains("fluid")) {

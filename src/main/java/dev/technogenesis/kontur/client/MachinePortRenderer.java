@@ -23,20 +23,19 @@ import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 
 /**
- * Подсветка разъёмов машины по настройке сторон: рамка гнезда синяя (вход), оранжевая (выход) или зелёная (и то, и
- * другое); внутри - метки включённых типов (предметы, жидкости, энергия). Закрытое гнездо без ключа не видно, а с
- * ключом в руке показывается серой рамкой; с ключом в режиме одного типа цвет рамки показывает только этот тип.
+ * Подсветка разъёмов машины по настройке сторон: рамка гнезда приглушённо-синяя (вход), тёплая (выход) или зеленоватая
+ * (и то, и другое). Закрытое гнездо без ключа не видно, а с ключом в руке показывается серой рамкой; с ключом в режиме одного типа цвет рамки показывает только этот тип.
  * Гнёзда лежат на гранях блока (стороны 0/16, центр 5..11), поэтому провода подходят к ним вплотную.
  */
 public final class MachinePortRenderer implements BlockEntityRenderer<MachineBlockEntity> {
     private static final ResourceLocation TEXTURE =
             ResourceLocation.fromNamespaceAndPath(Kontur.MODID, "textures/entity/port.png");
     private static final float LIFT = 0.002f;
-    private static final int INPUT = 0x3C6EE6;
-    private static final int OUTPUT = 0xEB8C28;
-    private static final int BOTH = 0x46C864;
-    private static final int CLOSED = 0x6E6E78;   // закрытое гнездо видно только с ключом в руке
-    private static final int[] PIPS = {0xD2D2D8, 0x4696E6, 0xEB463C};   // предметы, жидкости, энергия
+    // приглушённые тона на основе цвета керамики: вход - сероватый синий, выход - светлый тёплый, оба - зеленоватый
+    public static final int INPUT = 0x949EB3;
+    public static final int OUTPUT = 0xCAA37D;
+    public static final int BOTH = 0x94B593;
+    public static final int CLOSED = 0x96928C;   // закрытое гнездо видно только с ключом в руке
 
     public MachinePortRenderer(BlockEntityRendererProvider.Context context) {
     }
@@ -46,6 +45,9 @@ public final class MachinePortRenderer implements BlockEntityRenderer<MachineBlo
                        int light, int overlay) {
         if (be.kind() == dev.technogenesis.kontur.machine.MachineKind.SOLAR_FARM) {
             return;
+        }
+        if (be instanceof dev.technogenesis.kontur.blockentity.WindRotorBlockEntity rotor) {
+            WindBladesRenderer.render(rotor, partialTick, stack, buffers, light, overlay);
         }
         Direction facing = be.getBlockState().getValue(MachineBlock.FACING);
         VertexConsumer vc = buffers.getBuffer(RenderType.entityCutoutNoCull(TEXTURE));
@@ -65,13 +67,11 @@ public final class MachinePortRenderer implements BlockEntityRenderer<MachineBlo
             }
             boolean in = false;
             boolean out = false;
-            boolean[] on = new boolean[3];
             for (TransferType t : TransferType.values()) {
                 if (!has[t.ordinal()]) {
                     continue;
                 }
                 IoMode m = be.sides.get(t, rs);
-                on[t.ordinal()] = m != IoMode.NONE;
                 if (wrench != null && wrench.type != null && wrench.type != t) {
                     continue;   // цвет рамки только по выбранному на ключе типу
                 }
@@ -82,19 +82,7 @@ public final class MachinePortRenderer implements BlockEntityRenderer<MachineBlo
                 continue;
             }
             int color = in && out ? BOTH : in ? INPUT : out ? OUTPUT : CLOSED;
-            // рамка гнезда (1 пиксель = 1 кубик) и метки включённых типов в центре
-            ring(vc, pose, dir, 5f, 11f, 1f, color, lit, LIFT);
-            int count = 0;
-            for (boolean b : on) {
-                count += b ? 1 : 0;
-            }
-            float x = count == 3 ? 6f : 7f;
-            for (int i = 0; i < 3; i++) {
-                if (on[i]) {
-                    rect(vc, pose, dir, x, 7f, x + 1f, 8f, PIPS[i], lit, LIFT * 2);
-                    x += 1f;
-                }
-            }
+            bevelRing(vc, pose, dir, 5f, 11f, color, lit, LIFT);
         }
     }
 
@@ -117,6 +105,24 @@ public final class MachinePortRenderer implements BlockEntityRenderer<MachineBlo
             }
         }
         return null;
+    }
+
+    /** Рамка в 1 пиксель с фаской: верх и лево светлее, низ и право темнее. */
+    static void bevelRing(VertexConsumer vc, PoseStack.Pose pose, Direction dir, float lo, float hi, int color,
+                          int light, float lift) {
+        int lighter = shade(color, 1.10f);
+        int darker = shade(color, 0.84f);
+        rect(vc, pose, dir, lo, lo, hi, lo + 1f, darker, light, lift);
+        rect(vc, pose, dir, lo, hi - 1f, hi, hi, lighter, light, lift);
+        rect(vc, pose, dir, lo, lo + 1f, lo + 1f, hi - 1f, lighter, light, lift);
+        rect(vc, pose, dir, hi - 1f, lo + 1f, hi, hi - 1f, darker, light, lift);
+    }
+
+    static int shade(int color, float k) {
+        int r = Math.min(255, Math.round(((color >> 16) & 255) * k));
+        int g = Math.min(255, Math.round(((color >> 8) & 255) * k));
+        int b = Math.min(255, Math.round((color & 255) * k));
+        return (r << 16) | (g << 8) | b;
     }
 
     static void ring(VertexConsumer vc, PoseStack.Pose pose, Direction dir, float lo, float hi, float t,

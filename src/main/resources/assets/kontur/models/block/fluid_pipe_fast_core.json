@@ -1,11 +1,8 @@
 {
   "render_type": "minecraft:translucent",
   "textures": {
-    "dark": "kontur:block/conduit/dark",
-    "flange": "kontur:block/conduit/flange",
-    "band": "kontur:block/conduit/band2",
-    "glass": "kontur:block/conduit/glass",
-    "particle": "kontur:block/conduit/dark"
+    "t": "kontur:block/conduit/fluid_pipe_fast",
+    "particle": "kontur:block/conduit/fluid_pipe_fast"
   },
   "elements": [
     {
@@ -22,125 +19,57 @@
       "faces": {
         "north": {
           "uv": [
-            0,
-            0,
-            8,
-            8
+            0.0,
+            0.0,
+            2.0,
+            8.0
           ],
-          "texture": "#glass"
+          "texture": "#t"
         },
         "south": {
           "uv": [
-            0,
-            0,
-            8,
-            8
+            2.0,
+            0.0,
+            4.0,
+            8.0
           ],
-          "texture": "#glass"
+          "texture": "#t"
         },
         "east": {
           "uv": [
-            0,
-            0,
-            8,
-            8
+            4.0,
+            0.0,
+            6.0,
+            8.0
           ],
-          "texture": "#glass"
+          "texture": "#t"
         },
         "west": {
           "uv": [
-            0,
-            0,
-            8,
-            8
+            6.0,
+            0.0,
+            8.0,
+            8.0
           ],
-          "texture": "#glass"
+          "texture": "#t"
         },
         "up": {
           "uv": [
-            0,
-            0,
-            8,
-            8
+            8.0,
+            0.0,
+            10.0,
+            8.0
           ],
-          "texture": "#glass"
+          "texture": "#t"
         },
         "down": {
           "uv": [
-            0,
-            0,
-            8,
-            8
+            10.0,
+            0.0,
+            12.0,
+            8.0
           ],
-          "texture": "#glass"
-        }
-      }
-    },
-    {
-      "from": [
-        3,
-        3,
-        7
-      ],
-      "to": [
-        13,
-        13,
-        9
-      ],
-      "faces": {
-        "north": {
-          "uv": [
-            0,
-            0,
-            10,
-            10
-          ],
-          "texture": "#band"
-        },
-        "south": {
-          "uv": [
-            0,
-            0,
-            10,
-            10
-          ],
-          "texture": "#band"
-        },
-        "east": {
-          "uv": [
-            0,
-            0,
-            2,
-            10
-          ],
-          "texture": "#band"
-        },
-        "west": {
-          "uv": [
-            0,
-            0,
-            2,
-            10
-          ],
-          "texture": "#band"
-        },
-        "up": {
-          "uv": [
-            0,
-            0,
-            10,
-            2
-          ],
-          "texture": "#band"
-        },
-        "down": {
-          "uv": [
-            0,
-            0,
-            10,
-            2
-          ],
-          "texture": "#band"
+          "texture": "#t"
         }
       }
     }

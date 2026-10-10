@@ -1,9 +1,7 @@
 {
   "textures": {
-    "dark": "kontur:block/conduit/dark",
-    "flange": "kontur:block/conduit/flange",
-    "band": "kontur:block/conduit/band3",
-    "particle": "kontur:block/conduit/dark"
+    "t": "kontur:block/conduit/item_pipe_express",
+    "particle": "kontur:block/conduit/item_pipe_express"
   },
   "elements": [
     {
@@ -20,125 +18,57 @@
       "faces": {
         "north": {
           "uv": [
-            0,
-            0,
-            8,
-            8
+            0.0,
+            0.0,
+            2.0,
+            4.0
           ],
-          "texture": "#dark"
+          "texture": "#t"
         },
         "south": {
           "uv": [
-            0,
-            0,
-            8,
-            8
+            2.0,
+            0.0,
+            4.0,
+            4.0
           ],
-          "texture": "#dark"
+          "texture": "#t"
         },
         "east": {
           "uv": [
-            0,
-            0,
-            8,
-            8
+            4.0,
+            0.0,
+            6.0,
+            4.0
           ],
-          "texture": "#dark"
+          "texture": "#t"
         },
         "west": {
           "uv": [
-            0,
-            0,
-            8,
-            8
+            6.0,
+            0.0,
+            8.0,
+            4.0
           ],
-          "texture": "#dark"
+          "texture": "#t"
         },
         "up": {
           "uv": [
-            0,
-            0,
-            8,
-            8
+            8.0,
+            0.0,
+            10.0,
+            4.0
           ],
-          "texture": "#dark"
+          "texture": "#t"
         },
         "down": {
           "uv": [
-            0,
-            0,
-            8,
-            8
+            10.0,
+            0.0,
+            12.0,
+            4.0
           ],
-          "texture": "#dark"
-        }
-      }
-    },
-    {
-      "from": [
-        2,
-        2,
-        6
-      ],
-      "to": [
-        14,
-        14,
-        10
-      ],
-      "faces": {
-        "north": {
-          "uv": [
-            0,
-            0,
-            12,
-            12
-          ],
-          "texture": "#band"
-        },
-        "south": {
-          "uv": [
-            0,
-            0,
-            12,
-            12
-          ],
-          "texture": "#band"
-        },
-        "east": {
-          "uv": [
-            0,
-            0,
-            4,
-            12
-          ],
-          "texture": "#band"
-        },
-        "west": {
-          "uv": [
-            0,
-            0,
-            4,
-            12
-          ],
-          "texture": "#band"
-        },
-        "up": {
-          "uv": [
-            0,
-            0,
-            12,
-            4
-          ],
-          "texture": "#band"
-        },
-        "down": {
-          "uv": [
-            0,
-            0,
-            12,
-            4
-          ],
-          "texture": "#band"
+          "texture": "#t"
         }
       }
     }

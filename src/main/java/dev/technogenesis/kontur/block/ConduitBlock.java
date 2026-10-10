@@ -101,7 +101,7 @@ public class ConduitBlock extends BaseEntityBlock {
         if (level.getBlockState(np).getBlock() instanceof ConduitBlock other) {
             return other.tier.kind == tier.kind;
         }
-        ConduitMode mode = level.getBlockEntity(pos) instanceof ConduitBlockEntity be ? be.mode(dir) : ConduitMode.PUSH;
+        ConduitMode mode = level.getBlockEntity(pos) instanceof ConduitBlockEntity be ? be.mode(dir) : ConduitMode.AUTO;
         return mode != ConduitMode.OFF && hasHandler(level, np, dir);
     }
 
