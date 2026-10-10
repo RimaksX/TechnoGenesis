@@ -66,7 +66,7 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
     private static final int TB_X = 12;
     private static final int TB_Y = 19;
     private static final int TB_W = 24;
-    private static final int TB_H = 11;
+    private static final int TB_H = 13;
     private static final int TB_STEP = 26;
     private static final int NET_X = 14;
     private static final int NET_Y = 38;
