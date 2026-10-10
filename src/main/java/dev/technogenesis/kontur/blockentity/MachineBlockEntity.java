@@ -457,14 +457,14 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
             result = reverse ? now.prev() : now.next();
             for (TransferType t : TransferType.values()) {
                 if (supports(t)) {
-                    sides.set(t, side, SideConfig.coerce(t, result));
+                    sides.set(t, side, def.coerce(t, result));
                 }
             }
         } else {
             if (!supports(mode.type)) {
                 return null;
             }
-            sides.cycle(mode.type, side, reverse);
+            sides.cycle(mode.type, side, reverse, def.allowedModes(mode.type));
             result = sides.get(mode.type, side);
         }
         sidesChanged();
@@ -477,7 +477,7 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
         if (!supports(type)) {
             return null;
         }
-        sides.cycle(type, side, reverse);
+        sides.cycle(type, side, reverse, def.allowedModes(type));
         sidesChanged();
         return sides.get(type, side);
     }
@@ -489,6 +489,20 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
         sides.ejectFluids = on;
         sidesChanged();
         return on;
+    }
+
+    /** Режимы, которых у этой машины быть не может (например, вход у насоса), приводятся к допустимым. */
+    private void sanitizeSides() {
+        for (TransferType t : TransferType.values()) {
+            if (!supports(t)) {
+                continue;
+            }
+            for (RelativeSide s : RelativeSide.values()) {
+                if (s != RelativeSide.FRONT) {
+                    sides.set(t, s, def.coerce(t, sides.get(t, s)));
+                }
+            }
+        }
     }
 
     private void sidesChanged() {
@@ -513,6 +527,7 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
     @Override
     public void handleUpdateTag(CompoundTag tag, HolderLookup.Provider registries) {
         sides.load(tag.getCompound("sides"));
+        sanitizeSides();
         int o = tag.getInt("status");
         shown = o >= 0 && o < MachineStatus.values().length ? MachineStatus.values()[o] : MachineStatus.IDLE;
     }
@@ -563,6 +578,7 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
             energy.deserializeNBT(registries, e);
         }
         sides.load(tag.getCompound("sides"));
+        sanitizeSides();
         progress = tag.getInt("progress");
         totalTime = tag.getInt("total");
         heat = tag.getInt("heat");

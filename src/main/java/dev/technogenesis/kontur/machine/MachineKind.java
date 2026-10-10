@@ -127,6 +127,6 @@ public enum MachineKind implements StringRepresentable {
             case GENERATOR -> IoMode.OUTPUT;
             case STORAGE -> IoMode.ALL;
         };
-        return new SideConfig(IoMode.ALL, IoMode.ALL, energy);
+        return new SideConfig(IoMode.ALL, definition.defaultFluidMode(), energy);
     }
 }

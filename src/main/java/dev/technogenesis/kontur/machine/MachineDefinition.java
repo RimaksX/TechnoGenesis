@@ -66,6 +66,57 @@ public final class MachineDefinition {
         };
     }
 
+    /**
+     * Режимы грани, которые для типа вообще имеют смысл. Входы предметов - только вход, каждый выход - только выход;
+     * жидкости зависят от баков (насос с одним выходным баком только выпускает), энергия - от вида машины
+     * (потребитель только принимает, генератор только отдаёт, накопитель и то и другое).
+     */
+    public IoMode[] allowedModes(TransferType type) {
+        return switch (type) {
+            case ITEMS -> new IoMode[]{IoMode.NONE, IoMode.INPUT};
+            case OUT1, OUT2, OUT3 -> new IoMode[]{IoMode.NONE, IoMode.OUTPUT};
+            case FLUIDS -> {
+                boolean in = inputTank() >= 0;
+                boolean out = outputTank() >= 0;
+                yield in && out ? new IoMode[]{IoMode.NONE, IoMode.INPUT, IoMode.OUTPUT, IoMode.ALL}
+                        : in ? new IoMode[]{IoMode.NONE, IoMode.INPUT}
+                        : new IoMode[]{IoMode.NONE, IoMode.OUTPUT};
+            }
+            case ENERGY -> switch (energyKind) {
+                case CONSUMER -> new IoMode[]{IoMode.NONE, IoMode.INPUT};
+                case GENERATOR -> new IoMode[]{IoMode.NONE, IoMode.OUTPUT};
+                case STORAGE -> new IoMode[]{IoMode.NONE, IoMode.INPUT, IoMode.OUTPUT, IoMode.ALL};
+            };
+        };
+    }
+
+    /** Приводит желаемый режим к допустимому для типа: вход остаётся входом, только если вход вообще возможен. */
+    public IoMode coerce(TransferType type, IoMode wanted) {
+        IoMode[] allowed = allowedModes(type);
+        boolean hasIn = false;
+        boolean hasOut = false;
+        for (IoMode m : allowed) {
+            if (m == wanted) {
+                return m;
+            }
+            hasIn |= m == IoMode.INPUT;
+            hasOut |= m == IoMode.OUTPUT;
+        }
+        if (wanted.canInput() && hasIn) {
+            return IoMode.INPUT;
+        }
+        if (wanted.canOutput() && hasOut) {
+            return IoMode.OUTPUT;
+        }
+        return IoMode.NONE;
+    }
+
+    /** Режим по умолчанию для жидкостей: по тому, какие баки есть. */
+    public IoMode defaultFluidMode() {
+        IoMode[] a = allowedModes(TransferType.FLUIDS);
+        return a[a.length - 1];
+    }
+
     private boolean hasFuelSlot() {
         for (SlotDef s : slots) {
             if (s.role() == SlotRole.FUEL) {

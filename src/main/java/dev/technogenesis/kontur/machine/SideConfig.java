@@ -18,17 +18,6 @@ public final class SideConfig {
         fill(TransferType.ENERGY, energy);
     }
 
-    /** Допустимые режимы типа: входы и выходы предметов - только открыто или закрыто. */
-    private static IoMode[] allowed(TransferType type) {
-        if (type == TransferType.ITEMS) {
-            return new IoMode[]{IoMode.NONE, IoMode.INPUT};
-        }
-        if (type.isOutputChannel()) {
-            return new IoMode[]{IoMode.NONE, IoMode.OUTPUT};
-        }
-        return IoMode.values();
-    }
-
     /** Приводит режим к допустимому для типа (для режима ключа «все типы»). */
     public static IoMode coerce(TransferType type, IoMode wanted) {
         if (type == TransferType.ITEMS) {
@@ -55,8 +44,7 @@ public final class SideConfig {
         modes[type.ordinal()][side.ordinal()] = side == RelativeSide.FRONT ? IoMode.NONE : mode;
     }
 
-    public void cycle(TransferType type, RelativeSide side, boolean reverse) {
-        IoMode[] modes = allowed(type);
+    public void cycle(TransferType type, RelativeSide side, boolean reverse, IoMode[] modes) {
         int i = 0;
         for (int k = 0; k < modes.length; k++) {
             if (modes[k] == get(type, side)) {

@@ -436,15 +436,9 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
         return cfgType;
     }
 
-    /** Режимы, которые для типа вообще бывают: для входов и выходов предметов только открыто или закрыто. */
-    private static IoMode[] modesOf(TransferType t) {
-        if (t == TransferType.ITEMS) {
-            return new IoMode[]{IoMode.NONE, IoMode.INPUT};
-        }
-        if (t.isOutputChannel()) {
-            return new IoMode[]{IoMode.NONE, IoMode.OUTPUT};
-        }
-        return new IoMode[]{IoMode.NONE, IoMode.INPUT, IoMode.OUTPUT, IoMode.ALL};
+    /** Режимы, которые для типа вообще бывают у этой машины (насос только выпускает, потребитель только принимает). */
+    private IoMode[] modesOf(TransferType t) {
+        return def.allowedModes(t);
     }
 
     private static int cellColor(IoMode mode) {
