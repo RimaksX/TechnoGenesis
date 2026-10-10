@@ -1,92 +1,182 @@
 {
   "variants": {
-    "facing=north,charge=0": {
+    "active=false,charge=0,facing=north": {
       "model": "kontur:block/carbon_capacitor_0"
     },
-    "facing=east,charge=0": {
+    "active=false,charge=0,facing=east": {
       "model": "kontur:block/carbon_capacitor_0",
       "y": 90
     },
-    "facing=south,charge=0": {
+    "active=false,charge=0,facing=south": {
       "model": "kontur:block/carbon_capacitor_0",
       "y": 180
     },
-    "facing=west,charge=0": {
+    "active=false,charge=0,facing=west": {
       "model": "kontur:block/carbon_capacitor_0",
       "y": 270
     },
-    "facing=north,charge=1": {
+    "active=false,charge=1,facing=north": {
       "model": "kontur:block/carbon_capacitor_1"
     },
-    "facing=east,charge=1": {
+    "active=false,charge=1,facing=east": {
       "model": "kontur:block/carbon_capacitor_1",
       "y": 90
     },
-    "facing=south,charge=1": {
+    "active=false,charge=1,facing=south": {
       "model": "kontur:block/carbon_capacitor_1",
       "y": 180
     },
-    "facing=west,charge=1": {
+    "active=false,charge=1,facing=west": {
       "model": "kontur:block/carbon_capacitor_1",
       "y": 270
     },
-    "facing=north,charge=2": {
+    "active=false,charge=2,facing=north": {
       "model": "kontur:block/carbon_capacitor_2"
     },
-    "facing=east,charge=2": {
+    "active=false,charge=2,facing=east": {
       "model": "kontur:block/carbon_capacitor_2",
       "y": 90
     },
-    "facing=south,charge=2": {
+    "active=false,charge=2,facing=south": {
       "model": "kontur:block/carbon_capacitor_2",
       "y": 180
     },
-    "facing=west,charge=2": {
+    "active=false,charge=2,facing=west": {
       "model": "kontur:block/carbon_capacitor_2",
       "y": 270
     },
-    "facing=north,charge=3": {
+    "active=false,charge=3,facing=north": {
       "model": "kontur:block/carbon_capacitor_3"
     },
-    "facing=east,charge=3": {
+    "active=false,charge=3,facing=east": {
       "model": "kontur:block/carbon_capacitor_3",
       "y": 90
     },
-    "facing=south,charge=3": {
+    "active=false,charge=3,facing=south": {
       "model": "kontur:block/carbon_capacitor_3",
       "y": 180
     },
-    "facing=west,charge=3": {
+    "active=false,charge=3,facing=west": {
       "model": "kontur:block/carbon_capacitor_3",
       "y": 270
     },
-    "facing=north,charge=4": {
+    "active=false,charge=4,facing=north": {
       "model": "kontur:block/carbon_capacitor_4"
     },
-    "facing=east,charge=4": {
+    "active=false,charge=4,facing=east": {
       "model": "kontur:block/carbon_capacitor_4",
       "y": 90
     },
-    "facing=south,charge=4": {
+    "active=false,charge=4,facing=south": {
       "model": "kontur:block/carbon_capacitor_4",
       "y": 180
     },
-    "facing=west,charge=4": {
+    "active=false,charge=4,facing=west": {
       "model": "kontur:block/carbon_capacitor_4",
       "y": 270
     },
-    "facing=north,charge=5": {
+    "active=false,charge=5,facing=north": {
       "model": "kontur:block/carbon_capacitor_5"
     },
-    "facing=east,charge=5": {
+    "active=false,charge=5,facing=east": {
       "model": "kontur:block/carbon_capacitor_5",
       "y": 90
     },
-    "facing=south,charge=5": {
+    "active=false,charge=5,facing=south": {
       "model": "kontur:block/carbon_capacitor_5",
       "y": 180
     },
-    "facing=west,charge=5": {
+    "active=false,charge=5,facing=west": {
+      "model": "kontur:block/carbon_capacitor_5",
+      "y": 270
+    },
+    "active=true,charge=0,facing=north": {
+      "model": "kontur:block/carbon_capacitor_0"
+    },
+    "active=true,charge=0,facing=east": {
+      "model": "kontur:block/carbon_capacitor_0",
+      "y": 90
+    },
+    "active=true,charge=0,facing=south": {
+      "model": "kontur:block/carbon_capacitor_0",
+      "y": 180
+    },
+    "active=true,charge=0,facing=west": {
+      "model": "kontur:block/carbon_capacitor_0",
+      "y": 270
+    },
+    "active=true,charge=1,facing=north": {
+      "model": "kontur:block/carbon_capacitor_1"
+    },
+    "active=true,charge=1,facing=east": {
+      "model": "kontur:block/carbon_capacitor_1",
+      "y": 90
+    },
+    "active=true,charge=1,facing=south": {
+      "model": "kontur:block/carbon_capacitor_1",
+      "y": 180
+    },
+    "active=true,charge=1,facing=west": {
+      "model": "kontur:block/carbon_capacitor_1",
+      "y": 270
+    },
+    "active=true,charge=2,facing=north": {
+      "model": "kontur:block/carbon_capacitor_2"
+    },
+    "active=true,charge=2,facing=east": {
+      "model": "kontur:block/carbon_capacitor_2",
+      "y": 90
+    },
+    "active=true,charge=2,facing=south": {
+      "model": "kontur:block/carbon_capacitor_2",
+      "y": 180
+    },
+    "active=true,charge=2,facing=west": {
+      "model": "kontur:block/carbon_capacitor_2",
+      "y": 270
+    },
+    "active=true,charge=3,facing=north": {
+      "model": "kontur:block/carbon_capacitor_3"
+    },
+    "active=true,charge=3,facing=east": {
+      "model": "kontur:block/carbon_capacitor_3",
+      "y": 90
+    },
+    "active=true,charge=3,facing=south": {
+      "model": "kontur:block/carbon_capacitor_3",
+      "y": 180
+    },
+    "active=true,charge=3,facing=west": {
+      "model": "kontur:block/carbon_capacitor_3",
+      "y": 270
+    },
+    "active=true,charge=4,facing=north": {
+      "model": "kontur:block/carbon_capacitor_4"
+    },
+    "active=true,charge=4,facing=east": {
+      "model": "kontur:block/carbon_capacitor_4",
+      "y": 90
+    },
+    "active=true,charge=4,facing=south": {
+      "model": "kontur:block/carbon_capacitor_4",
+      "y": 180
+    },
+    "active=true,charge=4,facing=west": {
+      "model": "kontur:block/carbon_capacitor_4",
+      "y": 270
+    },
+    "active=true,charge=5,facing=north": {
+      "model": "kontur:block/carbon_capacitor_5"
+    },
+    "active=true,charge=5,facing=east": {
+      "model": "kontur:block/carbon_capacitor_5",
+      "y": 90
+    },
+    "active=true,charge=5,facing=south": {
+      "model": "kontur:block/carbon_capacitor_5",
+      "y": 180
+    },
+    "active=true,charge=5,facing=west": {
       "model": "kontur:block/carbon_capacitor_5",
       "y": 270
     }

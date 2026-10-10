@@ -1,32 +1,182 @@
 {
   "variants": {
-    "facing=north,active=false": {
+    "active=false,charge=0,facing=north": {
       "model": "kontur:block/acid_plant"
     },
-    "facing=east,active=false": {
+    "active=false,charge=0,facing=east": {
       "model": "kontur:block/acid_plant",
       "y": 90
     },
-    "facing=south,active=false": {
+    "active=false,charge=0,facing=south": {
       "model": "kontur:block/acid_plant",
       "y": 180
     },
-    "facing=west,active=false": {
+    "active=false,charge=0,facing=west": {
       "model": "kontur:block/acid_plant",
       "y": 270
     },
-    "facing=north,active=true": {
+    "active=false,charge=1,facing=north": {
+      "model": "kontur:block/acid_plant"
+    },
+    "active=false,charge=1,facing=east": {
+      "model": "kontur:block/acid_plant",
+      "y": 90
+    },
+    "active=false,charge=1,facing=south": {
+      "model": "kontur:block/acid_plant",
+      "y": 180
+    },
+    "active=false,charge=1,facing=west": {
+      "model": "kontur:block/acid_plant",
+      "y": 270
+    },
+    "active=false,charge=2,facing=north": {
+      "model": "kontur:block/acid_plant"
+    },
+    "active=false,charge=2,facing=east": {
+      "model": "kontur:block/acid_plant",
+      "y": 90
+    },
+    "active=false,charge=2,facing=south": {
+      "model": "kontur:block/acid_plant",
+      "y": 180
+    },
+    "active=false,charge=2,facing=west": {
+      "model": "kontur:block/acid_plant",
+      "y": 270
+    },
+    "active=false,charge=3,facing=north": {
+      "model": "kontur:block/acid_plant"
+    },
+    "active=false,charge=3,facing=east": {
+      "model": "kontur:block/acid_plant",
+      "y": 90
+    },
+    "active=false,charge=3,facing=south": {
+      "model": "kontur:block/acid_plant",
+      "y": 180
+    },
+    "active=false,charge=3,facing=west": {
+      "model": "kontur:block/acid_plant",
+      "y": 270
+    },
+    "active=false,charge=4,facing=north": {
+      "model": "kontur:block/acid_plant"
+    },
+    "active=false,charge=4,facing=east": {
+      "model": "kontur:block/acid_plant",
+      "y": 90
+    },
+    "active=false,charge=4,facing=south": {
+      "model": "kontur:block/acid_plant",
+      "y": 180
+    },
+    "active=false,charge=4,facing=west": {
+      "model": "kontur:block/acid_plant",
+      "y": 270
+    },
+    "active=false,charge=5,facing=north": {
+      "model": "kontur:block/acid_plant"
+    },
+    "active=false,charge=5,facing=east": {
+      "model": "kontur:block/acid_plant",
+      "y": 90
+    },
+    "active=false,charge=5,facing=south": {
+      "model": "kontur:block/acid_plant",
+      "y": 180
+    },
+    "active=false,charge=5,facing=west": {
+      "model": "kontur:block/acid_plant",
+      "y": 270
+    },
+    "active=true,charge=0,facing=north": {
       "model": "kontur:block/acid_plant_on"
     },
-    "facing=east,active=true": {
+    "active=true,charge=0,facing=east": {
       "model": "kontur:block/acid_plant_on",
       "y": 90
     },
-    "facing=south,active=true": {
+    "active=true,charge=0,facing=south": {
       "model": "kontur:block/acid_plant_on",
       "y": 180
     },
-    "facing=west,active=true": {
+    "active=true,charge=0,facing=west": {
+      "model": "kontur:block/acid_plant_on",
+      "y": 270
+    },
+    "active=true,charge=1,facing=north": {
+      "model": "kontur:block/acid_plant_on"
+    },
+    "active=true,charge=1,facing=east": {
+      "model": "kontur:block/acid_plant_on",
+      "y": 90
+    },
+    "active=true,charge=1,facing=south": {
+      "model": "kontur:block/acid_plant_on",
+      "y": 180
+    },
+    "active=true,charge=1,facing=west": {
+      "model": "kontur:block/acid_plant_on",
+      "y": 270
+    },
+    "active=true,charge=2,facing=north": {
+      "model": "kontur:block/acid_plant_on"
+    },
+    "active=true,charge=2,facing=east": {
+      "model": "kontur:block/acid_plant_on",
+      "y": 90
+    },
+    "active=true,charge=2,facing=south": {
+      "model": "kontur:block/acid_plant_on",
+      "y": 180
+    },
+    "active=true,charge=2,facing=west": {
+      "model": "kontur:block/acid_plant_on",
+      "y": 270
+    },
+    "active=true,charge=3,facing=north": {
+      "model": "kontur:block/acid_plant_on"
+    },
+    "active=true,charge=3,facing=east": {
+      "model": "kontur:block/acid_plant_on",
+      "y": 90
+    },
+    "active=true,charge=3,facing=south": {
+      "model": "kontur:block/acid_plant_on",
+      "y": 180
+    },
+    "active=true,charge=3,facing=west": {
+      "model": "kontur:block/acid_plant_on",
+      "y": 270
+    },
+    "active=true,charge=4,facing=north": {
+      "model": "kontur:block/acid_plant_on"
+    },
+    "active=true,charge=4,facing=east": {
+      "model": "kontur:block/acid_plant_on",
+      "y": 90
+    },
+    "active=true,charge=4,facing=south": {
+      "model": "kontur:block/acid_plant_on",
+      "y": 180
+    },
+    "active=true,charge=4,facing=west": {
+      "model": "kontur:block/acid_plant_on",
+      "y": 270
+    },
+    "active=true,charge=5,facing=north": {
+      "model": "kontur:block/acid_plant_on"
+    },
+    "active=true,charge=5,facing=east": {
+      "model": "kontur:block/acid_plant_on",
+      "y": 90
+    },
+    "active=true,charge=5,facing=south": {
+      "model": "kontur:block/acid_plant_on",
+      "y": 180
+    },
+    "active=true,charge=5,facing=west": {
       "model": "kontur:block/acid_plant_on",
       "y": 270
     }
