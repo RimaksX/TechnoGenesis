@@ -72,8 +72,13 @@ public final class KonturBlockEntities {
                 event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, type, (be, side) -> be.getEnergyStorage(side));
             }
         }
-        // ферма отдаёт энергию с любой из шести частей и с любой стороны: запрос уходит к главной части
+        // ферма отдаёт энергию через разъёмы на боковых гранях задних (высоких) плиток; запрос уходит к главной части
         event.registerBlock(Capabilities.EnergyStorage.BLOCK, (level, pos, state, be, side) -> {
+            var facing = state.getValue(dev.technogenesis.kontur.block.SolarFarmBlock.FACING);
+            boolean portSide = side == facing.getClockWise() || side == facing.getCounterClockWise();
+            if (state.getValue(dev.technogenesis.kontur.block.SolarFarmBlock.PART) < 3 || !portSide) {
+                return null;
+            }
             BlockPos master = dev.technogenesis.kontur.block.SolarFarmBlock.masterOf(pos, state);
             return level.getBlockEntity(master) instanceof MachineBlockEntity farm ? farm.getEnergyStorage(null) : null;
         }, KonturBlocks.SOLAR_FARM.get());
