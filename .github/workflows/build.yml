@@ -1,8 +1,7 @@
 name: Build
 
+# Сборка запускается вручную (Actions -> Build -> Run workflow), когда накопилась пачка правок
 on:
-  push:
-    branches: ["claude/zealous-cannon-l15u8v"]
   workflow_dispatch:
 
 permissions:
