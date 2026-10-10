@@ -86,7 +86,15 @@ public enum MachineKind implements StringRepresentable {
             .coating(-20, 41).energy(EnergyKind.GENERATOR, 48000, 0, 768, 120).build()),
     // Солнечная ферма 3x2: шесть плиток, одна энергосистема
     SOLAR_FARM("solar_farm", true, false, null, MachineDefinition.builder()
-            .coating(-20, 41).energy(EnergyKind.GENERATOR, 192000, 0, 3072, 720).build());
+            .coating(-20, 41).energy(EnergyKind.GENERATOR, 192000, 0, 3072, 720).build()),
+    // Автоматический шахтёр: 160 FE/t при работе, 60 FE/t в движении; 12 слотов буфера добычи, склад наконечников снаружи
+    MINER("miner", true, false, null, MachineDefinition.builder()
+            .slot(44, 22, SlotRole.OUTPUT).slot(62, 22, SlotRole.OUTPUT).slot(80, 22, SlotRole.OUTPUT)
+            .slot(98, 22, SlotRole.OUTPUT).slot(116, 22, SlotRole.OUTPUT).slot(134, 22, SlotRole.OUTPUT)
+            .slot(44, 40, SlotRole.OUTPUT).slot(62, 40, SlotRole.OUTPUT).slot(80, 40, SlotRole.OUTPUT)
+            .slot(98, 40, SlotRole.OUTPUT).slot(116, 40, SlotRole.OUTPUT).slot(134, 40, SlotRole.OUTPUT)
+            .singleOutputChannel().module(-20, 41).cooler(-20, 63)
+            .energy(EnergyKind.CONSUMER, 32000, 960, 0, 160).build());
 
     public static final Codec<MachineKind> CODEC = StringRepresentable.fromEnum(MachineKind::values);
 

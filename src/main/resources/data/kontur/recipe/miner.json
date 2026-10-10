@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "IPI",
+    "WFW",
+    "ICI"
+  ],
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "P": {
+      "item": "minecraft:piston"
+    },
+    "W": {
+      "item": "kontur:copper_wire"
+    },
+    "F": {
+      "item": "kontur:machine_frame"
+    },
+    "C": {
+      "item": "kontur:module_worker"
+    }
+  },
+  "result": {
+    "id": "kontur:miner",
+    "count": 1
+  }
+}

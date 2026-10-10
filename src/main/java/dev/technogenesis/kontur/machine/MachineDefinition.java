@@ -27,8 +27,11 @@ public final class MachineDefinition {
     public final int arrowY;
     public final int flameX;
     public final int flameY;
+    /** Все выходные слоты делят один канал (буфер шахтёра), а не получают отдельные грани. */
+    public final boolean singleOutputChannel;
 
     private MachineDefinition(Builder b) {
+        singleOutputChannel = b.singleOutputChannel;
         slots = List.copyOf(b.slots);
         tanks = List.copyOf(b.tanks);
         energyKind = b.energyKind;
@@ -62,7 +65,7 @@ public final class MachineDefinition {
             case ITEMS -> inputSlot() >= 0 || hasFuelSlot();
             case FLUIDS -> hasFluids();
             case ENERGY -> energyCapacity > 0;
-            case OUT1, OUT2, OUT3 -> outputSlots().length > type.outputIndex();
+            case OUT1, OUT2, OUT3 -> outputChannels() > type.outputIndex();
         };
     }
 
@@ -191,6 +194,12 @@ public final class MachineDefinition {
         return -1;
     }
 
+    /** Сколько каналов выхода у машины: по слоту на канал, но не больше трёх, у буфера шахтёра один. */
+    public int outputChannels() {
+        int n = outputSlots().length;
+        return singleOutputChannel ? Math.min(1, n) : Math.min(3, n);
+    }
+
     public int[] outputSlots() {
         return java.util.stream.IntStream.range(0, slots.size())
                 .filter(i -> slots.get(i).role() == SlotRole.OUTPUT).toArray();
@@ -230,6 +239,7 @@ public final class MachineDefinition {
         private int arrowY = -1;
         private int flameX = -1;
         private int flameY = -1;
+        private boolean singleOutputChannel;
 
         public Builder slot(int x, int y, SlotRole role) {
             slots.add(new SlotDef(x, y, role));
@@ -271,6 +281,12 @@ public final class MachineDefinition {
         public Builder arrow(int x, int y) {
             this.arrowX = x;
             this.arrowY = y;
+            return this;
+        }
+
+        /** Все выходные слоты - один канал выхода. */
+        public Builder singleOutputChannel() {
+            this.singleOutputChannel = true;
             return this;
         }
 

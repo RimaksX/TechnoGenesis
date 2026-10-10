@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " C ",
+    "CTC",
+    " C "
+  ],
+  "key": {
+    "C": {
+      "item": "kontur:chromium_ingot"
+    },
+    "T": {
+      "item": "kontur:drill_tip_iron"
+    }
+  },
+  "result": {
+    "id": "kontur:drill_tip_steel",
+    "count": 1
+  }
+}

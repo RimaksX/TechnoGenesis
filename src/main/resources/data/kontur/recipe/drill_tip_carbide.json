@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " W ",
+    "WTW",
+    " D "
+  ],
+  "key": {
+    "W": {
+      "item": "kontur:tungsten_ingot"
+    },
+    "T": {
+      "item": "kontur:drill_tip_steel"
+    },
+    "D": {
+      "item": "minecraft:diamond"
+    }
+  },
+  "result": {
+    "id": "kontur:drill_tip_carbide",
+    "count": 1
+  }
+}

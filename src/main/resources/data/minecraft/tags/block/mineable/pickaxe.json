@@ -38,6 +38,8 @@
     "kontur:jaw_crusher",
     "kontur:leaching_reactor",
     "kontur:magnetic_separator",
+    "kontur:miner",
+    "kontur:miner_rail",
     "kontur:molybdenite_ore",
     "kontur:native_sulfur_ore",
     "kontur:nether_native_sulfur_ore",

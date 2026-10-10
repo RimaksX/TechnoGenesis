@@ -412,6 +412,9 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
 
     /** Канал выхода, которому принадлежит выходной слот: по порядку выходов, не больше трёх. */
     private TransferType outputChannel(int slot) {
+        if (def.singleOutputChannel) {
+            return TransferType.OUT1;
+        }
         int[] outs = def.outputSlots();
         for (int i = 0; i < outs.length; i++) {
             if (outs[i] == slot) {

@@ -67,6 +67,11 @@ public final class KonturCreativeTabs {
                         out.accept(KonturBlocks.THERMAL_GENERATOR);
                         out.accept(KonturBlocks.STEAM_TURBINE);
                         out.accept(KonturBlocks.WATER_PUMP);
+                        out.accept(KonturBlocks.MINER);
+                        out.accept(KonturBlocks.MINER_RAIL);
+                        for (dev.technogenesis.kontur.machine.DrillTier tier : dev.technogenesis.kontur.machine.DrillTier.values()) {
+                            out.accept(KonturItems.DRILL_TIPS.get(tier));
+                        }
                         out.accept(KonturBlocks.SOLAR_PANEL);
                         out.accept(KonturBlocks.SOLAR_PANEL_ADVANCED);
                         out.accept(KonturBlocks.SOLAR_FARM);

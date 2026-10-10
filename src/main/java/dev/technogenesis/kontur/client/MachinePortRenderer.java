@@ -46,6 +46,9 @@ public final class MachinePortRenderer implements BlockEntityRenderer<MachineBlo
         if (be.kind() == dev.technogenesis.kontur.machine.MachineKind.SOLAR_FARM) {
             return;
         }
+        if (be instanceof dev.technogenesis.kontur.blockentity.MinerBlockEntity miner) {
+            MinerRenderer.render(miner, partialTick, stack, buffers, light, overlay);
+        }
         if (be instanceof dev.technogenesis.kontur.blockentity.WindRotorBlockEntity rotor) {
             WindBladesRenderer.render(rotor, partialTick, stack, buffers, light, overlay);
         }

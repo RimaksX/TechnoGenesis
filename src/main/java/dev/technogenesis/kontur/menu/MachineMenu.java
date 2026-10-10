@@ -166,6 +166,11 @@ public class MachineMenu extends AbstractContainerMenu {
         super.broadcastChanges();
     }
 
+    /** Сырое синхронизированное значение (для особых машин вроде шахтёра). */
+    public int raw(int index) {
+        return sync[index];
+    }
+
     public boolean configOpen() {
         return configOpen;
     }

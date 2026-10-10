@@ -56,6 +56,10 @@ public final class KonturBlocks {
     public static final DeferredBlock<MachineBlock> THERMAL_GENERATOR = machine(MachineKind.THERMAL_GENERATOR);
     public static final DeferredBlock<MachineBlock> STEAM_TURBINE = machine(MachineKind.STEAM_TURBINE);
     public static final DeferredBlock<MachineBlock> WATER_PUMP = machine(MachineKind.WATER_PUMP);
+    public static final DeferredBlock<MachineBlock> MINER = machine(MachineKind.MINER);
+    public static final DeferredBlock<dev.technogenesis.kontur.block.MinerRailBlock> MINER_RAIL = block("miner_rail",
+            () -> new dev.technogenesis.kontur.block.MinerRailBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL)
+                    .strength(2.0f, 6.0f).sound(SoundType.METAL).requiresCorrectToolForDrops().noOcclusion()));
     public static final DeferredBlock<MachineBlock> SOLAR_PANEL = machine(MachineKind.SOLAR_PANEL);
     public static final DeferredBlock<MachineBlock> SOLAR_PANEL_ADVANCED = machine(MachineKind.SOLAR_PANEL_ADVANCED);
     public static final DeferredBlock<MachineBlock> SOLAR_FARM = machine(MachineKind.SOLAR_FARM);

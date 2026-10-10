@@ -1,5 +1,6 @@
 package dev.technogenesis.kontur.client;
 
+import dev.technogenesis.kontur.machine.DrillTier;
 import dev.technogenesis.kontur.machine.IoMode;
 import dev.technogenesis.kontur.machine.MachineDefinition;
 import dev.technogenesis.kontur.machine.MachineDefinition.EnergyKind;
@@ -152,7 +153,7 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
         g.drawString(font, fit(playerInventoryTitle.getString(), IMAGE_W - 16), 8, INV_LABEL_Y, GuiUtil.LABEL_TEXT, false);
         // номера выходов: у каждого свои грани, которые настраиваются ключом
         int[] outs = def.outputSlots();
-        for (int i = 0; outs.length >= 2 && i < outs.length && i < 3; i++) {
+        for (int i = 0; def.outputChannels() >= 2 && i < outs.length && i < 3; i++) {
             Slot sl = menu.slots.get(outs[i]);
             g.pose().pushPose();
             g.pose().translate(sl.x + 1, sl.y + 1, 300);
@@ -207,6 +208,9 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
         }
         if (def.hasFlame()) {
             GuiUtil.flame(g, x + def.flameX, y + def.flameY, menu.burnLeft(), menu.burnTotal());
+        }
+        if (menu.kind == MachineKind.MINER) {
+            drawMinerInfo(g, x, y);
         }
         if (!def.hasItems() && !def.hasFluids()) {
             drawEnergyInfo(g, x, y);
@@ -315,6 +319,9 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
         if (cfg) {
             renderConfigTooltips(g, x, y, mx, my);
         }
+        if (!cfg && menu.kind == MachineKind.MINER) {
+            drawMinerTooltips(g, x, y, mx, my);
+        }
         if (!cfg && def.energyCapacity > 0 && inRect(mx, my, x + ENERGY_X, y + ENERGY_Y, GuiUtil.POWER_W, GuiUtil.POWER_H)) {
             List<Component> lines = new ArrayList<>();
             lines.add(Component.translatable("gui.kontur.energy"));
@@ -365,7 +372,7 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
             g.renderComponentTooltip(font, lines, mx, my);
         }
         if (hoveredSlot != null && !hoveredSlot.hasItem() && menu.getCarried().isEmpty()
-                && hoveredSlot.index < def.slots.size() && def.outputSlots().length >= 2) {
+                && hoveredSlot.index < def.slots.size() && def.outputChannels() >= 2) {
             int[] outs = def.outputSlots();
             for (int i = 0; i < outs.length && i < 3; i++) {
                 if (outs[i] == hoveredSlot.index) {
@@ -395,6 +402,42 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
                         .withStyle(ChatFormatting.GRAY));
             }
             g.renderComponentTooltip(font, lines, mx, my);
+        }
+    }
+
+    // ------------------------------------------------------------------ шахтёр
+
+    private static final int TIP_X = 16;
+    private static final int TIP_Y = 26;
+
+    /** Слева от буфера: текущий наконечник с полоской прочности; под буфером - слой и доля слоя. */
+    private void drawMinerInfo(GuiGraphics g, int x, int y) {
+        DrillTier tier = DrillTier.byCode(menu.raw(5));
+        GuiUtil.slot(g, x + TIP_X, y + TIP_Y, MachineDefinition.SlotRole.MODULE);
+        if (tier != null) {
+            g.blit(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(dev.technogenesis.kontur.Kontur.MODID,
+                    "textures/item/" + tier.itemId() + ".png"), x + TIP_X, y + TIP_Y, 0f, 0f, 16, 16, 16, 16);
+            int w = Math.max(1, 16 * menu.raw(6) / tier.durability);
+            int color = menu.raw(6) * 100 / tier.durability < 20 ? 0xFFEB463C : 0xFF50DC78;
+            g.fill(x + TIP_X, y + TIP_Y + 19, x + TIP_X + 16, y + TIP_Y + 22, 0xFF10131A);
+            g.fill(x + TIP_X, y + TIP_Y + 19, x + TIP_X + w, y + TIP_Y + 21, color);
+        }
+        String text = fit(Component.translatable("gui.kontur.miner_layer", menu.raw(7) + 1, menu.raw(19)).getString(), 144);
+        g.drawString(font, text, x + 8, y + 63, 0xFF9CE8C4, false);
+    }
+
+    private void drawMinerTooltips(GuiGraphics g, int x, int y, int mx, int my) {
+        if (!inRect(mx, my, x + TIP_X - 1, y + TIP_Y - 1, 18, 24)) {
+            return;
+        }
+        DrillTier tier = DrillTier.byCode(menu.raw(5));
+        if (tier == null) {
+            g.renderComponentTooltip(font, List.of(Component.translatable("gui.kontur.miner_no_tip"),
+                    Component.translatable("gui.kontur.miner_no_tip_hint").withStyle(ChatFormatting.GRAY)), mx, my);
+        } else {
+            g.renderComponentTooltip(font, List.of(Component.translatable("item.kontur." + tier.itemId()),
+                    Component.translatable("gui.kontur.miner_tip_durability", menu.raw(6), tier.durability)
+                            .withStyle(ChatFormatting.GRAY)), mx, my);
         }
     }
 
