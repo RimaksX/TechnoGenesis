@@ -60,6 +60,15 @@ public final class KonturCreativeTabs {
                         out.accept(KonturBlocks.MAGNETIC_SEPARATOR);
                         out.accept(KonturBlocks.SETTLING_TANK);
                         out.accept(KonturBlocks.SOLID_FUEL_GENERATOR);
+                        out.accept(KonturBlocks.WIND_ROTOR);
+                        out.accept(KonturBlocks.THERMAL_GENERATOR);
+                        out.accept(KonturBlocks.STEAM_TURBINE);
+                        out.accept(KonturBlocks.SOLAR_PANEL);
+                        out.accept(KonturBlocks.SOLAR_PANEL_ADVANCED);
+                        out.accept(KonturBlocks.SOLAR_FARM);
+                        for (dev.technogenesis.kontur.machine.CoatingTier tier : dev.technogenesis.kontur.machine.CoatingTier.values()) {
+                            out.accept(KonturItems.COATINGS.get(tier));
+                        }
                         out.accept(KonturBlocks.CARBON_CAPACITOR);
                         out.accept(KonturBlocks.TAILINGS_MILL);
                         out.accept(KonturBlocks.ACID_PLANT);

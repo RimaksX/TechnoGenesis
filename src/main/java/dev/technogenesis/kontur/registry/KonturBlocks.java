@@ -6,6 +6,9 @@ import dev.technogenesis.kontur.block.ConduitBlock;
 import dev.technogenesis.kontur.network.CableTier;
 import dev.technogenesis.kontur.network.PipeTier;
 import dev.technogenesis.kontur.block.MachineBlock;
+import dev.technogenesis.kontur.block.SolarFarmBlock;
+import dev.technogenesis.kontur.item.SolarFarmItem;
+import net.minecraft.world.item.Item;
 import dev.technogenesis.kontur.machine.MachineKind;
 import dev.technogenesis.kontur.material.Mineral;
 import java.util.EnumMap;
@@ -49,6 +52,12 @@ public final class KonturBlocks {
     public static final DeferredBlock<MachineBlock> PRECIPITATION_REACTOR = machine(MachineKind.PRECIPITATION_REACTOR);
     public static final DeferredBlock<MachineBlock> ACID_REGENERATION_COLUMN =
             machine(MachineKind.ACID_REGENERATION_COLUMN);
+    public static final DeferredBlock<MachineBlock> WIND_ROTOR = machine(MachineKind.WIND_ROTOR);
+    public static final DeferredBlock<MachineBlock> THERMAL_GENERATOR = machine(MachineKind.THERMAL_GENERATOR);
+    public static final DeferredBlock<MachineBlock> STEAM_TURBINE = machine(MachineKind.STEAM_TURBINE);
+    public static final DeferredBlock<MachineBlock> SOLAR_PANEL = machine(MachineKind.SOLAR_PANEL);
+    public static final DeferredBlock<MachineBlock> SOLAR_PANEL_ADVANCED = machine(MachineKind.SOLAR_PANEL_ADVANCED);
+    public static final DeferredBlock<MachineBlock> SOLAR_FARM = machine(MachineKind.SOLAR_FARM);
 
     /** Кабели по классам (энергия) и трубы по видам и скоростям (предметы, жидкости). */
     public static final Map<CableTier, DeferredBlock<CableBlock>> CABLES = new EnumMap<>(CableTier.class);
@@ -88,12 +97,28 @@ public final class KonturBlocks {
         return holder;
     }
 
+    /** Источники без огня (солнце, ветер) не светят, остальные работающие машины дают слабый свет. */
+    private static boolean glows(MachineKind kind) {
+        return switch (kind) {
+            case SOLAR_PANEL, SOLAR_PANEL_ADVANCED, SOLAR_FARM, WIND_ROTOR -> false;
+            default -> true;
+        };
+    }
+
     private static DeferredBlock<MachineBlock> machine(MachineKind kind) {
-        DeferredBlock<MachineBlock> holder = block(kind.id, () -> new MachineBlock(
-                BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(3.5f, 6.0f).sound(SoundType.METAL)
-                        .requiresCorrectToolForDrops().noOcclusion()
-                        .lightLevel(state -> state.hasProperty(MachineBlock.ACTIVE) && state.getValue(MachineBlock.ACTIVE) ? 8 : 0),
-                kind));
+        boolean glow = glows(kind);
+        DeferredBlock<MachineBlock> holder = BLOCKS.register(kind.id, () -> {
+            BlockBehaviour.Properties props = BlockBehaviour.Properties.of().mapColor(MapColor.METAL)
+                    .strength(3.5f, 6.0f).sound(SoundType.METAL).requiresCorrectToolForDrops().noOcclusion()
+                    .lightLevel(state -> glow && state.hasProperty(MachineBlock.ACTIVE)
+                            && state.getValue(MachineBlock.ACTIVE) ? 8 : 0);
+            return kind == MachineKind.SOLAR_FARM ? new SolarFarmBlock(props, kind) : new MachineBlock(props, kind);
+        });
+        if (kind == MachineKind.SOLAR_FARM) {
+            KonturItems.ITEMS.register(kind.id, () -> new SolarFarmItem((SolarFarmBlock) holder.get(), new Item.Properties()));
+        } else {
+            KonturItems.ITEMS.registerSimpleBlockItem(kind.id, holder);
+        }
         MACHINES.put(kind, holder);
         return holder;
     }

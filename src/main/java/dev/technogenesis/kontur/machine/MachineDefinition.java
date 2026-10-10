@@ -5,7 +5,7 @@ import java.util.List;
 
 /** Описание машины: слоты, баки, энергия и расположение элементов в интерфейсе. Общее для сервера и клиента. */
 public final class MachineDefinition {
-    public enum SlotRole { INPUT, OUTPUT, FUEL, MODULE }
+    public enum SlotRole { INPUT, OUTPUT, FUEL, MODULE, COATING }
 
     public enum EnergyKind { CONSUMER, GENERATOR, STORAGE }
 
@@ -42,8 +42,14 @@ public final class MachineDefinition {
         flameY = b.flameY;
     }
 
+    /** Есть ли обычные слоты (кроме служебных слотов модуля и покрытия на вкладке). */
     public boolean hasItems() {
-        return !slots.isEmpty();
+        for (SlotDef s : slots) {
+            if (s.role() != SlotRole.MODULE && s.role() != SlotRole.COATING) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public boolean hasFluids() {
@@ -53,6 +59,25 @@ public final class MachineDefinition {
     /** Есть ли слот модуля форсирования. */
     public boolean hasModule() {
         return moduleSlot() >= 0;
+    }
+
+    /** Есть ли слот покрытия солнечной панели. */
+    public boolean hasCoating() {
+        return coatingSlot() >= 0;
+    }
+
+    public int coatingSlot() {
+        for (int i = 0; i < slots.size(); i++) {
+            if (slots.get(i).role() == SlotRole.COATING) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /** Слот на вкладке слева: модуль форсирования или покрытие. */
+    public int tabSlot() {
+        return hasModule() ? moduleSlot() : coatingSlot();
     }
 
     public int moduleSlot() {
@@ -130,6 +155,12 @@ public final class MachineDefinition {
         /** Слот модуля: добавляется последним, вне рабочей области (на вкладке слева от окна). */
         public Builder module(int x, int y) {
             slots.add(new SlotDef(x, y, SlotRole.MODULE));
+            return this;
+        }
+
+        /** Слот покрытия: стоит там же, на вкладке слева. */
+        public Builder coating(int x, int y) {
+            slots.add(new SlotDef(x, y, SlotRole.COATING));
             return this;
         }
 

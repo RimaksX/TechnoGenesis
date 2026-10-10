@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "kontur:coating_basic"
+    },
+    {
+      "item": "kontur:aluminum_ingot"
+    },
+    {
+      "item": "kontur:aluminum_ingot"
+    }
+  ],
+  "result": {
+    "id": "kontur:coating_aluminum",
+    "count": 1
+  }
+}

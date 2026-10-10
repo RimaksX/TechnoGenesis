@@ -62,7 +62,27 @@ public enum MachineKind implements StringRepresentable {
     ACID_REGENERATION_COLUMN("acid_regeneration_column", true, false, KonturRecipes.ACID_REGENERATION,
             MachineDefinition.builder()
             .tank(36, 20, 4000, false).tank(106, 20, 4000, true).slot(72, 45, SlotRole.OUTPUT)
-            .energy(EnergyKind.CONSUMER, 6400, 256, 0, 64).arrow(66, 30).module(-21, 39).build());
+            .energy(EnergyKind.CONSUMER, 6400, 256, 0, 64).arrow(66, 30).module(-21, 39).build()),
+
+    // ---- энергетика: возобновляемые источники и паровая турбина
+    // Ветряной ротор: 8..32 FE/t, растёт с высотой и в непогоду; нужны открытое небо и свободные бока
+    WIND_ROTOR("wind_rotor", true, false, null, MachineDefinition.builder()
+            .energy(EnergyKind.GENERATOR, 8000, 0, 128, 32).build()),
+    // Тепловой генератор: лава снизу, вода сбоку; 40 FE/t на каждую водяную сторону, до 160
+    THERMAL_GENERATOR("thermal_generator", true, false, null, MachineDefinition.builder()
+            .energy(EnergyKind.GENERATOR, 16000, 0, 256, 160).build()),
+    // Паровая турбина: вода и топливо; 128 FE/t
+    STEAM_TURBINE("steam_turbine", true, false, null, MachineDefinition.builder()
+            .tank(40, 20, 4000, false).slot(73, 29, SlotRole.FUEL).slot(105, 29, SlotRole.OUTPUT).module(-21, 39)
+            .energy(EnergyKind.GENERATOR, 32000, 0, 512, 128).flame(75, 50).build()),
+    // Солнечные панели: пик при ясном небе днём; нужны чистое небо над панелью и дневной свет
+    SOLAR_PANEL("solar_panel", true, false, null, MachineDefinition.builder()
+            .energy(EnergyKind.GENERATOR, 4000, 0, 64, 8).build()),
+    SOLAR_PANEL_ADVANCED("solar_panel_advanced", true, false, null, MachineDefinition.builder()
+            .coating(-21, 39).energy(EnergyKind.GENERATOR, 16000, 0, 256, 40).build()),
+    // Солнечная ферма 3x2: шесть плиток, одна энергосистема
+    SOLAR_FARM("solar_farm", true, false, null, MachineDefinition.builder()
+            .coating(-21, 39).energy(EnergyKind.GENERATOR, 64000, 0, 1024, 192).build());
 
     public static final Codec<MachineKind> CODEC = StringRepresentable.fromEnum(MachineKind::values);
 

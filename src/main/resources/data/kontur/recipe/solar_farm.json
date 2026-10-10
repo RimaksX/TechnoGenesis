@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "AAA",
+    "AAA",
+    "IFI"
+  ],
+  "key": {
+    "A": {
+      "item": "kontur:solar_panel_advanced"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "F": {
+      "item": "kontur:machine_frame"
+    }
+  },
+  "result": {
+    "id": "kontur:solar_farm",
+    "count": 1
+  }
+}

@@ -108,6 +108,12 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
         return kind;
     }
 
+    /** Слоты вкладки (модуль, покрытие) доступны только игроку, но не трубам и воронкам. */
+    protected boolean isServiceSlot(int slot) {
+        SlotRole role = def.slots.get(slot).role();
+        return role == SlotRole.MODULE || role == SlotRole.COATING;
+    }
+
     /** Читает модуль из слота: меняет скорость и увеличивает буфер энергии и предел приёма во столько же раз. */
     protected final void refreshModule() {
         int speed = 1;
@@ -147,6 +153,9 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
         MachineDefinition.SlotDef s = def.slots.get(slot);
         if (s.role() == SlotRole.MODULE) {
             return stack.getItem() instanceof ModuleItem;
+        }
+        if (s.role() == SlotRole.COATING) {
+            return stack.getItem() instanceof dev.technogenesis.kontur.item.CoatingItem;
         }
         return s.role() != SlotRole.OUTPUT && acceptsItem(slot, stack);
     }
@@ -532,7 +541,7 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
 
         @Override
         public int getSlotLimit(int slot) {
-            return def.slots.get(slot).role() == SlotRole.MODULE ? 1 : super.getSlotLimit(slot);
+            return isServiceSlot(slot) ? 1 : super.getSlotLimit(slot);
         }
 
         /** Роли слотов проверяют боковые обёртки; сама машина вставляет выходы напрямую. */
@@ -587,7 +596,7 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
 
         @Override
         public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-            if (!mode(TransferType.ITEMS, side).canInput() || def.slots.get(slot).role() == SlotRole.MODULE
+            if (!mode(TransferType.ITEMS, side).canInput() || isServiceSlot(slot)
                     || !isItemValidForSlot(slot, stack)) {
                 return stack;
             }
@@ -609,7 +618,7 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
 
         @Override
         public boolean isItemValid(int slot, ItemStack stack) {
-            return mode(TransferType.ITEMS, side).canInput() && def.slots.get(slot).role() != SlotRole.MODULE
+            return mode(TransferType.ITEMS, side).canInput() && !isServiceSlot(slot)
                     && isItemValidForSlot(slot, stack);
         }
     }

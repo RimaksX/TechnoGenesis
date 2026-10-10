@@ -116,7 +116,7 @@ public class MachineMenu extends AbstractContainerMenu {
 
         @Override
         public int getMaxStackSize() {
-            return role == SlotRole.MODULE ? 1 : super.getMaxStackSize();
+            return role == SlotRole.MODULE || role == SlotRole.COATING ? 1 : super.getMaxStackSize();
         }
 
         @Override
@@ -126,6 +126,9 @@ public class MachineMenu extends AbstractContainerMenu {
             }
             if (role == SlotRole.MODULE) {
                 return stack.getItem() instanceof ModuleItem;
+            }
+            if (role == SlotRole.COATING) {
+                return stack.getItem() instanceof dev.technogenesis.kontur.item.CoatingItem;
             }
             return be == null || be.isItemValidForSlot(getSlotIndex(), stack);
         }

@@ -51,7 +51,7 @@ public final class GuiUtil {
         ResourceLocation sprite = role == null ? SLOT : switch (role) {
             case INPUT, FUEL -> SLOT_IN;
             case OUTPUT -> SLOT_OUT;
-            case MODULE -> SLOT_MODULE;
+            case MODULE, COATING -> SLOT_MODULE;
         };
         g.blitSprite(sprite, x - 1, y - 1, 18, 18);
     }

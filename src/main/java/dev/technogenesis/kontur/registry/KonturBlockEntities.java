@@ -53,6 +53,12 @@ public final class KonturBlockEntities {
         return switch (kind) {
             case SOLID_FUEL_GENERATOR -> new SolidFuelGeneratorBlockEntity(pos, state);
             case CARBON_CAPACITOR -> new CapacitorBlockEntity(pos, state);
+            case WIND_ROTOR -> new dev.technogenesis.kontur.blockentity.WindRotorBlockEntity(pos, state);
+            case THERMAL_GENERATOR -> new dev.technogenesis.kontur.blockentity.ThermalGeneratorBlockEntity(pos, state);
+            case STEAM_TURBINE -> new dev.technogenesis.kontur.blockentity.SteamTurbineBlockEntity(pos, state);
+            case SOLAR_PANEL, SOLAR_PANEL_ADVANCED ->
+                    new dev.technogenesis.kontur.blockentity.SolarPanelBlockEntity(kind, pos, state);
+            case SOLAR_FARM -> new dev.technogenesis.kontur.blockentity.SolarFarmBlockEntity(pos, state);
             default -> new ProcessingMachineBlockEntity(kind, pos, state);
         };
     }
@@ -62,7 +68,14 @@ public final class KonturBlockEntities {
             BlockEntityType<MachineBlockEntity> type = MACHINES.get(kind).get();
             event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, type, (be, side) -> be.getItemHandler(side));
             event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, type, (be, side) -> be.getFluidHandler(side));
-            event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, type, (be, side) -> be.getEnergyStorage(side));
+            if (kind != MachineKind.SOLAR_FARM) {
+                event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, type, (be, side) -> be.getEnergyStorage(side));
+            }
         }
+        // ферма отдаёт энергию с любой из шести частей и с любой стороны: запрос уходит к главной части
+        event.registerBlock(Capabilities.EnergyStorage.BLOCK, (level, pos, state, be, side) -> {
+            BlockPos master = dev.technogenesis.kontur.block.SolarFarmBlock.masterOf(pos, state);
+            return level.getBlockEntity(master) instanceof MachineBlockEntity farm ? farm.getEnergyStorage(null) : null;
+        }, KonturBlocks.SOLAR_FARM.get());
     }
 }

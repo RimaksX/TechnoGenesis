@@ -27,7 +27,30 @@ public class SolidFuelGeneratorBlockEntity extends MachineBlockEntity {
     private int burnTotal;
 
     public SolidFuelGeneratorBlockEntity(BlockPos pos, BlockState state) {
-        super(MachineKind.SOLID_FUEL_GENERATOR, pos, state);
+        this(MachineKind.SOLID_FUEL_GENERATOR, pos, state);
+    }
+
+    protected SolidFuelGeneratorBlockEntity(MachineKind kind, BlockPos pos, BlockState state) {
+        super(kind, pos, state);
+    }
+
+    /** Выработка за тик при единичной скорости. */
+    protected int outputPerTick() {
+        return OUTPUT_PER_TICK;
+    }
+
+    /** Во сколько раз топливо горит быстрее печи. */
+    protected int burnSpeedup() {
+        return BURN_SPEEDUP;
+    }
+
+    /** Дополнительное условие работы (например, вода); при отказе подкласс сам выставляет статус. */
+    protected boolean ready(int speed) {
+        return true;
+    }
+
+    /** Расход ресурсов на тик работы. */
+    protected void consume(int speed) {
     }
 
     @Override
@@ -44,7 +67,7 @@ public class SolidFuelGeneratorBlockEntity extends MachineBlockEntity {
                 setStatus(MachineStatus.NO_FUEL);
                 return;
             }
-            if (energy.space() < OUTPUT_PER_TICK * activeSpeed()) {
+            if (energy.space() < outputPerTick() * activeSpeed()) {
                 setStatus(MachineStatus.FULL);
                 return;
             }
@@ -63,18 +86,22 @@ public class SolidFuelGeneratorBlockEntity extends MachineBlockEntity {
             if (ash) {
                 inventory.insertItem(ASH_SLOT, ashStack, false);
             }
-            burnTotal = Math.max(1, burn / BURN_SPEEDUP);
+            burnTotal = Math.max(1, burn / burnSpeedup());
             burnLeft = burnTotal;
             setChanged();
         }
         // модуль форсирования: горит и вырабатывает в speed раз быстрее, на единицу топлива энергии столько же
         int speed = Math.max(1, Math.min(activeSpeed(), burnLeft));
-        int output = OUTPUT_PER_TICK * speed;
+        int output = outputPerTick() * speed;
+        if (!ready(speed)) {
+            return;
+        }
         if (energy.space() < output) {
             setStatus(MachineStatus.FULL);
             return;
         }
         energy.produce(output);
+        consume(speed);
         burnLeft -= speed;
         setStatus(MachineStatus.RUNNING);
         setChanged();
@@ -84,7 +111,7 @@ public class SolidFuelGeneratorBlockEntity extends MachineBlockEntity {
     protected void extraSync(int[] data) {
         data[5] = burnLeft;
         data[6] = burnTotal;
-        data[7] = status == MachineStatus.RUNNING ? OUTPUT_PER_TICK * activeSpeed() : 0;
+        data[7] = status == MachineStatus.RUNNING ? outputPerTick() * activeSpeed() : 0;
     }
 
     @Override

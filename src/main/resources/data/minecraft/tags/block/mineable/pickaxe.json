@@ -41,11 +41,17 @@
     "kontur:pyrolusite_ore",
     "kontur:rutile_ore",
     "kontur:settling_tank",
+    "kontur:solar_farm",
+    "kontur:solar_panel",
+    "kontur:solar_panel_advanced",
     "kontur:solid_fuel_generator",
     "kontur:spodumene_ore",
+    "kontur:steam_turbine",
     "kontur:superconducting_cable",
     "kontur:tailings_mill",
+    "kontur:thermal_generator",
     "kontur:washing_drum",
+    "kontur:wind_rotor",
     "kontur:wolframite_ore"
   ]
 }

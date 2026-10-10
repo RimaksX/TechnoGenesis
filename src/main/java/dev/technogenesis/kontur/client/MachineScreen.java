@@ -84,7 +84,7 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
     /** Области вне основной панели (вкладка модуля): JEI не должен заходить на них своим списком. */
     public List<Rect2i> extraAreas() {
         List<Rect2i> areas = new ArrayList<>();
-        if (def.hasModule()) {
+        if (def.tabSlot() >= 0) {
             areas.add(new Rect2i(leftPos + HOLDER_X, topPos + HOLDER_Y, 30, 36));
         }
         return areas;
@@ -111,7 +111,7 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
         int x = leftPos;
         int y = topPos;
         GuiUtil.background(g, x, y, imageWidth, imageHeight);
-        if (def.hasModule()) {
+        if (def.tabSlot() >= 0) {
             GuiUtil.holder(g, x + HOLDER_X, y + HOLDER_Y);
         }
         for (Slot slot : menu.slots) {
@@ -163,7 +163,10 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
         g.blitSprite(GuiUtil.TANK_OVERLAY, left, y + t.y() + 1, 16, 50);
     }
 
-    /** Накопитель без слотов: зелёный экран с процентом заряда и точными значениями. */
+    /**
+     * Накопитель или источник без слотов: зелёный экран. У накопителя крупно процент заряда, у источника крупно
+     * текущая выработка; ниже точные значения и предел.
+     */
     private void drawEnergyInfo(GuiGraphics g, int x, int y) {
         int sx = x + 16;
         int sy = y + CONTENT_Y + 2;
@@ -172,15 +175,19 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
         GuiUtil.gauge(g, sx, sy, sw, sh);
         int cx = sx + sw / 2;
         long cap = Math.max(1, menu.energyCapacity());
-        int pct = (int) (100L * menu.energy() / cap);
+        boolean source = def.energyKind == EnergyKind.GENERATOR;
+        String big = source ? (menu.rate() > 0 ? "+" + fe(menu.rate()) : "0") : (int) (100L * menu.energy() / cap) + "%";
         g.pose().pushPose();
         g.pose().translate(cx, sy + 7, 0);
         g.pose().scale(2f, 2f, 1f);
-        g.drawCenteredString(font, pct + "%", 0, 0, GuiUtil.SCREEN_TEXT);
+        g.drawCenteredString(font, big, 0, 0, GuiUtil.SCREEN_TEXT);
         g.pose().popPose();
         String values = fit(fe(menu.energy()) + " / " + fe(cap) + " FE", sw - 8);
         g.drawString(font, values, cx - font.width(values) / 2, sy + 28, GuiUtil.SCREEN_TEXT, false);
-        String rate = fit(Component.translatable("gui.kontur.transfer_rate", fe(def.ratePerTick)).getString(), sw - 8);
+        String second = source
+                ? Component.translatable("gui.kontur.gen_peak", fe(def.ratePerTick)).getString()
+                : Component.translatable("gui.kontur.transfer_rate", fe(def.ratePerTick)).getString();
+        String rate = fit(second, sw - 8);
         g.drawString(font, rate, cx - font.width(rate) / 2, sy + 39, 0xFF8FA39A, false);
     }
 
@@ -255,6 +262,17 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
             lines.add(Component.translatable("gui.kontur.cooling", menu.cooledFaces()).withStyle(ChatFormatting.GRAY));
             if (menu.overheated()) {
                 lines.add(Component.translatable("gui.kontur.overheat_hint").withStyle(ChatFormatting.RED));
+            }
+            g.renderComponentTooltip(font, lines, mx, my);
+        }
+        if (def.hasCoating() && hoveredSlot != null && hoveredSlot.index == def.coatingSlot()
+                && !hoveredSlot.hasItem() && menu.getCarried().isEmpty()) {
+            List<Component> lines = new ArrayList<>();
+            lines.add(Component.translatable("gui.kontur.coating_slot"));
+            for (dev.technogenesis.kontur.machine.CoatingTier tier : dev.technogenesis.kontur.machine.CoatingTier.values()) {
+                lines.add(Component.translatable("gui.kontur.coating_line",
+                        Component.translatable("item.kontur." + tier.itemId()), tier.percent)
+                        .withStyle(ChatFormatting.GRAY));
             }
             g.renderComponentTooltip(font, lines, mx, my);
         }
