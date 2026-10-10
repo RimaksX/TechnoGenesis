@@ -14,9 +14,14 @@
   "energy": 1200,
   "time": 75,
   "input": {
-    "ingredient": {
-      "item": "minecraft:raw_iron"
-    },
+    "ingredient": [
+      {
+        "item": "minecraft:raw_iron"
+      },
+      {
+        "tag": "c:ores/iron"
+      }
+    ],
     "count": 1
   }
 }

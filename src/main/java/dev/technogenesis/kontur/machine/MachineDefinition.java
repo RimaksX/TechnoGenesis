@@ -114,7 +114,7 @@ public final class MachineDefinition {
         }
 
         public Builder tank(int x, int y, int capacity, boolean output) {
-            tanks.add(new TankDef(x, y, 16, 62, capacity, output));
+            tanks.add(new TankDef(x, y, 18, 52, capacity, output));
             return this;
         }
 

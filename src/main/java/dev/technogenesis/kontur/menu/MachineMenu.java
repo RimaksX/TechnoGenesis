@@ -33,7 +33,7 @@ import org.jetbrains.annotations.Nullable;
  */
 public class MachineMenu extends AbstractContainerMenu {
     public static final int SYNC_SIZE = 16;
-    public static final int PLAYER_INV_Y = 84;
+    public static final int PLAYER_INV_Y = 102;
 
     public final MachineKind kind;
     public final MachineDefinition def;

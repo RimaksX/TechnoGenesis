@@ -14,9 +14,14 @@
   "energy": 1200,
   "time": 75,
   "input": {
-    "ingredient": {
-      "item": "kontur:raw_sulfur"
-    },
+    "ingredient": [
+      {
+        "item": "kontur:raw_sulfur"
+      },
+      {
+        "tag": "c:ores/sulfur"
+      }
+    ],
     "count": 1
   }
 }

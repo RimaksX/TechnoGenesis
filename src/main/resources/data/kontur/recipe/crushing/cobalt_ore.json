@@ -14,9 +14,14 @@
   "energy": 1200,
   "time": 75,
   "input": {
-    "ingredient": {
-      "item": "kontur:raw_cobaltite"
-    },
+    "ingredient": [
+      {
+        "item": "kontur:raw_cobaltite"
+      },
+      {
+        "tag": "c:ores/cobaltite"
+      }
+    ],
     "count": 1
   }
 }

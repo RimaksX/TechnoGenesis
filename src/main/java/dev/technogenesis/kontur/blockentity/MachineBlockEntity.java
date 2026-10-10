@@ -268,7 +268,12 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
             sides.ejectItems = !sides.ejectItems;
         } else if (id == 201) {
             sides.ejectFluids = !sides.ejectFluids;
-        } else if (id >= 100) {
+        } else if (id >= 300 && id < 300 + TransferType.values().length) {
+            TransferType type = TransferType.values()[id - 300];
+            for (RelativeSide side : RelativeSide.values()) {
+                sides.set(type, side, IoMode.NONE);
+            }
+        } else if (id >= 100 && id < 200) {
             int v = id - 100;
             boolean reverse = (v & 1) == 1;
             v >>= 1;

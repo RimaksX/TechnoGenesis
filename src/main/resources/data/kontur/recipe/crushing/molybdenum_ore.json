@@ -14,9 +14,14 @@
   "energy": 1200,
   "time": 75,
   "input": {
-    "ingredient": {
-      "item": "kontur:raw_molybdenite"
-    },
+    "ingredient": [
+      {
+        "item": "kontur:raw_molybdenite"
+      },
+      {
+        "tag": "c:ores/molybdenite"
+      }
+    ],
     "count": 1
   }
 }

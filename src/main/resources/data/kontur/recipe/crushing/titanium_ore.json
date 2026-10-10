@@ -14,9 +14,14 @@
   "energy": 1200,
   "time": 75,
   "input": {
-    "ingredient": {
-      "item": "kontur:raw_rutile"
-    },
+    "ingredient": [
+      {
+        "item": "kontur:raw_rutile"
+      },
+      {
+        "tag": "c:ores/rutile"
+      }
+    ],
     "count": 1
   }
 }

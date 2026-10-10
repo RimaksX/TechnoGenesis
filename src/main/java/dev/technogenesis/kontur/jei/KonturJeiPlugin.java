@@ -94,8 +94,8 @@ public class KonturJeiPlugin implements IModPlugin {
                 }
                 int x = kind.definition.arrowX;
                 int y = kind.definition.arrowY;
-                if (mouseX >= x && mouseX < x + 24 && mouseY >= y && mouseY < y + 16) {
-                    return List.of(IGuiClickableArea.createBasic(x, y, 24, 16, KonturJeiTypes.of(kind.recipeKind)));
+                if (mouseX >= x && mouseX < x + 28 && mouseY >= y - 2 && mouseY < y + 10) {
+                    return List.of(IGuiClickableArea.createBasic(x, y - 2, 28, 12, KonturJeiTypes.of(kind.recipeKind)));
                 }
                 return List.of();
             }
