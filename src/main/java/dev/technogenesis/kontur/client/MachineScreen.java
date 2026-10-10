@@ -25,9 +25,8 @@ import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtension
 import net.neoforged.neoforge.fluids.FluidStack;
 
 /**
- * Универсальный экран машины в духе Mekanism: светлое окно с чёрной обводкой, утопленные слоты и шкалы, шкала энергии
- * справа, тёмный экран состояния с зелёным текстом, слева вкладка со слотом модуля форсирования. Стороны настраиваются
- * не здесь, а ключом по граням самой машины.
+ * Универсальный экран машины: тёмная панель, слоты входа и выхода разного цвета, шкала энергии справа, экран
+ * состояния, слева вкладка со слотом модуля форсирования. Стороны настраиваются ключом по граням машины, не в меню.
  * Любой текст перед выводом обрезается по доступной ширине, поэтому надписи не наезжают друг на друга.
  */
 public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
@@ -104,7 +103,7 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
     protected void renderLabels(GuiGraphics g, int mouseX, int mouseY) {
         String t = fit(title.getString(), IMAGE_W - 16);
         g.drawString(font, t, (imageWidth - font.width(t)) / 2, TITLE_Y, GuiUtil.TITLE_TEXT, false);
-        g.drawString(font, fit(playerInventoryTitle.getString(), IMAGE_W - 16), 8, INV_LABEL_Y, GuiUtil.TITLE_TEXT, false);
+        g.drawString(font, fit(playerInventoryTitle.getString(), IMAGE_W - 16), 8, INV_LABEL_Y, GuiUtil.LABEL_TEXT, false);
     }
 
     @Override
@@ -116,7 +115,11 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
             GuiUtil.holder(g, x + HOLDER_X, y + HOLDER_Y);
         }
         for (Slot slot : menu.slots) {
-            GuiUtil.slot(g, x + slot.x, y + slot.y);
+            MachineDefinition.SlotRole role = slot.index < def.slots.size() ? def.slots.get(slot.index).role() : null;
+            GuiUtil.slot(g, x + slot.x, y + slot.y, role);
+        }
+        if (def.hasModule() && (menu.slots.get(def.moduleSlot()).hasItem() || menu.heatPercent() > 0)) {
+            GuiUtil.heatBar(g, x + HOLDER_X + 4, y + HOLDER_Y + 28, menu.heatPercent());
         }
         if (def.energyCapacity > 0) {
             GuiUtil.powerBar(g, x + ENERGY_X, y + ENERGY_Y, menu.energy(), menu.energyCapacity());
@@ -184,7 +187,7 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
     private void drawStatusLine(GuiGraphics g, int x, int y) {
         GuiUtil.gauge(g, x + STATUS_X, y + STATUS_Y, STATUS_W, STATUS_H);
         MachineStatus st = menu.status();
-        int color = st.problem ? 0xFFFF6B5E : (st == MachineStatus.RUNNING || st == MachineStatus.CHARGING
+        int color = st.problem || menu.overheated() ? 0xFFFF6B5E : (st == MachineStatus.RUNNING || st == MachineStatus.CHARGING
                 ? GuiUtil.SCREEN_TEXT : 0xFF8FA39A);
         String rate = rateText(st);
         int inner = STATUS_W - 8;
@@ -193,12 +196,16 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
         int ty = y + STATUS_Y + (STATUS_H - 8) / 2;
         g.drawString(font, text, x + STATUS_X + 4, ty, color, false);
         if (!rate.isEmpty() && font.width(text) + rateW <= inner) {
-            g.drawString(font, rate, x + STATUS_X + STATUS_W - 4 - font.width(rate), ty, 0xFF9CE8C4, false);
+            g.drawString(font, rate, x + STATUS_X + STATUS_W - 4 - font.width(rate),
+                    ty, menu.overheated() ? 0xFFFF6B5E : 0xFF9CE8C4, false);
         }
     }
 
     /** Мощность справа в строке состояния: расход при работе с учётом модуля, выработка у генератора. */
     private String rateText(MachineStatus st) {
+        if (menu.overheated()) {
+            return Component.translatable("gui.kontur.overheat").getString();
+        }
         if (def.energyKind == EnergyKind.GENERATOR && menu.rate() > 0) {
             return "+" + fe(menu.rate()) + " FE/t";
         }
@@ -241,6 +248,15 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
         if (def.hasArrow() && inRect(mx, my, x + def.arrowX, y + def.arrowY - 2, GuiUtil.ARROW_W, GuiUtil.ARROW_H + 4)
                 && menu.totalTime() > 0) {
             g.renderTooltip(font, Component.translatable("gui.kontur.progress", 100 * menu.progress() / menu.totalTime()), mx, my);
+        }
+        if (def.hasModule() && inRect(mx, my, x + HOLDER_X + 4, y + HOLDER_Y + 28, 18, 6)) {
+            List<Component> lines = new ArrayList<>();
+            lines.add(Component.translatable("gui.kontur.heat", menu.heatPercent()));
+            lines.add(Component.translatable("gui.kontur.cooling", menu.cooledFaces()).withStyle(ChatFormatting.GRAY));
+            if (menu.overheated()) {
+                lines.add(Component.translatable("gui.kontur.overheat_hint").withStyle(ChatFormatting.RED));
+            }
+            g.renderComponentTooltip(font, lines, mx, my);
         }
         if (def.hasModule() && hoveredSlot != null && hoveredSlot.index == def.moduleSlot()
                 && !hoveredSlot.hasItem() && menu.getCarried().isEmpty()) {

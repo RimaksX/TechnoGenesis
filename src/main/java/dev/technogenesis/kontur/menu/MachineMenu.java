@@ -221,6 +221,19 @@ public class MachineMenu extends AbstractContainerMenu {
         return def.hasModule() && sync[6] > 0 ? sync[6] : 100;
     }
 
+    /** Нагрев модуля в процентах от предела. */
+    public int heatPercent() {
+        return def.hasModule() ? sync[7] : 0;
+    }
+
+    public int cooledFaces() {
+        return sync[12];
+    }
+
+    public boolean overheated() {
+        return def.hasModule() && sync[15] != 0;
+    }
+
     public int burnLeft() {
         return sync[5];
     }

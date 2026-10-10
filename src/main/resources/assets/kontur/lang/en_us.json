@@ -261,5 +261,10 @@
   "wrench.kontur.front": "Machine front: no port",
   "wrench.kontur.unsupported": "This machine has no \"%s\"",
   "wrench.kontur.eject_on": "Auto-eject on",
-  "wrench.kontur.eject_off": "Auto-eject off"
+  "wrench.kontur.eject_off": "Auto-eject off",
+  "gui.kontur.overheat": "OVERHEAT",
+  "gui.kontur.heat": "Module heat: %s%%",
+  "gui.kontur.cooling": "Faces touching water, ice or snow: %s",
+  "gui.kontur.overheat_hint": "The module is off and the machine runs as if without it until it cools down. Put water, ice or snow right next to the machine.",
+  "tooltip.kontur.module.heat": "Heat: +%s per tick; cooling faces for steady work: %s"
 }

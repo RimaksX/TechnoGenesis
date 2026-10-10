@@ -35,6 +35,10 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.FluidTags;
+import dev.technogenesis.kontur.machine.ModuleTier;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.capabilities.Capabilities;
@@ -64,6 +68,10 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
     /** Действие модуля форсирования: во сколько раз быстрее и сколько процентов энергии. */
     protected int moduleSpeed = 1;
     protected int moduleEnergyPercent = 100;
+    private int moduleHeat;
+    protected int heat;
+    protected boolean overheated;
+    protected int cooledFaces;
 
     private final IItemHandler[] itemViews = new IItemHandler[7];
     private final IFluidHandler[] fluidViews = new IFluidHandler[7];
@@ -106,6 +114,10 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
         }
         moduleSpeed = speed;
         moduleEnergyPercent = percent;
+        moduleHeat = slot >= 0 && inventory.getStackInSlot(slot).getItem() instanceof ModuleItem mm ? mm.tier().heatPerTick : 0;
+        if (speed == 1) {
+            overheated = false;
+        }
         if (def.energyKind == EnergyKind.CONSUMER) {
             energy.setLimits(def.energyCapacity * speed, def.maxReceive * speed);
         }
@@ -166,12 +178,59 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
             return;
         }
         tickMachine();
+        updateHeat();
         pushEnergy();
         if (lvl.getGameTime() % 8 == 0) {
             ejectItems();
             ejectFluids();
         }
         updateBlockState();
+    }
+
+    /** Скорость и цена энергии, действующие сейчас: при перегреве модуль отключён. */
+    protected final int activeSpeed() {
+        return overheated ? 1 : moduleSpeed;
+    }
+
+    protected final int activeEnergyPercent() {
+        return overheated ? 100 : moduleEnergyPercent;
+    }
+
+    /**
+     * Нагрев от модуля: работающая машина греется на heatPerTick, остывает на COOL_PASSIVE плюс COOL_PER_FACE за каждую
+     * грань, касающуюся воды, льда или снега. При HEAT_MAX модуль отключается (машина работает как без него), и он
+     * включается обратно, когда нагрев упал до HEAT_RESUME.
+     */
+    private void updateHeat() {
+        if (!def.hasModule()) {
+            return;
+        }
+        if (level.getGameTime() % 20 == 0) {
+            cooledFaces = countCooledFaces();
+        }
+        if (moduleHeat == 0 && heat == 0) {
+            return;
+        }
+        int gain = status == MachineStatus.RUNNING && !overheated ? moduleHeat : 0;
+        int cool = ModuleTier.COOL_PASSIVE + ModuleTier.COOL_PER_FACE * cooledFaces;
+        heat = Math.max(0, Math.min(ModuleTier.HEAT_MAX, heat + gain - cool));
+        if (heat >= ModuleTier.HEAT_MAX) {
+            overheated = true;
+        } else if (overheated && heat <= ModuleTier.HEAT_RESUME) {
+            overheated = false;
+        }
+        setChanged();
+    }
+
+    private int countCooledFaces() {
+        int n = 0;
+        for (Direction d : Direction.values()) {
+            BlockState st = level.getBlockState(worldPosition.relative(d));
+            if (st.getFluidState().is(FluidTags.WATER) || st.is(BlockTags.ICE) || st.is(Blocks.SNOW_BLOCK)) {
+                n++;
+            }
+        }
+        return n;
     }
 
     protected final void setStatus(MachineStatus s) {
@@ -278,6 +337,8 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
         d[3] = totalTime;
         d[4] = status.ordinal();
         extraSync(d);
+        d[12] = cooledFaces;
+        d[15] = overheated ? 1 : 0;
         d[8] = sides.packA();
         d[9] = sides.packB();
         for (int i = 0; i < tanks.length; i++) {
@@ -396,6 +457,8 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
         tag.put("sides", sides.save());
         tag.putInt("progress", progress);
         tag.putInt("total", totalTime);
+        tag.putInt("heat", heat);
+        tag.putBoolean("overheated", overheated);
         saveExtra(tag);
     }
 
@@ -414,6 +477,8 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
         sides.load(tag.getCompound("sides"));
         progress = tag.getInt("progress");
         totalTime = tag.getInt("total");
+        heat = tag.getInt("heat");
+        overheated = tag.getBoolean("overheated") && moduleSpeed > 1;
         loadExtra(tag);
     }
 

@@ -261,5 +261,10 @@
   "wrench.kontur.front": "Лицо машины: гнезда нет",
   "wrench.kontur.unsupported": "У этой машины нет типа «%s»",
   "wrench.kontur.eject_on": "Авто-вывод включён",
-  "wrench.kontur.eject_off": "Авто-вывод выключен"
+  "wrench.kontur.eject_off": "Авто-вывод выключен",
+  "gui.kontur.overheat": "ПЕРЕГРЕВ",
+  "gui.kontur.heat": "Нагрев модуля: %s%%",
+  "gui.kontur.cooling": "Граней с водой, льдом или снегом: %s",
+  "gui.kontur.overheat_hint": "Модуль отключён, машина идёт как без него. Включится после остывания. Поставьте воду, лёд или снег вплотную к машине.",
+  "tooltip.kontur.module.heat": "Нагрев: +%s за тик; граней охлаждения для стабильной работы: %s"
 }

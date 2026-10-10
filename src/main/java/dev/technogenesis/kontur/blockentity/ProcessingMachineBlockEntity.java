@@ -3,6 +3,7 @@ package dev.technogenesis.kontur.blockentity;
 import dev.technogenesis.kontur.block.MachineBlock;
 import dev.technogenesis.kontur.machine.MachineKind;
 import dev.technogenesis.kontur.machine.MachineStatus;
+import dev.technogenesis.kontur.machine.ModuleTier;
 import dev.technogenesis.kontur.recipe.MachineRecipe;
 import dev.technogenesis.kontur.recipe.MachineRecipeInput;
 import java.util.List;
@@ -103,12 +104,12 @@ public class ProcessingMachineBlockEntity extends MachineBlockEntity {
         }
         // 2. энергия этого тика
         // модуль форсирования: за тик выполняется несколько шагов цикла, энергия за них платится сразу
-        int steps = Math.max(1, Math.min(moduleSpeed, recipe.time() - progress));
+        int steps = Math.max(1, Math.min(activeSpeed(), recipe.time() - progress));
         int base = 0;
         for (int i = 0; i < steps; i++) {
             base += recipe.energyForTick(progress + i);
         }
-        int cost = (int) (((long) base * moduleEnergyPercent + 99) / 100);
+        int cost = (int) (((long) base * activeEnergyPercent() + 99) / 100);
         if (energy.getEnergyStored() < cost) {
             setStatus(MachineStatus.NO_ENERGY);
             return;
@@ -159,6 +160,7 @@ public class ProcessingMachineBlockEntity extends MachineBlockEntity {
     protected void extraSync(int[] data) {
         data[5] = moduleSpeed;
         data[6] = moduleEnergyPercent;
+        data[7] = heat * 100 / ModuleTier.HEAT_MAX;
     }
 
     @Override

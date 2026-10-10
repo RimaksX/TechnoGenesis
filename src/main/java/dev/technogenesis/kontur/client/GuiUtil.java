@@ -1,6 +1,7 @@
 package dev.technogenesis.kontur.client;
 
 import dev.technogenesis.kontur.Kontur;
+import dev.technogenesis.kontur.machine.MachineDefinition;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 
@@ -12,6 +13,9 @@ import net.minecraft.resources.ResourceLocation;
 public final class GuiUtil {
     public static final ResourceLocation BACKGROUND = sprite("background");
     public static final ResourceLocation SLOT = sprite("slot");
+    public static final ResourceLocation SLOT_IN = sprite("slot_in");
+    public static final ResourceLocation SLOT_OUT = sprite("slot_out");
+    public static final ResourceLocation SLOT_MODULE = sprite("slot_module");
     public static final ResourceLocation GAUGE = sprite("gauge");
     public static final ResourceLocation TANK_OVERLAY = sprite("tank_overlay");
     public static final ResourceLocation HOLDER = sprite("holder");
@@ -28,7 +32,8 @@ public final class GuiUtil {
 
     /** Цвет текста на тёмном экране. */
     public static final int SCREEN_TEXT = 0xFF3CFE9A;
-    public static final int TITLE_TEXT = 0xFF404040;
+    public static final int TITLE_TEXT = 0xFFD4DEEE;
+    public static final int LABEL_TEXT = 0xFF8C98AC;
 
     private GuiUtil() {
     }
@@ -41,9 +46,14 @@ public final class GuiUtil {
         g.blitSprite(BACKGROUND, x, y, w, h);
     }
 
-    /** Слот: рамка 18x18 вокруг предмета 16x16, который стоит в точке (x, y). */
-    public static void slot(GuiGraphics g, int x, int y) {
-        g.blitSprite(SLOT, x - 1, y - 1, 18, 18);
+    /** Слот: рамка 18x18 вокруг предмета 16x16, который стоит в точке (x, y). Вход - бирюзовая, выход - янтарная. */
+    public static void slot(GuiGraphics g, int x, int y, MachineDefinition.SlotRole role) {
+        ResourceLocation sprite = role == null ? SLOT : switch (role) {
+            case INPUT, FUEL -> SLOT_IN;
+            case OUTPUT -> SLOT_OUT;
+            case MODULE -> SLOT_MODULE;
+        };
+        g.blitSprite(sprite, x - 1, y - 1, 18, 18);
     }
 
     /** Утопленная рамка с тёмной серединой: шкалы, баки, экраны. */
@@ -60,11 +70,11 @@ public final class GuiUtil {
         int h = (int) Math.max(1, Math.min(54, 54 * stored / capacity));
         int left = x + 1;
         int bottom = y + POWER_H - 1;
-        g.fill(left, bottom - h, left + 6, bottom, 0xFF2FC577);
+        g.fill(left, bottom - h, left + 6, bottom, 0xFFD98A1E);
         for (int row = 0; row < h; row += 2) {
-            g.fill(left, bottom - h + row, left + 6, bottom - h + row + 1, 0xFF3EE88A);
+            g.fill(left, bottom - h + row, left + 6, bottom - h + row + 1, 0xFFF0A832);
         }
-        g.fill(left, bottom - h, left + 1, bottom, 0xFF9CFFC8);
+        g.fill(left, bottom - h, left + 1, bottom, 0xFFFFE09A);
     }
 
     /** Стрелка прогресса 28x8: серая основа и зелёная часть слева направо. */
@@ -82,6 +92,16 @@ public final class GuiUtil {
         if (total > 0 && left > 0) {
             int k = Math.max(1, FLAME_SIZE * left / total);
             g.blitSprite(FLAME_ON, FLAME_SIZE, FLAME_SIZE, 0, FLAME_SIZE - k, x, y + FLAME_SIZE - k, FLAME_SIZE, k);
+        }
+    }
+
+    /** Полоса нагрева модуля 18x6: зелёная, жёлтая, красная. */
+    public static void heatBar(GuiGraphics g, int x, int y, int percent) {
+        gauge(g, x, y, 18, 6);
+        int w = Math.max(0, Math.min(16, 16 * percent / 100));
+        if (w > 0) {
+            int color = percent < 50 ? 0xFF50DC78 : percent < 80 ? 0xFFF0BE32 : 0xFFEB463C;
+            g.fill(x + 1, y + 1, x + 1 + w, y + 5, color);
         }
     }
 
