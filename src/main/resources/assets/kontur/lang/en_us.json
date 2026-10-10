@@ -256,7 +256,7 @@
   "wrench.kontur.current": "Mode: %s",
   "wrench.kontur.hint_side": "Right-click a machine face: next port mode",
   "wrench.kontur.hint_shift": "Shift + right-click: previous mode",
-  "wrench.kontur.hint_air": "Right-click in air: change wrench mode",
+  "wrench.kontur.hint_air": "Shift + right click in the air: change wrench mode",
   "wrench.kontur.side_set": "%s: %s%s",
   "wrench.kontur.front": "Machine front: no port",
   "wrench.kontur.unsupported": "This machine has no \"%s\"",

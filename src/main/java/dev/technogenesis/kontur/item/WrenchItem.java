@@ -34,7 +34,7 @@ import net.minecraft.world.level.Level;
 
 /**
  * Ключ для настройки сторон машин. Правый клик по грани переключает режим гнезда (вход, выход, вход и выход, закрыто),
- * с Shift - в обратную сторону; рамка гнезда на модели меняет цвет. Правый клик в воздухе меняет режим ключа:
+ * с Shift - в обратную сторону; рамка гнезда на модели меняет цвет. Shift + правый клик в воздухе (не глядя на блок) меняет режим ключа:
  * все типы сразу, только предметы, жидкости, энергия или авто-вывод.
  */
 public class WrenchItem extends Item {
@@ -94,6 +94,12 @@ public class WrenchItem extends Item {
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
+        // режим меняется только Shift + ПКМ в воздухе: клик рядом с блоком (мимо тонкой трубы или кабеля) или по
+        // постороннему блоку режим не трогает
+        if (!player.isShiftKeyDown()
+                || player.pick(player.blockInteractionRange(), 0f, false).getType() == net.minecraft.world.phys.HitResult.Type.BLOCK) {
+            return InteractionResultHolder.pass(stack);
+        }
         WrenchMode next = mode(stack).next();
         if (!level.isClientSide) {
             setMode(stack, next);

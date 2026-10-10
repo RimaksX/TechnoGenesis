@@ -256,7 +256,7 @@
   "wrench.kontur.current": "Режим: %s",
   "wrench.kontur.hint_side": "ПКМ по грани машины: следующий режим гнезда",
   "wrench.kontur.hint_shift": "Shift + ПКМ: предыдущий режим",
-  "wrench.kontur.hint_air": "ПКМ в воздухе: сменить режим ключа",
+  "wrench.kontur.hint_air": "Shift + ПКМ в воздухе: сменить режим ключа",
   "wrench.kontur.side_set": "%s: %s%s",
   "wrench.kontur.front": "Лицо машины: гнезда нет",
   "wrench.kontur.unsupported": "У этой машины нет типа «%s»",
