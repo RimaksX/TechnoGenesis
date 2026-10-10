@@ -97,7 +97,9 @@ public class MachineBlock extends BaseEntityBlock {
         // ведро/бак с жидкостью: наполнить или слить машину прямо кликом
         if (kind.definition.hasFluids() && !stack.isEmpty() && stack.getCapability(Capabilities.FluidHandler.ITEM) != null) {
             if (!level.isClientSide) {
-                FluidUtil.interactWithFluidHandler(player, hand, level, pos, hit.getDirection());
+                if (level.getBlockEntity(pos) instanceof MachineBlockEntity be) {
+                    FluidUtil.interactWithFluidHandler(player, hand, be.playerFluidHandler());
+                }
             }
             return ItemInteractionResult.sidedSuccess(level.isClientSide);
         }

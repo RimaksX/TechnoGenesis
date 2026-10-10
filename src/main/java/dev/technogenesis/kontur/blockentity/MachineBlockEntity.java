@@ -393,6 +393,8 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
         d[12] = coolingPerTick();
         d[15] = overheated ? 1 : 0;
         d[16] = heat * 100 / ModuleTier.HEAT_MAX;
+        d[17] = sides.packA();
+        d[18] = sides.packB();
         for (int i = 0; i < tanks.length; i++) {
             FluidStack f = tanks[i].getFluid();
             d[10 + i * 3] = f.isEmpty() ? 0 : BuiltInRegistries.FLUID.getId(f.getFluid());
@@ -402,21 +404,7 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
 
     /** Типы передачи, которые у машины вообще есть. */
     public boolean supports(TransferType type) {
-        return switch (type) {
-            case ITEMS -> def.inputSlot() >= 0 || hasFuelSlot();
-            case FLUIDS -> def.hasFluids();
-            case ENERGY -> def.energyCapacity > 0;
-            case OUT1, OUT2, OUT3 -> def.outputSlots().length > type.outputIndex();
-        };
-    }
-
-    private boolean hasFuelSlot() {
-        for (MachineDefinition.SlotDef s : def.slots) {
-            if (s.role() == SlotRole.FUEL) {
-                return true;
-            }
-        }
-        return false;
+        return def.supports(type);
     }
 
     /** Канал выхода, которому принадлежит выходной слот: по порядку выходов, не больше трёх. */
@@ -481,6 +469,17 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
         }
         sidesChanged();
         return result;
+    }
+
+    /** Панель в меню: следующий (или предыдущий) режим одного типа на одной грани. Null, если такого типа у машины нет. */
+    @Nullable
+    public IoMode cycleType(TransferType type, RelativeSide side, boolean reverse) {
+        if (!supports(type)) {
+            return null;
+        }
+        sides.cycle(type, side, reverse);
+        sidesChanged();
+        return sides.get(type, side);
     }
 
     /** Ключ: общий переключатель авто-вывода предметов и жидкостей. */
@@ -615,6 +614,75 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
             return null;
         }
         return fluidViews[side == null ? 6 : side.ordinal()];
+    }
+
+    /**
+     * Баки в руках игрока: ведро наливает во входные баки и забирает из любого бака, настройки сторон не нужны (так можно
+     * освободить машину от остатков с любой грани, в том числе с лицевой). Вмещается и сливается только целыми вёдрами.
+     */
+    public IFluidHandler playerFluidHandler() {
+        return new IFluidHandler() {
+            @Override
+            public int getTanks() {
+                return tanks.length;
+            }
+
+            @Override
+            public FluidStack getFluidInTank(int tank) {
+                return tanks[tank].getFluid();
+            }
+
+            @Override
+            public int getTankCapacity(int tank) {
+                return tanks[tank].getCapacity();
+            }
+
+            @Override
+            public boolean isFluidValid(int tank, FluidStack stack) {
+                return !tanks[tank].output && tanks[tank].isFluidValid(stack);
+            }
+
+            @Override
+            public int fill(FluidStack resource, FluidAction action) {
+                for (MachineTank tank : tanks) {
+                    if (!tank.output && tank.isFluidValid(resource)
+                            && (tank.isEmpty() || FluidStack.isSameFluidSameComponents(tank.getFluid(), resource))) {
+                        return tank.fill(resource, action);
+                    }
+                }
+                return 0;
+            }
+
+            @Override
+            public FluidStack drain(FluidStack resource, FluidAction action) {
+                for (MachineTank tank : tanks) {
+                    if (FluidStack.isSameFluidSameComponents(tank.getFluid(), resource)) {
+                        return tank.drain(resource, action);
+                    }
+                }
+                return FluidStack.EMPTY;
+            }
+
+            @Override
+            public FluidStack drain(int maxDrain, FluidAction action) {
+                for (MachineTank tank : tanks) {
+                    if (!tank.isEmpty()) {
+                        return tank.drain(maxDrain, action);
+                    }
+                }
+                return FluidStack.EMPTY;
+            }
+        };
+    }
+
+    /** Меню: слить бак целиком в никуда (для остатков, которые не набираются в ведро). */
+    public boolean voidTank(int index) {
+        if (index < 0 || index >= tanks.length || tanks[index].isEmpty()) {
+            return false;
+        }
+        tanks[index].setFluid(FluidStack.EMPTY);
+        setChanged();
+        return true;
     }
 
     @Nullable

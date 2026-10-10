@@ -116,7 +116,7 @@ public final class MachinePortRenderer implements BlockEntityRenderer<MachineBlo
         rect(vc, pose, dir, hi - 1f, lo + 1f, hi, hi - 1f, darker, light, lift);
     }
 
-    static int shade(int color, float k) {
+    public static int shade(int color, float k) {
         int r = Math.min(255, Math.round(((color >> 16) & 255) * k));
         int g = Math.min(255, Math.round(((color >> 8) & 255) * k));
         int b = Math.min(255, Math.round((color & 255) * k));

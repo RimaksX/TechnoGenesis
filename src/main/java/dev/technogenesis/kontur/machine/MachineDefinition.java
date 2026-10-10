@@ -56,6 +56,25 @@ public final class MachineDefinition {
         return !tanks.isEmpty();
     }
 
+    /** Типы передачи, которые у машины вообще есть (общее для сервера и экрана настройки сторон). */
+    public boolean supports(TransferType type) {
+        return switch (type) {
+            case ITEMS -> inputSlot() >= 0 || hasFuelSlot();
+            case FLUIDS -> hasFluids();
+            case ENERGY -> energyCapacity > 0;
+            case OUT1, OUT2, OUT3 -> outputSlots().length > type.outputIndex();
+        };
+    }
+
+    private boolean hasFuelSlot() {
+        for (SlotDef s : slots) {
+            if (s.role() == SlotRole.FUEL) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /** Есть ли слот модуля форсирования. */
     public boolean hasModule() {
         return moduleSlot() >= 0;

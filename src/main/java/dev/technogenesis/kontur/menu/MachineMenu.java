@@ -6,7 +6,11 @@ import dev.technogenesis.kontur.machine.MachineDefinition;
 import dev.technogenesis.kontur.machine.MachineDefinition.SlotDef;
 import dev.technogenesis.kontur.machine.MachineDefinition.SlotRole;
 import dev.technogenesis.kontur.machine.MachineKind;
+import dev.technogenesis.kontur.machine.IoMode;
 import dev.technogenesis.kontur.machine.MachineStatus;
+import dev.technogenesis.kontur.machine.RelativeSide;
+import dev.technogenesis.kontur.machine.SideConfig;
+import dev.technogenesis.kontur.machine.TransferType;
 import dev.technogenesis.kontur.registry.KonturBlocks;
 import dev.technogenesis.kontur.registry.KonturMenus;
 import net.minecraft.core.BlockPos;
@@ -42,6 +46,13 @@ public class MachineMenu extends AbstractContainerMenu {
     private final MachineBlockEntity be;
     private final ContainerLevelAccess access;
     private final int[] sync = new int[SYNC_SIZE];
+    /** Кнопка авто-вывода на панели настройки сторон. */
+    public static final int EJECT_BUTTON = 255;
+    /** Кнопки 200..203: слить соответствующий бак (Shift + клик по баку). */
+    public static final int VOID_TANK_BUTTON = 200;
+    /** Только клиент: открыта ли панель настройки сторон (рабочие слоты тогда выключены). */
+    private boolean configOpen;
+    private final SideConfig clientSides = new SideConfig(IoMode.ALL, IoMode.ALL, IoMode.ALL);
 
     /** Серверный конструктор. */
     public MachineMenu(int id, Inventory inv, MachineBlockEntity be) {
@@ -114,6 +125,12 @@ public class MachineMenu extends AbstractContainerMenu {
             this.role = role;
         }
 
+        /** При открытой панели настройки рабочие слоты скрыты и недоступны, слоты вкладки остаются. */
+        @Override
+        public boolean isActive() {
+            return !configOpen || role == SlotRole.MODULE || role == SlotRole.COATING || role == SlotRole.COOLER;
+        }
+
         @Override
         public int getMaxStackSize() {
             return role == SlotRole.MODULE || role == SlotRole.COATING || role == SlotRole.COOLER ? 1
@@ -144,6 +161,50 @@ public class MachineMenu extends AbstractContainerMenu {
             be.fillSyncData(sync);
         }
         super.broadcastChanges();
+    }
+
+    public boolean configOpen() {
+        return configOpen;
+    }
+
+    public void setConfigOpen(boolean open) {
+        this.configOpen = open;
+    }
+
+    /** Настройки сторон, пришедшие с сервера. */
+    public SideConfig sides() {
+        clientSides.unpack(sync[17], sync[18]);
+        return clientSides;
+    }
+
+    /** Код кнопки панели: тип, сторона и направление перебора. */
+    public static int sideButton(TransferType type, RelativeSide side, boolean reverse) {
+        return (type.ordinal() << 4) | (side.ordinal() << 1) | (reverse ? 1 : 0);
+    }
+
+    /** Кнопки панели настройки сторон: меняют режим одной клетки или включают авто-вывод. Сервер проверяет всё сам. */
+    @Override
+    public boolean clickMenuButton(Player player, int id) {
+        if (be == null) {
+            return false;
+        }
+        if (id == EJECT_BUTTON) {
+            be.toggleEject();
+            return true;
+        }
+        if (id >= VOID_TANK_BUTTON && id < VOID_TANK_BUTTON + 4) {
+            return be.voidTank(id - VOID_TANK_BUTTON);
+        }
+        int typeIdx = (id >> 4) & 15;
+        int sideIdx = (id >> 1) & 7;
+        if (typeIdx >= TransferType.values().length || sideIdx >= RelativeSide.values().length) {
+            return false;
+        }
+        RelativeSide side = RelativeSide.values()[sideIdx];
+        if (side == RelativeSide.FRONT || !kind.hasPort(side)) {
+            return false;
+        }
+        return be.cycleType(TransferType.values()[typeIdx], side, (id & 1) != 0) != null;
     }
 
     @Override
