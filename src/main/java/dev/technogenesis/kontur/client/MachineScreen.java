@@ -186,8 +186,8 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
         }
         if (hasConfigTab()) {
             boolean open = menu.configOpen();
-            if (open || inRect(mouseX, mouseY, x + HOLDER_X + 4, y + configTabY() + 3, 20, 20)) {
-                g.fill(x + HOLDER_X + 4, y + configTabY() + 3, x + HOLDER_X + 24, y + configTabY() + 23,
+            if (open || inRect(mouseX, mouseY, x + HOLDER_X + 4, y + configTabY() + 4, 20, 18)) {
+                g.fill(x + HOLDER_X + 4, y + configTabY() + 4, x + HOLDER_X + 24, y + configTabY() + 22,
                         open ? 0x40F5C542 : 0x30FFFFFF);
             }
             g.blit(WRENCH_ICON, x + HOLDER_X + 6, y + configTabY() + 5, 0f, 0f, 16, 16, 16, 16);
@@ -307,7 +307,7 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
     private void renderCustomTooltips(GuiGraphics g, int mx, int my) {
         int x = leftPos;
         int y = topPos;
-        if (hasConfigTab() && inRect(mx, my, x + HOLDER_X + 4, y + configTabY() + 3, 20, 20)) {
+        if (hasConfigTab() && inRect(mx, my, x + HOLDER_X + 4, y + configTabY() + 4, 20, 18)) {
             g.renderComponentTooltip(font, List.of(Component.translatable("gui.kontur.config_tab"),
                     Component.translatable("gui.kontur.config_tab_hint").withStyle(ChatFormatting.GRAY)), mx, my);
         }
@@ -400,7 +400,7 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
 
     // ------------------------------------------------------------------ панель настройки сторон
 
-    private static final int CFG_TAB_H = 27;
+    private static final int CFG_TAB_H = 26;
 
     /** Есть ли у машины хоть одна грань с разъёмом (у фермы разъёмы особые, панель ей не нужна). */
     private boolean hasConfigTab() {
@@ -479,8 +479,7 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
             int bx = x + TB_X + i * TB_STEP;
             boolean on = t == sel;
             drawButton(g, bx, y + TB_Y, TB_W, TB_H, on ? 0xFF4F6A9A : 0xFF353B4A, !on && inRect(mx, my, bx, y + TB_Y, TB_W, TB_H));
-            String label = fit(Component.translatable("gui.kontur.tab." + t.key).getString(), TB_W - 2);
-            g.drawString(font, label, bx + (TB_W - font.width(label)) / 2, y + TB_Y + 2, on ? 0xFFF2F6FF : 0xFF9AA4B8, false);
+            TabIcons.draw(g, bx, y + TB_Y, TB_W, TB_H, t, on);
         }
         // развёртка куба; лицевая сторона стоит в центре тёмной клеткой, чтобы форма читалась
         drawCell(g, x + NET_X + NET_STEP, y + NET_Y + NET_STEP, 0xFF171A21, false, "");
@@ -593,7 +592,7 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
         int y = topPos;
         int mx = (int) Math.floor(mouseX);
         int my = (int) Math.floor(mouseY);
-        if (hasConfigTab() && button == 0 && inRect(mx, my, x + HOLDER_X + 4, y + configTabY() + 3, 20, 20)) {
+        if (hasConfigTab() && button == 0 && inRect(mx, my, x + HOLDER_X + 4, y + configTabY() + 4, 20, 18)) {
             menu.setConfigOpen(!menu.configOpen());
             click();
             return true;
@@ -636,7 +635,7 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
 
     /** Вкладка: слот модуля, слот радиатора и полоса нагрева (у панелей - только слот покрытия). */
     private int holderHeight() {
-        return def.hasCooler() ? 58 : def.hasModule() ? 36 : 27;
+        return def.hasCooler() ? 57 : def.hasModule() ? 36 : 26;
     }
 
     private int heatBarOffset() {
