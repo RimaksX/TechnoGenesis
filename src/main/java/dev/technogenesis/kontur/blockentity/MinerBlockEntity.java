@@ -538,8 +538,7 @@ public class MinerBlockEntity extends MachineBlockEntity {
     }
 
     /** Область отрисовки: вся рамка с запасом по высоте, иначе балку за пределами блока обрежет отсечение по кадру. */
-    @Override
-    public AABB getRenderBoundingBox() {
+    public AABB renderArea() {
         MinerFrame f = viewScan == null ? null : viewScan.frame;
         if (f == null) {
             return new AABB(worldPosition).inflate(8.0);

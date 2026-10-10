@@ -40,6 +40,15 @@ public final class MachinePortRenderer implements BlockEntityRenderer<MachineBlo
     public MachinePortRenderer(BlockEntityRendererProvider.Context context) {
     }
 
+    /** Шахтёр рисует балку и головку по всей рамке, поэтому область отсечения у него шире блока. */
+    @Override
+    public net.minecraft.world.phys.AABB getRenderBoundingBox(MachineBlockEntity be) {
+        if (be instanceof dev.technogenesis.kontur.blockentity.MinerBlockEntity miner) {
+            return miner.renderArea();
+        }
+        return new net.minecraft.world.phys.AABB(be.getBlockPos());
+    }
+
     @Override
     public void render(MachineBlockEntity be, float partialTick, PoseStack stack, MultiBufferSource buffers,
                        int light, int overlay) {
