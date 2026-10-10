@@ -33,7 +33,6 @@ public final class KonturCreativeTabs {
                         for (Metal m : Metal.values()) {
                             if (!m.vanilla) {
                                 out.accept(KonturItems.INGOT.get(m));
-                                out.accept(KonturBlocks.STORAGE.get(m));
                             }
                         }
                         for (Form form : Form.values()) {

@@ -4,7 +4,6 @@ import dev.technogenesis.kontur.Kontur;
 import dev.technogenesis.kontur.block.CableBlock;
 import dev.technogenesis.kontur.block.MachineBlock;
 import dev.technogenesis.kontur.machine.MachineKind;
-import dev.technogenesis.kontur.material.Metal;
 import dev.technogenesis.kontur.material.Mineral;
 import java.util.EnumMap;
 import java.util.Map;
@@ -19,14 +18,13 @@ import net.minecraft.world.level.material.MapColor;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
-/** Блоки: руды, металлические блоки, строительные материалы, машины и кабель. */
+/** Блоки: руды, строительные материалы, машины и кабель. */
 public final class KonturBlocks {
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(Kontur.MODID);
 
     public static final Map<Mineral, DeferredBlock<Block>> ORE = new EnumMap<>(Mineral.class);
     public static final Map<Mineral, DeferredBlock<Block>> DEEPSLATE_ORE = new EnumMap<>(Mineral.class);
     public static final Map<Mineral, DeferredBlock<Block>> NETHER_ORE = new EnumMap<>(Mineral.class);
-    public static final Map<Metal, DeferredBlock<Block>> STORAGE = new EnumMap<>(Metal.class);
 
     public static final DeferredBlock<Block> ASH_BLOCK = block("ash_block", () -> new Block(
             BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_GRAY).strength(0.6f).sound(SoundType.GRAVEL)));
@@ -64,13 +62,6 @@ public final class KonturBlocks {
             if (mineral.nether) {
                 NETHER_ORE.put(mineral, block("nether_" + mineral.oreId, () -> new DropExperienceBlock(xp,
                         BlockBehaviour.Properties.ofFullCopy(Blocks.NETHER_GOLD_ORE).strength(hardness, 3.0f))));
-            }
-        }
-        for (Metal metal : Metal.values()) {
-            if (!metal.vanilla) {
-                STORAGE.put(metal, block(metal.id() + "_block", () -> new Block(
-                        BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(5.0f, 6.0f)
-                                .sound(SoundType.METAL).requiresCorrectToolForDrops())));
             }
         }
     }
