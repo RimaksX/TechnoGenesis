@@ -41,7 +41,7 @@ public class MinerBlockEntity extends MachineBlockEntity {
     public static final int MAX_OUTER = 50;
     /** Высота головки (наконечник и корпус) и низ каретки над уровнем рамки. */
     public static final double HEAD_H = 0.625;
-    public static final double CARRIAGE_BOTTOM = 0.75;
+    public static final double CARRIAGE_BOTTOM = 0.4375;
     private static final double MOVE_SPEED = 0.35;
     private static final int ENERGY_MOVE = 60;
     private static final int ENERGY_MINE = 160;
@@ -75,6 +75,8 @@ public class MinerBlockEntity extends MachineBlockEntity {
 
     // --- то, что видит клиент
     private MinerScan viewScan;
+    private MinerScan clientScan;
+    private long clientScanTime;
     private boolean viewDepot;
     private Vec3 syncHead = Vec3.ZERO;
     private Vec3 syncTarget = Vec3.ZERO;
@@ -99,7 +101,7 @@ public class MinerBlockEntity extends MachineBlockEntity {
     }
 
     private double planeTipY(MinerFrame f) {
-        return f.y() + CARRIAGE_BOTTOM - HEAD_H;
+        return f.y();          // низ головки на уровне пола рамки: в плоскости она не цепляет блоки слоя под рамкой
     }
 
     private Vec3 home(MinerFrame f) {
@@ -509,9 +511,24 @@ public class MinerBlockEntity extends MachineBlockEntity {
 
     // --- для отрисовки на клиенте
 
+    /**
+     * Рамка для отрисовки. Если синхронизация ещё не пришла, клиент проверяет рамку сам по своему миру,
+     * чтобы балка и головка рисовались независимо от пакетов.
+     */
     @Nullable
     public MinerScan viewScan() {
-        return viewScan;
+        if (viewScan != null) {
+            return viewScan;
+        }
+        if (level != null && level.isClientSide) {
+            long t = level.getGameTime();
+            if (clientScan == null || t - clientScanTime >= 40 || t < clientScanTime) {
+                clientScan = MinerScan.scan(level, worldPosition, facing(), MAX_OUTER);
+                clientScanTime = t;
+            }
+            return clientScan;
+        }
+        return null;
     }
 
     public boolean viewDepot() {
@@ -528,8 +545,15 @@ public class MinerBlockEntity extends MachineBlockEntity {
 
     /** Положение головки в данный момент: от последней синхронизации едет по тому же пути, что и на сервере. */
     public Vec3 viewHead(float partialTick) {
-        MinerFrame f = viewScan == null ? null : viewScan.frame;
-        if (!syncMoving || f == null || level == null) {
+        MinerScan sc = viewScan();
+        MinerFrame f = sc == null ? null : sc.frame;
+        if (f == null) {
+            return syncHead;
+        }
+        if (syncHead.lengthSqr() == 0) {                 // состояние головки ещё не пришло: она стоит над ядром
+            return home(f);
+        }
+        if (!syncMoving || level == null) {
             return syncHead;
         }
         double ticks = Math.max(0.0, level.getGameTime() + partialTick - syncTime);
@@ -539,7 +563,8 @@ public class MinerBlockEntity extends MachineBlockEntity {
 
     /** Область отрисовки: вся рамка с запасом по высоте, иначе балку за пределами блока обрежет отсечение по кадру. */
     public AABB renderArea() {
-        MinerFrame f = viewScan == null ? null : viewScan.frame;
+        MinerScan sc = viewScan();
+        MinerFrame f = sc == null ? null : sc.frame;
         if (f == null) {
             return new AABB(worldPosition).inflate(8.0);
         }

@@ -568,6 +568,15 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
         return ClientboundBlockEntityDataPacket.create(this);
     }
 
+    /** Данные для клиента всегда читаются через handleUpdateTag (в разных версиях по умолчанию вызывается loadAdditional). */
+    public void onDataPacket(net.minecraft.network.Connection net, ClientboundBlockEntityDataPacket pkt,
+                             HolderLookup.Provider registries) {
+        CompoundTag tag = pkt.getTag();
+        if (!tag.isEmpty()) {
+            handleUpdateTag(tag, registries);
+        }
+    }
+
     public void dropContents() {
         if (level == null) {
             return;

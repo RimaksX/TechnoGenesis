@@ -17,7 +17,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * Направляющая шахтёра: балка в верхней части блока (высота 8..16), которая тянется к соседним направляющим и к ядру.
+ * Направляющая шахтёра: балка по центру блока (высота 4..12), которая тянется к соседним направляющим и к ядру.
  * Из направляющих собирается замкнутый прямоугольник на одном уровне; сама головка по ним ездит как модель и блоков не занимает.
  */
 public class MinerRailBlock extends Block {
@@ -26,11 +26,11 @@ public class MinerRailBlock extends Block {
     public static final BooleanProperty SOUTH = BlockStateProperties.SOUTH;
     public static final BooleanProperty WEST = BlockStateProperties.WEST;
 
-    private static final VoxelShape CORE = Block.box(4, 8, 4, 12, 16, 12);
-    private static final VoxelShape ARM_N = Block.box(4, 8, 0, 12, 16, 4);
-    private static final VoxelShape ARM_S = Block.box(4, 8, 12, 12, 16, 16);
-    private static final VoxelShape ARM_W = Block.box(0, 8, 4, 4, 16, 12);
-    private static final VoxelShape ARM_E = Block.box(12, 8, 4, 16, 16, 12);
+    private static final VoxelShape CORE = Block.box(4, 4, 4, 12, 12, 12);
+    private static final VoxelShape ARM_N = Block.box(4, 4, 0, 12, 12, 4);
+    private static final VoxelShape ARM_S = Block.box(4, 4, 12, 12, 12, 16);
+    private static final VoxelShape ARM_W = Block.box(0, 4, 4, 4, 12, 12);
+    private static final VoxelShape ARM_E = Block.box(12, 4, 4, 16, 12, 12);
 
     public MinerRailBlock(Properties properties) {
         super(properties);

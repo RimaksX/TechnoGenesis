@@ -46,6 +46,8 @@ public final class MinerRenderer {
             model("miner_tip_carbide")};
 
     private static final float SPIN_PER_TICK = 28f;
+    /** Высота низа балки над полом блока рамки: колёса стоят ровно на верхней грани направляющей (12/16 блока). */
+    private static final double BEAM_LIFT = 0.6875;
 
     private MinerRenderer() {
     }
@@ -74,7 +76,7 @@ public final class MinerRenderer {
         ModelBlockRenderer renderer = Minecraft.getInstance().getBlockRenderer().getModelRenderer();
         VertexConsumer vc = buffers.getBuffer(RenderType.cutout());
 
-        double beamY = f.y() + 1 - core.getY();
+        double beamY = f.y() + BEAM_LIFT - core.getY();
         double beamZ = head.z - 0.5 - core.getZ();
         for (int x = f.minX(); x <= f.maxX(); x++) {
             part(renderer, vc, stack, level, BEAM, x - core.getX(), beamY, beamZ, core, overlay);
@@ -84,7 +86,7 @@ public final class MinerRenderer {
 
         double headX = head.x - 0.5 - core.getX();
         double headZ = head.z - 0.5 - core.getZ();
-        part(renderer, vc, stack, level, CARRIAGE, headX, f.y() - core.getY(), headZ, core, overlay);
+        part(renderer, vc, stack, level, CARRIAGE, headX, f.y() + BEAM_LIFT - 1.0 - core.getY(), headZ, core, overlay);
 
         // вал: целые блоки сверху вниз, последний обрезается по высоте до верха головки
         double top = f.y() + MinerBlockEntity.CARRIAGE_BOTTOM;
