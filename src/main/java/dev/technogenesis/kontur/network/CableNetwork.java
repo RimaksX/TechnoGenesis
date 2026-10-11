@@ -17,11 +17,22 @@ import net.neoforged.neoforge.energy.IEnergyStorage;
  * и то и другое: их заряжают излишком и разряжают при нехватке. Энергия не создаётся и не пропадает.
  */
 public final class CableNetwork {
-    private static final int REFRESH_INTERVAL = 40;
+    private static final int REFRESH_INTERVAL = 200;
 
     private final ServerLevel level;
     final Map<BlockPos, CableTier> cables = new HashMap<>();
-    private final List<BlockCapabilityCache<IEnergyStorage, Direction>> endpoints = new ArrayList<>();
+    /** Распад сети проверяется один раз за тик, а не при каждом удалении кабеля (см. менеджер). */
+    boolean splitPending;
+    private record Endpoint(BlockPos pos, BlockCapabilityCache<IEnergyStorage, Direction> cache) {
+    }
+
+    private record EndKey(BlockPos pipe, Direction dir) {
+    }
+
+    private List<Endpoint> endpoints = new ArrayList<>();
+    private Map<EndKey, BlockCapabilityCache<IEnergyStorage, Direction>> caches = new HashMap<>();
+    private int cachedThroughput;
+    private boolean throughputStale = true;
     private boolean dirty = true;
     private int lastSources;
     private int lastSinks;
@@ -35,6 +46,7 @@ public final class CableNetwork {
 
     void markDirty() {
         dirty = true;
+        throughputStale = true;
     }
 
     /** Для диагностики ключом: слабейший кабель, число кабелей, источников, потребителей, накопителей и перенос за тик. */
@@ -52,24 +64,38 @@ public final class CableNetwork {
     }
 
     public int throughput() {
-        int min = Integer.MAX_VALUE;
-        for (CableTier t : cables.values()) {
-            min = Math.min(min, t.throughput);
+        if (throughputStale) {
+            int min = Integer.MAX_VALUE;
+            for (CableTier t : cables.values()) {
+                min = Math.min(min, t.throughput);
+            }
+            cachedThroughput = min == Integer.MAX_VALUE ? 0 : min;
+            throughputStale = false;
         }
-        return min == Integer.MAX_VALUE ? 0 : min;
+        return cachedThroughput;
     }
 
+    /** Конечные точки пересобираются редко, а кэши способностей берутся прежние: их создание дорого. */
     private void refreshEndpoints() {
-        endpoints.clear();
+        List<Endpoint> fresh = new ArrayList<>();
+        Map<EndKey, BlockCapabilityCache<IEnergyStorage, Direction>> freshCaches = new HashMap<>();
         for (BlockPos pos : cables.keySet()) {
             for (Direction d : Direction.values()) {
                 BlockPos np = pos.relative(d);
                 if (cables.containsKey(np) || !level.isLoaded(np)) {
                     continue;
                 }
-                endpoints.add(BlockCapabilityCache.create(Capabilities.EnergyStorage.BLOCK, level, np, d.getOpposite()));
+                EndKey key = new EndKey(pos, d);
+                BlockCapabilityCache<IEnergyStorage, Direction> cache = caches.get(key);
+                if (cache == null) {
+                    cache = BlockCapabilityCache.create(Capabilities.EnergyStorage.BLOCK, level, np, d.getOpposite());
+                }
+                freshCaches.put(key, cache);
+                fresh.add(new Endpoint(np, cache));
             }
         }
+        endpoints = fresh;
+        caches = freshCaches;
         dirty = false;
         lastRefresh = level.getGameTime();
     }
@@ -84,8 +110,11 @@ public final class CableNetwork {
         List<IEnergyStorage> sources = new ArrayList<>();
         List<IEnergyStorage> sinks = new ArrayList<>();
         List<IEnergyStorage> storages = new ArrayList<>();
-        for (BlockCapabilityCache<IEnergyStorage, Direction> ep : endpoints) {
-            IEnergyStorage h = ep.getCapability();
+        for (Endpoint ep : endpoints) {
+            if (!level.isLoaded(ep.pos)) {               // запрос к выгруженному чанку загрузил бы его
+                continue;
+            }
+            IEnergyStorage h = ep.cache.getCapability();
             if (h == null) {
                 continue;
             }

@@ -52,7 +52,7 @@ public class SolarPanelBlockEntity extends PassiveGeneratorBlockEntity {
             setStatus(MachineStatus.NO_SUN);
             return 0;
         }
-        if (level.getGameTime() % 20 == 0 || (rate == 0 && level.getGameTime() % 5 == 0)) {
+        if (phaseTick(20) || (rate == 0 && level.getGameTime() % 5 == 0)) {
             refreshSky();
         }
         float share = clearShare();

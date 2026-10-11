@@ -203,11 +203,16 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
         debounceStatus();
         updateHeat();
         pushEnergy();
-        if (lvl.getGameTime() % 8 == 0) {
+        if (phaseTick(8)) {                    // у разных машин такты разведены, чтобы нагрузка не копилась в одном тике
             ejectItems();
             ejectFluids();
         }
         updateBlockState();
+    }
+
+    /** Раз в period тиков, со сдвигом по положению блока: машины не работают с периодическими задачами в один и тот же тик. */
+    protected final boolean phaseTick(int period) {
+        return Math.floorMod(level.getGameTime() + worldPosition.hashCode(), period) == 0;
     }
 
     /** Скорость и цена энергии, действующие сейчас: при перегреве модуль отключён. */
@@ -228,7 +233,7 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
         if (!def.hasModule()) {
             return;
         }
-        if (level.getGameTime() % 20 == 0) {
+        if (phaseTick(20)) {
             cooledFaces = countCooledFaces();
         }
         if (moduleHeat == 0 && heat == 0) {
@@ -256,7 +261,11 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
     private int countCooledFaces() {
         int n = 0;
         for (Direction d : Direction.values()) {
-            BlockState st = level.getBlockState(worldPosition.relative(d));
+            BlockPos np = worldPosition.relative(d);
+            if (!level.isLoaded(np)) {
+                continue;
+            }
+            BlockState st = level.getBlockState(np);
             if (st.getFluidState().is(FluidTags.WATER) || st.is(BlockTags.ICE) || st.is(Blocks.SNOW_BLOCK)) {
                 n++;
             }
@@ -303,6 +312,9 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
                 continue;
             }
             BlockPos np = worldPosition.relative(d);
+            if (!level.isLoaded(np)) {
+                continue;                       // выгруженный чанк не подгружаем запросом соседа
+            }
             if (level.getBlockState(np).getBlock() instanceof CableBlock) {
                 continue; // кабельная сеть сама забирает энергию
             }
@@ -319,13 +331,24 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
         if (!sides.ejectItems || !def.hasItems()) {
             return;
         }
+        int[] outs = def.outputSlots();
         for (Direction d : Direction.values()) {
+            boolean wanted = false;                // способность соседа запрашиваем, только если грань вообще открыта на выход
+            for (int slot : outs) {
+                if (mode(outputChannel(slot), d).canOutput() && !inventory.getStackInSlot(slot).isEmpty()) {
+                    wanted = true;
+                    break;
+                }
+            }
+            if (!wanted || !level.isLoaded(worldPosition.relative(d))) {
+                continue;
+            }
             IItemHandler target = level.getCapability(Capabilities.ItemHandler.BLOCK, worldPosition.relative(d),
                     d.getOpposite());
             if (target == null) {
                 continue;
             }
-            for (int slot : def.outputSlots()) {
+            for (int slot : outs) {
                 if (!mode(outputChannel(slot), d).canOutput()) {
                     continue;
                 }
@@ -349,7 +372,7 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
             return;
         }
         for (Direction d : Direction.values()) {
-            if (!mode(TransferType.FLUIDS, d).canOutput()) {
+            if (!mode(TransferType.FLUIDS, d).canOutput() || !level.isLoaded(worldPosition.relative(d))) {
                 continue;
             }
             IFluidHandler target = level.getCapability(Capabilities.FluidHandler.BLOCK, worldPosition.relative(d),

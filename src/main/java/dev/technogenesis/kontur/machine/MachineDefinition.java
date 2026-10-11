@@ -29,10 +29,13 @@ public final class MachineDefinition {
     public final int flameY;
     /** Все выходные слоты делят один канал (буфер шахтёра), а не получают отдельные грани. */
     public final boolean singleOutputChannel;
+    private final int[] outputSlotCache;
 
     private MachineDefinition(Builder b) {
         singleOutputChannel = b.singleOutputChannel;
         slots = List.copyOf(b.slots);
+        outputSlotCache = java.util.stream.IntStream.range(0, slots.size())
+                .filter(i -> slots.get(i).role() == SlotRole.OUTPUT).toArray();
         tanks = List.copyOf(b.tanks);
         energyKind = b.energyKind;
         energyCapacity = b.energyCapacity;
@@ -196,13 +199,13 @@ public final class MachineDefinition {
 
     /** Сколько каналов выхода у машины: по слоту на канал, но не больше трёх, у буфера шахтёра один. */
     public int outputChannels() {
-        int n = outputSlots().length;
+        int n = outputSlotCache.length;
         return singleOutputChannel ? Math.min(1, n) : Math.min(3, n);
     }
 
+    /** Индексы выходных слотов (массив общий, не изменять). */
     public int[] outputSlots() {
-        return java.util.stream.IntStream.range(0, slots.size())
-                .filter(i -> slots.get(i).role() == SlotRole.OUTPUT).toArray();
+        return outputSlotCache;
     }
 
     public int inputTank() {

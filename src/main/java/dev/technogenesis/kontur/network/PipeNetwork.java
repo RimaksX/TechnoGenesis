@@ -25,13 +25,19 @@ import net.neoforged.neoforge.items.ItemHandlerHelper;
  * Из точки в ту же самую точку ничего не возвращается, всё переносится только целиком и без потерь.
  */
 public final class PipeNetwork {
-    private static final int REFRESH_INTERVAL = 40;
+    private static final int REFRESH_INTERVAL = 200;
 
     private final ServerLevel level;
     final ConduitKind kind;
     final Map<BlockPos, PipeTier> pipes = new HashMap<>();
-    private final List<Endpoint<IItemHandler>> itemEnds = new ArrayList<>();
-    private final List<Endpoint<IFluidHandler>> fluidEnds = new ArrayList<>();
+    private List<Endpoint<IItemHandler>> itemEnds = new ArrayList<>();
+    private List<Endpoint<IFluidHandler>> fluidEnds = new ArrayList<>();
+    private Map<EndKey, BlockCapabilityCache<IItemHandler, Direction>> itemCaches = new HashMap<>();
+    private Map<EndKey, BlockCapabilityCache<IFluidHandler, Direction>> fluidCaches = new HashMap<>();
+    /** Распад сети проверяется один раз за тик, а не при каждом удалении трубы (см. менеджер). */
+    boolean splitPending;
+    private PipeTier weakCache;
+    private boolean weakStale = true;
     private boolean dirty = true;
     private long lastRefresh = Long.MIN_VALUE;
     private int rotation;
@@ -42,13 +48,17 @@ public final class PipeNetwork {
     /** machine - по ту сторону машина Контура: её приёмники имеют приоритет над сундуками и баками. */
     private record Endpoint<T>(BlockPos pipe, Direction dir, ConduitMode mode, boolean machine,
                                BlockCapabilityCache<T, Direction> cache) {
-        T handler() {
-            return cache.getCapability();
+        /** Соседний чанк выгружен - способность не запрашивается, чтобы не загрузить его принудительно. */
+        T handler(ServerLevel level) {
+            return level.isLoaded(pipe.relative(dir)) ? cache.getCapability() : null;
         }
 
         boolean same(Endpoint<?> other) {
             return pipe.equals(other.pipe) && dir == other.dir;
         }
+    }
+
+    private record EndKey(BlockPos pipe, Direction dir) {
     }
 
     /** Для диагностики ключом. */
@@ -62,16 +72,22 @@ public final class PipeNetwork {
 
     void markDirty() {
         dirty = true;
+        weakStale = true;
     }
 
+    /** Самая слабая труба сети; считается только после изменения состава сети, а не каждый тик. */
     private PipeTier weakest() {
-        PipeTier min = null;
-        for (PipeTier t : pipes.values()) {
-            if (min == null || t.perTick() < min.perTick()) {
-                min = t;
+        if (weakStale) {
+            PipeTier min = null;
+            for (PipeTier t : pipes.values()) {
+                if (min == null || t.perTick() < min.perTick()) {
+                    min = t;
+                }
             }
+            weakCache = min;
+            weakStale = false;
         }
-        return min;
+        return weakCache;
     }
 
     public Info info() {
@@ -91,9 +107,12 @@ public final class PipeNetwork {
         return new Info(weakest(), pipes.size(), src, dst, lastMoved);
     }
 
+    /** Конечные точки пересобираются редко, а кэши способностей берутся прежние: их создание дорого. */
     private void refreshEndpoints() {
-        itemEnds.clear();
-        fluidEnds.clear();
+        List<Endpoint<IItemHandler>> newItems = new ArrayList<>();
+        List<Endpoint<IFluidHandler>> newFluids = new ArrayList<>();
+        Map<EndKey, BlockCapabilityCache<IItemHandler, Direction>> newItemCaches = new HashMap<>();
+        Map<EndKey, BlockCapabilityCache<IFluidHandler, Direction>> newFluidCaches = new HashMap<>();
         for (BlockPos pos : pipes.keySet()) {
             if (!(level.getBlockEntity(pos) instanceof ConduitBlockEntity be)) {
                 continue;
@@ -105,15 +124,28 @@ public final class PipeNetwork {
                 }
                 boolean machine = level.getBlockEntity(np) instanceof MachineBlockEntity;
                 ConduitMode mode = be.mode(d).resolve(machine);
+                EndKey key = new EndKey(pos, d);
                 if (kind == ConduitKind.ITEMS) {
-                    itemEnds.add(new Endpoint<>(pos, d, mode, machine,
-                            BlockCapabilityCache.create(Capabilities.ItemHandler.BLOCK, level, np, d.getOpposite())));
+                    BlockCapabilityCache<IItemHandler, Direction> cache = itemCaches.get(key);
+                    if (cache == null) {
+                        cache = BlockCapabilityCache.create(Capabilities.ItemHandler.BLOCK, level, np, d.getOpposite());
+                    }
+                    newItemCaches.put(key, cache);
+                    newItems.add(new Endpoint<>(pos, d, mode, machine, cache));
                 } else {
-                    fluidEnds.add(new Endpoint<>(pos, d, mode, machine,
-                            BlockCapabilityCache.create(Capabilities.FluidHandler.BLOCK, level, np, d.getOpposite())));
+                    BlockCapabilityCache<IFluidHandler, Direction> cache = fluidCaches.get(key);
+                    if (cache == null) {
+                        cache = BlockCapabilityCache.create(Capabilities.FluidHandler.BLOCK, level, np, d.getOpposite());
+                    }
+                    newFluidCaches.put(key, cache);
+                    newFluids.add(new Endpoint<>(pos, d, mode, machine, cache));
                 }
             }
         }
+        itemEnds = newItems;
+        fluidEnds = newFluids;
+        itemCaches = newItemCaches;
+        fluidCaches = newFluidCaches;
         dirty = false;
         lastRefresh = level.getGameTime();
     }
@@ -154,7 +186,7 @@ public final class PipeNetwork {
         List<Endpoint<IItemHandler>> sources = new ArrayList<>();
         List<Endpoint<IItemHandler>> sinks = new ArrayList<>();
         for (Endpoint<IItemHandler> e : itemEnds) {
-            if (e.handler() == null) {
+            if (e.handler(level) == null) {
                 continue;
             }
             if (e.mode.pulls()) {
@@ -170,7 +202,7 @@ public final class PipeNetwork {
         int left = budget;
         for (int k = 0; k < sources.size() && left > 0; k++) {
             Endpoint<IItemHandler> src = sources.get((rotation + k) % sources.size());
-            IItemHandler from = src.handler();
+            IItemHandler from = src.handler(level);
             for (int slot = 0; slot < from.getSlots() && left > 0; slot++) {
                 ItemStack probe = from.extractItem(slot, left, true);
                 if (probe.isEmpty()) {
@@ -182,7 +214,7 @@ public final class PipeNetwork {
                     if (dst.same(src)) {
                         continue;
                     }
-                    IItemHandler to = dst.handler();
+                    IItemHandler to = dst.handler(level);
                     ItemStack rest = ItemHandlerHelper.insertItem(to, probe.copy(), true);
                     int fits = probe.getCount() - rest.getCount();
                     if (fits <= 0) {
@@ -209,12 +241,12 @@ public final class PipeNetwork {
      * ждёт места, а не уходит в сундук. Предмет, который не нужен ни одной машине (например, пустая порода),
      * свободно идёт в остальные приёмники.
      */
-    private static List<Endpoint<IItemHandler>> itemTargets(List<Endpoint<IItemHandler>> sinks, ItemStack stack) {
+    private List<Endpoint<IItemHandler>> itemTargets(List<Endpoint<IItemHandler>> sinks, ItemStack stack) {
         List<Endpoint<IItemHandler>> wanted = new ArrayList<>();
         for (Endpoint<IItemHandler> e : sinks) {
             if (e.machine) {
-                IItemHandler h = e.handler();
-                for (int i = 0; i < h.getSlots(); i++) {
+                IItemHandler h = e.handler(level);
+                for (int i = 0; h != null && i < h.getSlots(); i++) {
                     if (h.isItemValid(i, stack)) {
                         wanted.add(e);
                         break;
@@ -225,12 +257,12 @@ public final class PipeNetwork {
         return wanted.isEmpty() ? sinks : wanted;
     }
 
-    private static List<Endpoint<IFluidHandler>> fluidTargets(List<Endpoint<IFluidHandler>> sinks, FluidStack stack) {
+    private List<Endpoint<IFluidHandler>> fluidTargets(List<Endpoint<IFluidHandler>> sinks, FluidStack stack) {
         List<Endpoint<IFluidHandler>> wanted = new ArrayList<>();
         for (Endpoint<IFluidHandler> e : sinks) {
             if (e.machine) {
-                IFluidHandler h = e.handler();
-                for (int i = 0; i < h.getTanks(); i++) {
+                IFluidHandler h = e.handler(level);
+                for (int i = 0; h != null && i < h.getTanks(); i++) {
                     if (h.isFluidValid(i, stack)) {
                         wanted.add(e);
                         break;
@@ -245,7 +277,7 @@ public final class PipeNetwork {
         List<Endpoint<IFluidHandler>> sources = new ArrayList<>();
         List<Endpoint<IFluidHandler>> sinks = new ArrayList<>();
         for (Endpoint<IFluidHandler> e : fluidEnds) {
-            if (e.handler() == null) {
+            if (e.handler(level) == null) {
                 continue;
             }
             if (e.mode.pulls()) {
@@ -261,7 +293,7 @@ public final class PipeNetwork {
         int left = budget;
         for (int k = 0; k < sources.size() && left > 0; k++) {
             Endpoint<IFluidHandler> src = sources.get((rotation + k) % sources.size());
-            IFluidHandler from = src.handler();
+            IFluidHandler from = src.handler(level);
             FluidStack probe = from.drain(left, IFluidHandler.FluidAction.SIMULATE);
             if (probe.isEmpty()) {
                 continue;
@@ -272,7 +304,7 @@ public final class PipeNetwork {
                 if (dst.same(src)) {
                     continue;
                 }
-                IFluidHandler to = dst.handler();
+                IFluidHandler to = dst.handler(level);
                 int fits = to.fill(probe.copyWithAmount(Math.min(probe.getAmount(), left)), IFluidHandler.FluidAction.SIMULATE);
                 if (fits <= 0) {
                     continue;

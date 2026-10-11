@@ -39,17 +39,35 @@ public class ProcessingMachineBlockEntity extends MachineBlockEntity {
         return kind.recipeKind.type.get();
     }
 
+    // Ответы «годится ли предмет или жидкость какому-то рецепту» запоминаются: их спрашивают трубы на каждой операции
+    // по каждой машине, а полный перебор рецептов с созданием списка каждый раз был бы лишней нагрузкой.
+    private net.minecraft.world.item.crafting.RecipeManager memoManager;
+    private final java.util.Map<Integer, Boolean> itemMemo = new java.util.HashMap<>();
+    private final java.util.Map<net.minecraft.world.level.material.Fluid, Boolean> fluidMemo = new java.util.HashMap<>();
+
+    private void checkMemo() {
+        net.minecraft.world.item.crafting.RecipeManager rm = level.getRecipeManager();
+        if (rm != memoManager || itemMemo.size() > 512) {      // рецепты перезагрузили или память разрослась
+            memoManager = rm;
+            itemMemo.clear();
+            fluidMemo.clear();
+        }
+    }
+
     @Override
     protected boolean acceptsItem(int slot, ItemStack stack) {
         if (level == null) {
             return true;
         }
-        for (RecipeHolder<MachineRecipe> h : level.getRecipeManager().getAllRecipesFor(recipeType())) {
-            if (h.value().input().map(in -> in.test(stack)).orElse(false)) {
-                return true;
+        checkMemo();
+        return itemMemo.computeIfAbsent(ItemStack.hashItemAndComponents(stack), k -> {
+            for (RecipeHolder<MachineRecipe> h : level.getRecipeManager().getAllRecipesFor(recipeType())) {
+                if (h.value().input().map(in -> in.test(stack)).orElse(false)) {
+                    return true;
+                }
             }
-        }
-        return false;
+            return false;
+        });
     }
 
     @Override
@@ -57,12 +75,15 @@ public class ProcessingMachineBlockEntity extends MachineBlockEntity {
         if (level == null) {
             return true;
         }
-        for (RecipeHolder<MachineRecipe> h : level.getRecipeManager().getAllRecipesFor(recipeType())) {
-            if (h.value().fluidInput().map(f -> f.accepts(stack.getFluid())).orElse(false)) {
-                return true;
+        checkMemo();
+        return fluidMemo.computeIfAbsent(stack.getFluid(), k -> {
+            for (RecipeHolder<MachineRecipe> h : level.getRecipeManager().getAllRecipesFor(recipeType())) {
+                if (h.value().fluidInput().map(f -> f.accepts(stack.getFluid())).orElse(false)) {
+                    return true;
+                }
             }
-        }
-        return false;
+            return false;
+        });
     }
 
     @Override
@@ -78,6 +99,14 @@ public class ProcessingMachineBlockEntity extends MachineBlockEntity {
         return false;
     }
 
+    private MachineStatus idleStatus;
+    private int idleSignature;
+
+    private static int inputSignature(MachineRecipeInput input) {
+        int h = ItemStack.hashItemAndComponents(input.stack()) * 31 + input.stack().getCount();
+        return h * 31 + input.fluid().getFluid().hashCode() * 17 + input.fluid().getAmount();
+    }
+
     private MachineRecipeInput currentInput() {
         ItemStack in = inputSlot >= 0 ? inventory.getStackInSlot(inputSlot) : ItemStack.EMPTY;
         FluidStack fluid = inputTank >= 0 ? tanks[inputTank].getFluid() : FluidStack.EMPTY;
@@ -88,14 +117,24 @@ public class ProcessingMachineBlockEntity extends MachineBlockEntity {
     protected void tickMachine() {
         MachineRecipeInput input = currentInput();
         if (current == null || !current.value().matches(input, level)) {
+            // простаивающая машина не перебирает рецепты каждый тик: поиск повторяется, если содержимое изменилось
+            // (или раз в секунду на случай перезагрузки рецептов)
+            int sig = inputSignature(input);
+            if (current == null && idleStatus != null && idleSignature == sig && !phaseTick(20)) {
+                setStatus(idleStatus);
+                return;
+            }
             Optional<RecipeHolder<MachineRecipe>> found = level.getRecipeManager().getRecipeFor(recipeType(), input, level);
             current = found.orElse(null);
             progress = 0;
             if (current == null) {
                 totalTime = 0;
-                setStatus(missingFluid(input) ? MachineStatus.NO_FLUID : MachineStatus.IDLE);
+                idleSignature = sig;
+                idleStatus = missingFluid(input) ? MachineStatus.NO_FLUID : MachineStatus.IDLE;
+                setStatus(idleStatus);
                 return;
             }
+            idleStatus = null;
         }
         MachineRecipe recipe = current.value();
         totalTime = recipe.time();

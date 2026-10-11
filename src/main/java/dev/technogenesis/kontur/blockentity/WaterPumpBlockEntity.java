@@ -43,7 +43,7 @@ public class WaterPumpBlockEntity extends MachineBlockEntity {
 
     @Override
     protected void tickMachine() {
-        if (level.getGameTime() % 20 == 0) {
+        if (phaseTick(20)) {
             hasWater = scan();
         }
         if (!hasWater) {

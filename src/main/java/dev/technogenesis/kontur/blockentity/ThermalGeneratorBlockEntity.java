@@ -40,7 +40,7 @@ public class ThermalGeneratorBlockEntity extends PassiveGeneratorBlockEntity {
 
     @Override
     protected int output() {
-        if (level.getGameTime() % 10 == 0) {
+        if (phaseTick(10)) {
             scan();
         }
         if (!lava || waterSides == 0) {

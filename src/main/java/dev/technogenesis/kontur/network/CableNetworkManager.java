@@ -57,6 +57,10 @@ public final class CableNetworkManager {
             if (m != null) {
                 CableNetwork n = m.byPos.get(pos);
                 if (n != null) {
+                    if (n.splitPending) {
+                        m.split(n);
+                        n = m.byPos.get(pos);
+                    }
                     return n.info();
                 }
             }
@@ -68,9 +72,7 @@ public final class CableNetworkManager {
         if (level instanceof ServerLevel sl) {
             Manager m = MANAGERS.get(sl.dimension());
             if (m != null) {
-                for (CableNetwork n : new ArrayList<>(m.networks)) {
-                    n.tick();
-                }
+                m.tick();
             }
         }
     }
@@ -99,28 +101,31 @@ public final class CableNetworkManager {
             CableNetwork target = null;
             for (Direction d : Direction.values()) {
                 CableNetwork n = byPos.get(key.relative(d));
-                if (n == null) {
-                    continue;
-                }
-                if (target == null) {
+                if (n != null && (target == null || n.cables.size() > target.cables.size())) {
                     target = n;
-                } else if (n != target) {
-                    for (Map.Entry<BlockPos, CableTier> e : n.cables.entrySet()) {
-                        target.cables.put(e.getKey(), e.getValue());
-                        byPos.put(e.getKey(), target);
-                    }
-                    networks.remove(n);
                 }
             }
             if (target == null) {
                 target = new CableNetwork(level);
                 networks.add(target);
+            } else {
+                for (Direction d : Direction.values()) {
+                    CableNetwork n = byPos.get(key.relative(d));
+                    if (n != null && n != target && networks.remove(n)) {
+                        for (Map.Entry<BlockPos, CableTier> e : n.cables.entrySet()) {
+                            target.cables.put(e.getKey(), e.getValue());
+                            byPos.put(e.getKey(), target);
+                        }
+                        target.splitPending |= n.splitPending;
+                    }
+                }
             }
             target.cables.put(key, tier);
             byPos.put(key, target);
             target.markDirty();
         }
 
+        /** Удаление - О(1), проверка на распад откладывается до тика (см. PipeNetworkManager). */
         void remove(BlockPos pos) {
             CableNetwork net = byPos.remove(pos);
             if (net == null) {
@@ -131,7 +136,21 @@ public final class CableNetworkManager {
                 networks.remove(net);
                 return;
             }
-            // сеть могла распасться на несколько частей
+            net.splitPending = true;
+            net.markDirty();
+        }
+
+        void tick() {
+            for (CableNetwork n : new ArrayList<>(networks)) {
+                if (n.splitPending) {
+                    split(n);
+                }
+                n.tick();
+            }
+        }
+
+        void split(CableNetwork net) {
+            net.splitPending = false;
             Set<BlockPos> seen = new HashSet<>();
             List<Set<BlockPos>> parts = new ArrayList<>();
             for (BlockPos start : net.cables.keySet()) {
@@ -154,8 +173,8 @@ public final class CableNetworkManager {
                 seen.addAll(part);
                 parts.add(part);
             }
-            if (parts.size() == 1) {
-                net.markDirty();
+            net.markDirty();
+            if (parts.size() <= 1) {
                 return;
             }
             Map<BlockPos, CableTier> all = new HashMap<>(net.cables);

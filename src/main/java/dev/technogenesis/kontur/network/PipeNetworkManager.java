@@ -64,6 +64,10 @@ public final class PipeNetworkManager {
                 for (Manager m : byKind.values()) {
                     PipeNetwork n = m.byPos.get(pos);
                     if (n != null) {
+                        if (n.splitPending) {
+                            m.split(n);
+                            n = m.byPos.get(pos);
+                        }
                         return n.info();
                     }
                 }
@@ -77,9 +81,7 @@ public final class PipeNetworkManager {
             Map<ConduitKind, Manager> byKind = MANAGERS.get(sl.dimension());
             if (byKind != null) {
                 for (Manager m : byKind.values()) {
-                    for (PipeNetwork n : new ArrayList<>(m.networks)) {
-                        n.tick();
-                    }
+                    m.tick();
                 }
             }
         }
@@ -108,31 +110,38 @@ public final class PipeNetworkManager {
                 existing.markDirty();
                 return;
             }
+            // соседние сети сливаются в самую большую: меньшие переносятся в неё, а не наоборот
             PipeNetwork target = null;
             for (Direction d : Direction.values()) {
                 PipeNetwork n = byPos.get(key.relative(d));
-                if (n == null) {
-                    continue;
-                }
-                if (target == null) {
+                if (n != null && (target == null || n.pipes.size() > target.pipes.size())) {
                     target = n;
-                } else if (n != target) {
-                    for (Map.Entry<BlockPos, PipeTier> e : n.pipes.entrySet()) {
-                        target.pipes.put(e.getKey(), e.getValue());
-                        byPos.put(e.getKey(), target);
-                    }
-                    networks.remove(n);
                 }
             }
             if (target == null) {
                 target = new PipeNetwork(level, kind);
                 networks.add(target);
+            } else {
+                for (Direction d : Direction.values()) {
+                    PipeNetwork n = byPos.get(key.relative(d));
+                    if (n != null && n != target && networks.remove(n)) {
+                        for (Map.Entry<BlockPos, PipeTier> e : n.pipes.entrySet()) {
+                            target.pipes.put(e.getKey(), e.getValue());
+                            byPos.put(e.getKey(), target);
+                        }
+                        target.splitPending |= n.splitPending;
+                    }
+                }
             }
             target.pipes.put(key, tier);
             byPos.put(key, target);
             target.markDirty();
         }
 
+        /**
+         * Удаление трубы (в том числе при выгрузке чанка) - О(1): проверка на распад сети откладывается и выполняется
+         * один раз за тик. Иначе выгрузка чанка с большой сетью разбирала бы её по одной трубе с обходом всей сети каждый раз.
+         */
         void remove(BlockPos pos) {
             PipeNetwork net = byPos.remove(pos);
             if (net == null) {
@@ -143,6 +152,21 @@ public final class PipeNetworkManager {
                 networks.remove(net);
                 return;
             }
+            net.splitPending = true;
+            net.markDirty();
+        }
+
+        void tick() {
+            for (PipeNetwork n : new ArrayList<>(networks)) {
+                if (n.splitPending) {
+                    split(n);
+                }
+                n.tick();
+            }
+        }
+
+        void split(PipeNetwork net) {
+            net.splitPending = false;
             Set<BlockPos> seen = new HashSet<>();
             List<Set<BlockPos>> parts = new ArrayList<>();
             for (BlockPos start : net.pipes.keySet()) {
@@ -165,8 +189,8 @@ public final class PipeNetworkManager {
                 seen.addAll(part);
                 parts.add(part);
             }
-            if (parts.size() == 1) {
-                net.markDirty();
+            net.markDirty();
+            if (parts.size() <= 1) {
                 return;
             }
             Map<BlockPos, PipeTier> all = new HashMap<>(net.pipes);

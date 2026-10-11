@@ -61,6 +61,7 @@ public class MinerBlockEntity extends MachineBlockEntity {
     private Vec3 target = Vec3.ZERO;
     private BlockPos mining;
     private int mineProgress;
+    private int crackStage = -1;
     private int mineTotal;
     private int fetchTimer;
     private int noTipWait;
@@ -270,7 +271,7 @@ public class MinerBlockEntity extends MachineBlockEntity {
         }
         int total = f.cells();
         int minY = level.getMinBuildHeight();
-        int budget = 600;                              // не больше 600 проверок клеток за тик, чтобы пустая шахта не вешала сервер
+        int budget = 256;                              // не больше 256 проверок клеток за тик, чтобы пустая шахта не вешала сервер
         while (true) {
             if (f.y() - 1 - layer < minY) {
                 clearCracks();
@@ -293,7 +294,12 @@ public class MinerBlockEntity extends MachineBlockEntity {
                     return;
                 }
                 if (isMineable(pos, state)) {
+                    if (!workAreaLoaded(pos)) {          // рядом выгруженный чанк: не трогаем, чтобы разрушение не подгрузило его
+                        setStatus(MachineStatus.UNLOADED);
+                        return;
+                    }
                     mining = pos;
+                    crackStage = -1;
                     target = new Vec3(pos.getX() + 0.5, pos.getY() + 0.8, pos.getZ() + 0.5);
                     phase = Phase.MOVE;
                     syncDirty = true;
@@ -329,6 +335,10 @@ public class MinerBlockEntity extends MachineBlockEntity {
         }
         setStatus(MachineStatus.RUNNING);
         if (advance(target, viaPlane, f)) {
+            if (!workAreaLoaded(mining)) {
+                setStatus(MachineStatus.UNLOADED);
+                return;
+            }
             viaPlane = false;
             phase = Phase.MINE;
             mineProgress = 0;
@@ -361,6 +371,10 @@ public class MinerBlockEntity extends MachineBlockEntity {
     }
 
     private void mine(MinerFrame f) {
+        if (!workAreaLoaded(mining)) {                 // чанк выгрузили на ходу: ждём, а не подгружаем его запросом блока
+            setStatus(MachineStatus.UNLOADED);
+            return;
+        }
         BlockState state = level.getBlockState(mining);
         if (state.isAir()) {                       // блок исчез сам
             cell++;
@@ -378,7 +392,7 @@ public class MinerBlockEntity extends MachineBlockEntity {
             }
             setStatus(MachineStatus.RUNNING);
             mineProgress = Math.min(mineTotal, mineProgress + activeSpeed());
-            level.destroyBlockProgress(-worldPosition.hashCode(), mining, Math.min(9, mineProgress * 10 / mineTotal));
+            crack(Math.min(9, mineProgress * 10 / mineTotal));
             setChanged();
             return;
         }
@@ -398,7 +412,7 @@ public class MinerBlockEntity extends MachineBlockEntity {
             return;
         }
         float hardness = Math.max(0f, state.getDestroySpeed(level, mining));
-        level.destroyBlockProgress(-worldPosition.hashCode(), mining, -1);
+        crack(-1);
         level.destroyBlock(mining, false);
         for (ItemStack drop : drops) {
             ItemStack left = ItemHandlerHelper.insertItem(inventory, drop, false);
@@ -424,7 +438,7 @@ public class MinerBlockEntity extends MachineBlockEntity {
     }
 
     private void skipCell() {
-        level.destroyBlockProgress(-worldPosition.hashCode(), mining, -1);
+        crack(-1);
         cell++;
         mineProgress = 0;
         phase = Phase.SELECT;
@@ -483,13 +497,36 @@ public class MinerBlockEntity extends MachineBlockEntity {
     @Nullable
     private IItemHandler depotHandler() {
         Direction front = facing();
-        return level.getCapability(Capabilities.ItemHandler.BLOCK, worldPosition.relative(front), front.getOpposite());
+        BlockPos at = worldPosition.relative(front);
+        if (!level.isLoaded(at)) {                      // склад в выгруженном чанке: считаем, что его нет, но не загружаем чанк
+            return null;
+        }
+        return level.getCapability(Capabilities.ItemHandler.BLOCK, at, front.getOpposite());
     }
 
     private void clearCracks() {
-        if (mining != null) {
-            level.destroyBlockProgress(-worldPosition.hashCode(), mining, -1);
+        if (mining != null && crackStage != -1) {
+            crack(-1);
         }
+    }
+
+    /**
+     * Трещины на блоке рассылаются игрокам пакетом; отправляется только смена стадии (и раз в 5 секунд, чтобы клиент не
+     * забыл долгую ломку), а не каждый тик.
+     */
+    private void crack(int stage) {
+        if (mining == null) {
+            return;
+        }
+        if (stage != crackStage || stage >= 0 && level.getGameTime() % 100 == 0) {
+            level.destroyBlockProgress(-worldPosition.hashCode(), mining, stage);
+            crackStage = stage;
+        }
+    }
+
+    /** Блок и его соседи по горизонтали загружены: разрушение и обновления соседей не вызовут загрузку чанка. */
+    private boolean workAreaLoaded(BlockPos pos) {
+        return level.hasChunksAt(pos.offset(-1, -1, -1), pos.offset(1, 1, 1));
     }
 
     // ------------------------------------------------------------------ синхронизация с клиентом
