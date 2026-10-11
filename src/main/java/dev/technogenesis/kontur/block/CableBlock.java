@@ -35,9 +35,9 @@ public class CableBlock extends BaseEntityBlock {
     private static final VoxelShape CORE = Block.box(5, 5, 5, 11, 11, 11);
     /** Порядок как у Direction.values(): DOWN, UP, NORTH, SOUTH, WEST, EAST. */
     private static final VoxelShape[] ARMS = {
-            Block.box(6, 0, 6, 10, 5, 10), Block.box(6, 11, 6, 10, 16, 10),
-            Block.box(6, 6, 0, 10, 10, 5), Block.box(6, 6, 11, 10, 10, 16),
-            Block.box(0, 6, 6, 5, 10, 10), Block.box(11, 6, 6, 16, 10, 10)};
+            Block.box(5, 0, 5, 11, 5, 11), Block.box(5, 11, 5, 11, 16, 11),
+            Block.box(5, 5, 0, 11, 11, 5), Block.box(5, 5, 11, 11, 11, 16),
+            Block.box(0, 5, 5, 5, 11, 11), Block.box(11, 5, 5, 16, 11, 11)};
 
     public final CableTier tier;
 
