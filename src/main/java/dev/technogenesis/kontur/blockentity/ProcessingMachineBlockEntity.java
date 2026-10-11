@@ -209,9 +209,8 @@ public class ProcessingMachineBlockEntity extends MachineBlockEntity {
     @Override
     protected void updateBlockState() {
         boolean active = shown == MachineStatus.RUNNING;
-        BlockState state = getBlockState();
-        if (state.getValue(MachineBlock.ACTIVE) != active) {
-            level.setBlock(worldPosition, state.setValue(MachineBlock.ACTIVE, active), 3);
+        if (getBlockState().getValue(MachineBlock.ACTIVE) != active) {
+            setActive(active);
         }
     }
 }

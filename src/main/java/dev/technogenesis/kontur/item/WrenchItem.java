@@ -132,7 +132,8 @@ public class WrenchItem extends Item {
             configurePipe(pipe, level, pos, ctx, player);
             return InteractionResult.CONSUME;
         }
-        if (!(level.getBlockEntity(pos) instanceof MachineBlockEntity be)) {
+        MachineBlockEntity be = MachineBlock.resolve(level, pos);
+        if (be == null) {
             return InteractionResult.PASS;
         }
         if (be instanceof MinerBlockEntity miner && !miner.isVerified()) {

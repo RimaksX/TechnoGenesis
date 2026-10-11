@@ -1,184 +1,348 @@
 {
-  "variants": {
-    "active=false,charge=0,facing=north": {
-      "model": "kontur:block/precipitation_reactor"
+  "multipart": [
+    {
+      "when": {
+        "facing": "north",
+        "part": "0",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/precipitation_reactor_p0"
+      }
     },
-    "active=false,charge=0,facing=east": {
-      "model": "kontur:block/precipitation_reactor",
-      "y": 90
+    {
+      "when": {
+        "facing": "north",
+        "part": "0",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/precipitation_reactor_p0_on"
+      }
     },
-    "active=false,charge=0,facing=south": {
-      "model": "kontur:block/precipitation_reactor",
-      "y": 180
+    {
+      "when": {
+        "facing": "north",
+        "part": "2",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/precipitation_reactor_p2"
+      }
     },
-    "active=false,charge=0,facing=west": {
-      "model": "kontur:block/precipitation_reactor",
-      "y": 270
+    {
+      "when": {
+        "facing": "north",
+        "part": "2",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/precipitation_reactor_p2"
+      }
     },
-    "active=false,charge=1,facing=north": {
-      "model": "kontur:block/precipitation_reactor"
+    {
+      "when": {
+        "facing": "north",
+        "part": "1",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/precipitation_reactor_p1"
+      }
     },
-    "active=false,charge=1,facing=east": {
-      "model": "kontur:block/precipitation_reactor",
-      "y": 90
+    {
+      "when": {
+        "facing": "north",
+        "part": "1",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/precipitation_reactor_p1_on"
+      }
     },
-    "active=false,charge=1,facing=south": {
-      "model": "kontur:block/precipitation_reactor",
-      "y": 180
+    {
+      "when": {
+        "facing": "north",
+        "part": "3",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/precipitation_reactor_p3"
+      }
     },
-    "active=false,charge=1,facing=west": {
-      "model": "kontur:block/precipitation_reactor",
-      "y": 270
+    {
+      "when": {
+        "facing": "north",
+        "part": "3",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/precipitation_reactor_p3"
+      }
     },
-    "active=false,charge=2,facing=north": {
-      "model": "kontur:block/precipitation_reactor"
+    {
+      "when": {
+        "facing": "east",
+        "part": "0",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/precipitation_reactor_p0",
+        "y": 90
+      }
     },
-    "active=false,charge=2,facing=east": {
-      "model": "kontur:block/precipitation_reactor",
-      "y": 90
+    {
+      "when": {
+        "facing": "east",
+        "part": "0",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/precipitation_reactor_p0_on",
+        "y": 90
+      }
     },
-    "active=false,charge=2,facing=south": {
-      "model": "kontur:block/precipitation_reactor",
-      "y": 180
+    {
+      "when": {
+        "facing": "east",
+        "part": "2",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/precipitation_reactor_p2",
+        "y": 90
+      }
     },
-    "active=false,charge=2,facing=west": {
-      "model": "kontur:block/precipitation_reactor",
-      "y": 270
+    {
+      "when": {
+        "facing": "east",
+        "part": "2",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/precipitation_reactor_p2",
+        "y": 90
+      }
     },
-    "active=false,charge=3,facing=north": {
-      "model": "kontur:block/precipitation_reactor"
+    {
+      "when": {
+        "facing": "east",
+        "part": "1",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/precipitation_reactor_p1",
+        "y": 90
+      }
     },
-    "active=false,charge=3,facing=east": {
-      "model": "kontur:block/precipitation_reactor",
-      "y": 90
+    {
+      "when": {
+        "facing": "east",
+        "part": "1",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/precipitation_reactor_p1_on",
+        "y": 90
+      }
     },
-    "active=false,charge=3,facing=south": {
-      "model": "kontur:block/precipitation_reactor",
-      "y": 180
+    {
+      "when": {
+        "facing": "east",
+        "part": "3",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/precipitation_reactor_p3",
+        "y": 90
+      }
     },
-    "active=false,charge=3,facing=west": {
-      "model": "kontur:block/precipitation_reactor",
-      "y": 270
+    {
+      "when": {
+        "facing": "east",
+        "part": "3",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/precipitation_reactor_p3",
+        "y": 90
+      }
     },
-    "active=false,charge=4,facing=north": {
-      "model": "kontur:block/precipitation_reactor"
+    {
+      "when": {
+        "facing": "south",
+        "part": "0",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/precipitation_reactor_p0",
+        "y": 180
+      }
     },
-    "active=false,charge=4,facing=east": {
-      "model": "kontur:block/precipitation_reactor",
-      "y": 90
+    {
+      "when": {
+        "facing": "south",
+        "part": "0",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/precipitation_reactor_p0_on",
+        "y": 180
+      }
     },
-    "active=false,charge=4,facing=south": {
-      "model": "kontur:block/precipitation_reactor",
-      "y": 180
+    {
+      "when": {
+        "facing": "south",
+        "part": "2",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/precipitation_reactor_p2",
+        "y": 180
+      }
     },
-    "active=false,charge=4,facing=west": {
-      "model": "kontur:block/precipitation_reactor",
-      "y": 270
+    {
+      "when": {
+        "facing": "south",
+        "part": "2",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/precipitation_reactor_p2",
+        "y": 180
+      }
     },
-    "active=false,charge=5,facing=north": {
-      "model": "kontur:block/precipitation_reactor"
+    {
+      "when": {
+        "facing": "south",
+        "part": "1",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/precipitation_reactor_p1",
+        "y": 180
+      }
     },
-    "active=false,charge=5,facing=east": {
-      "model": "kontur:block/precipitation_reactor",
-      "y": 90
+    {
+      "when": {
+        "facing": "south",
+        "part": "1",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/precipitation_reactor_p1_on",
+        "y": 180
+      }
     },
-    "active=false,charge=5,facing=south": {
-      "model": "kontur:block/precipitation_reactor",
-      "y": 180
+    {
+      "when": {
+        "facing": "south",
+        "part": "3",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/precipitation_reactor_p3",
+        "y": 180
+      }
     },
-    "active=false,charge=5,facing=west": {
-      "model": "kontur:block/precipitation_reactor",
-      "y": 270
+    {
+      "when": {
+        "facing": "south",
+        "part": "3",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/precipitation_reactor_p3",
+        "y": 180
+      }
     },
-    "active=true,charge=0,facing=north": {
-      "model": "kontur:block/precipitation_reactor_on"
+    {
+      "when": {
+        "facing": "west",
+        "part": "0",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/precipitation_reactor_p0",
+        "y": 270
+      }
     },
-    "active=true,charge=0,facing=east": {
-      "model": "kontur:block/precipitation_reactor_on",
-      "y": 90
+    {
+      "when": {
+        "facing": "west",
+        "part": "0",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/precipitation_reactor_p0_on",
+        "y": 270
+      }
     },
-    "active=true,charge=0,facing=south": {
-      "model": "kontur:block/precipitation_reactor_on",
-      "y": 180
+    {
+      "when": {
+        "facing": "west",
+        "part": "2",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/precipitation_reactor_p2",
+        "y": 270
+      }
     },
-    "active=true,charge=0,facing=west": {
-      "model": "kontur:block/precipitation_reactor_on",
-      "y": 270
+    {
+      "when": {
+        "facing": "west",
+        "part": "2",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/precipitation_reactor_p2",
+        "y": 270
+      }
     },
-    "active=true,charge=1,facing=north": {
-      "model": "kontur:block/precipitation_reactor_on"
+    {
+      "when": {
+        "facing": "west",
+        "part": "1",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/precipitation_reactor_p1",
+        "y": 270
+      }
     },
-    "active=true,charge=1,facing=east": {
-      "model": "kontur:block/precipitation_reactor_on",
-      "y": 90
+    {
+      "when": {
+        "facing": "west",
+        "part": "1",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/precipitation_reactor_p1_on",
+        "y": 270
+      }
     },
-    "active=true,charge=1,facing=south": {
-      "model": "kontur:block/precipitation_reactor_on",
-      "y": 180
+    {
+      "when": {
+        "facing": "west",
+        "part": "3",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/precipitation_reactor_p3",
+        "y": 270
+      }
     },
-    "active=true,charge=1,facing=west": {
-      "model": "kontur:block/precipitation_reactor_on",
-      "y": 270
-    },
-    "active=true,charge=2,facing=north": {
-      "model": "kontur:block/precipitation_reactor_on"
-    },
-    "active=true,charge=2,facing=east": {
-      "model": "kontur:block/precipitation_reactor_on",
-      "y": 90
-    },
-    "active=true,charge=2,facing=south": {
-      "model": "kontur:block/precipitation_reactor_on",
-      "y": 180
-    },
-    "active=true,charge=2,facing=west": {
-      "model": "kontur:block/precipitation_reactor_on",
-      "y": 270
-    },
-    "active=true,charge=3,facing=north": {
-      "model": "kontur:block/precipitation_reactor_on"
-    },
-    "active=true,charge=3,facing=east": {
-      "model": "kontur:block/precipitation_reactor_on",
-      "y": 90
-    },
-    "active=true,charge=3,facing=south": {
-      "model": "kontur:block/precipitation_reactor_on",
-      "y": 180
-    },
-    "active=true,charge=3,facing=west": {
-      "model": "kontur:block/precipitation_reactor_on",
-      "y": 270
-    },
-    "active=true,charge=4,facing=north": {
-      "model": "kontur:block/precipitation_reactor_on"
-    },
-    "active=true,charge=4,facing=east": {
-      "model": "kontur:block/precipitation_reactor_on",
-      "y": 90
-    },
-    "active=true,charge=4,facing=south": {
-      "model": "kontur:block/precipitation_reactor_on",
-      "y": 180
-    },
-    "active=true,charge=4,facing=west": {
-      "model": "kontur:block/precipitation_reactor_on",
-      "y": 270
-    },
-    "active=true,charge=5,facing=north": {
-      "model": "kontur:block/precipitation_reactor_on"
-    },
-    "active=true,charge=5,facing=east": {
-      "model": "kontur:block/precipitation_reactor_on",
-      "y": 90
-    },
-    "active=true,charge=5,facing=south": {
-      "model": "kontur:block/precipitation_reactor_on",
-      "y": 180
-    },
-    "active=true,charge=5,facing=west": {
-      "model": "kontur:block/precipitation_reactor_on",
-      "y": 270
+    {
+      "when": {
+        "facing": "west",
+        "part": "3",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/precipitation_reactor_p3",
+        "y": 270
+      }
     }
-  }
+  ]
 }

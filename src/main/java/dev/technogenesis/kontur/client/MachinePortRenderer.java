@@ -7,6 +7,7 @@ import dev.technogenesis.kontur.block.MachineBlock;
 import dev.technogenesis.kontur.blockentity.MachineBlockEntity;
 import dev.technogenesis.kontur.machine.IoMode;
 import dev.technogenesis.kontur.machine.MachineStatus;
+import dev.technogenesis.kontur.machine.MultiLayout;
 import dev.technogenesis.kontur.machine.RelativeSide;
 import dev.technogenesis.kontur.item.WrenchItem;
 import dev.technogenesis.kontur.machine.TransferType;
@@ -46,6 +47,11 @@ public final class MachinePortRenderer implements BlockEntityRenderer<MachineBlo
         if (be instanceof dev.technogenesis.kontur.blockentity.MinerBlockEntity miner) {
             return miner.renderArea();
         }
+        if (be.kind().layout() != null) {
+            var cells = be.footprint();
+            var far = cells.get(cells.size() - 1);
+            return new net.minecraft.world.phys.AABB(be.getBlockPos()).minmax(new net.minecraft.world.phys.AABB(far));
+        }
         return new net.minecraft.world.phys.AABB(be.getBlockPos());
     }
 
@@ -75,37 +81,52 @@ public final class MachinePortRenderer implements BlockEntityRenderer<MachineBlo
         }
         Direction facing = be.getBlockState().getValue(MachineBlock.FACING);
         VertexConsumer vc = buffers.getBuffer(RenderType.entityCutoutNoCull(TEXTURE));
-        PoseStack.Pose pose = stack.last();
         int lit = LightTexture.pack(Math.max(LightTexture.block(light), 9), LightTexture.sky(light));
         WrenchMode wrench = heldWrenchMode();
+        MultiLayout layout = be.kind().layout();
         for (Direction dir : Direction.values()) {
             RelativeSide rs = RelativeSide.of(facing, dir);
-            if (rs == RelativeSide.FRONT) {
-                frontLight(vc, pose, dir, be.status(), lit);
-                continue;
+            // у крупной машины гнёзда и индикатор лежат на гранях своих клеток: сдвигаем рисование к нужной
+            stack.pushPose();
+            if (layout != null) {
+                var cell = layout.cell(be.getBlockPos(), facing, rs == RelativeSide.FRONT ? layout.lightIndex()
+                        : Math.max(0, layout.portIndex(rs)));
+                stack.translate(cell.getX() - be.getBlockPos().getX(), cell.getY() - be.getBlockPos().getY(),
+                        cell.getZ() - be.getBlockPos().getZ());
             }
-            if (!be.kind().hasPort(rs)) {
-                continue;
-            }
-            boolean in = false;
-            boolean out = false;
-            for (TransferType t : TransferType.values()) {
-                if (!be.supports(t)) {
-                    continue;
-                }
-                IoMode m = be.sides.get(t, rs);
-                if (wrench != null && wrench.type != null && wrench.type != t) {
-                    continue;   // цвет рамки только по выбранному на ключе типу
-                }
-                in |= m.canInput();
-                out |= m.canOutput();
-            }
-            if (!in && !out && wrench == null) {
-                continue;
-            }
-            int color = in && out ? BOTH : in ? INPUT : out ? OUTPUT : CLOSED;
-            bevelRing(vc, pose, dir, 5f, 11f, color, lit, LIFT);
+            PoseStack.Pose pose = stack.last();
+            drawSide(be, vc, pose, dir, rs, wrench, lit);
+            stack.popPose();
         }
+    }
+
+    private static void drawSide(MachineBlockEntity be, VertexConsumer vc, PoseStack.Pose pose, Direction dir,
+                             RelativeSide rs, WrenchMode wrench, int lit) {
+        if (rs == RelativeSide.FRONT) {
+            frontLight(vc, pose, dir, be.status(), lit);
+            return;
+        }
+        if (!be.kind().hasPort(rs)) {
+            return;
+        }
+        boolean in = false;
+        boolean out = false;
+        for (TransferType t : TransferType.values()) {
+            if (!be.supports(t)) {
+                continue;
+            }
+            IoMode m = be.sides.get(t, rs);
+            if (wrench != null && wrench.type != null && wrench.type != t) {
+                continue;   // цвет рамки только по выбранному на ключе типу
+            }
+            in |= m.canInput();
+            out |= m.canOutput();
+        }
+        if (!in && !out && wrench == null) {
+            return;
+        }
+        int color = in && out ? BOTH : in ? INPUT : out ? OUTPUT : CLOSED;
+        bevelRing(vc, pose, dir, 5f, 11f, color, lit, LIFT);
     }
 
     /** Световой индикатор состояния на передней грани: зелёный - работает, красный - неполадка, жёлтый - полный или заряжается. */

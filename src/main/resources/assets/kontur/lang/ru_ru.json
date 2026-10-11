@@ -307,6 +307,7 @@
   "tooltip.kontur.coating.efficiency": "Выработка панели: %s%%",
   "tooltip.kontur.coating.hint": "Ставится в слот покрытия улучшенной панели или солнечной фермы",
   "message.kontur.farm_no_space": "Для солнечной фермы нужно свободное место 3x2",
+  "message.kontur.multi_no_space": "Не хватает места: нужна свободная площадка %s×%s и высота %s",
   "block.kontur.item_pipe_express": "Экспресс-труба предметов",
   "block.kontur.item_pipe_ultra": "Магистральная труба предметов",
   "block.kontur.fluid_pipe_heavy": "Тяжёлая труба жидкостей",
@@ -456,5 +457,6 @@
   "item.kontur.molybdenum_sintered_residue": "Спёкшийся остаток (молибден)",
   "fluid_type.kontur.molybdenum_melt": "Расплав (молибден)",
   "item.kontur.titanium_sintered_residue": "Спёкшийся остаток (титан)",
-  "fluid_type.kontur.titanium_melt": "Расплав (титан)"
+  "fluid_type.kontur.titanium_melt": "Расплав (титан)",
+  "tooltip.kontur.size": "Размер в блоках: %s × %s × %s (ширина, глубина, высота)"
 }

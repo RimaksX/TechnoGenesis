@@ -60,6 +60,21 @@ public class MachineBlock extends BaseEntityBlock {
         builder.add(FACING, ACTIVE, CHARGE);
     }
 
+    /** Позиция блока с блок-сущностью: у крупных машин главная часть, у остальных сама позиция. */
+    public BlockPos masterPos(BlockState state, BlockPos pos) {
+        return pos;
+    }
+
+    /** Блок-сущность машины в позиции (для частей крупной машины - главной части) или null. */
+    @Nullable
+    public static MachineBlockEntity resolve(net.minecraft.world.level.BlockGetter level, BlockPos pos) {
+        BlockState state = level.getBlockState(pos);
+        if (state.getBlock() instanceof MachineBlock block) {
+            return level.getBlockEntity(block.masterPos(state, pos)) instanceof MachineBlockEntity be ? be : null;
+        }
+        return null;
+    }
+
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
@@ -97,7 +112,8 @@ public class MachineBlock extends BaseEntityBlock {
         // ведро/бак с жидкостью: наполнить или слить машину прямо кликом
         if (kind.definition.hasFluids() && !stack.isEmpty() && stack.getCapability(Capabilities.FluidHandler.ITEM) != null) {
             if (!level.isClientSide) {
-                if (level.getBlockEntity(pos) instanceof MachineBlockEntity be) {
+                MachineBlockEntity be = resolve(level, pos);
+                if (be != null) {
                     FluidUtil.interactWithFluidHandler(player, hand, be.playerFluidHandler());
                 }
             }
@@ -109,10 +125,11 @@ public class MachineBlock extends BaseEntityBlock {
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player,
                                                BlockHitResult hit) {
-        if (!level.isClientSide && level.getBlockEntity(pos) instanceof MachineBlockEntity be) {
+        BlockPos master = masterPos(state, pos);
+        if (!level.isClientSide && level.getBlockEntity(master) instanceof MachineBlockEntity be) {
             player.openMenu(be, buf -> {
                 buf.writeEnum(kind);
-                buf.writeBlockPos(pos);
+                buf.writeBlockPos(master);
             });
         }
         return InteractionResult.sidedSuccess(level.isClientSide);

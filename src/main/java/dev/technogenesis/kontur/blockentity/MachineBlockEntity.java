@@ -12,6 +12,7 @@ import dev.technogenesis.kontur.machine.MachineDefinition.SlotRole;
 import dev.technogenesis.kontur.machine.MachineKind;
 import dev.technogenesis.kontur.machine.MachineStatus;
 import dev.technogenesis.kontur.machine.MachineTank;
+import dev.technogenesis.kontur.machine.MultiLayout;
 import dev.technogenesis.kontur.machine.RelativeSide;
 import dev.technogenesis.kontur.machine.SideConfig;
 import dev.technogenesis.kontur.machine.TransferType;
@@ -182,6 +183,36 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
     protected void updateBlockState() {
     }
 
+    /** Блок, лежащий за гранью d: у крупной машины - за клеткой с разъёмом этой стороны. */
+    protected final BlockPos neighbour(Direction d) {
+        MultiLayout layout = kind.layout();
+        if (layout == null) {
+            return worldPosition.relative(d);
+        }
+        Direction facing = getBlockState().getValue(MachineBlock.FACING);
+        int idx = layout.portIndex(RelativeSide.of(facing, d));
+        return (idx < 0 ? worldPosition : layout.cell(worldPosition, facing, idx)).relative(d);
+    }
+
+    /** Все блоки, занятые машиной (для крупной - все части). */
+    public final java.util.List<BlockPos> footprint() {
+        MultiLayout layout = kind.layout();
+        if (layout == null) {
+            return java.util.List.of(worldPosition);
+        }
+        return layout.cells(worldPosition, getBlockState().getValue(MachineBlock.FACING));
+    }
+
+    /** Переключает признак работы в состоянии блока (у крупной машины - у всех частей). */
+    protected final void setActive(boolean active) {
+        BlockState state = getBlockState();
+        if (state.getBlock() instanceof dev.technogenesis.kontur.block.MultiMachineBlock multi) {
+            multi.setActive(level, worldPosition, active);
+        } else if (state.getValue(MachineBlock.ACTIVE) != active) {
+            level.setBlock(worldPosition, state.setValue(MachineBlock.ACTIVE, active), 3);
+        }
+    }
+
     protected void saveExtra(CompoundTag tag) {
     }
 
@@ -261,7 +292,7 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
     private int countCooledFaces() {
         int n = 0;
         for (Direction d : Direction.values()) {
-            BlockPos np = worldPosition.relative(d);
+            BlockPos np = neighbour(d);
             if (!level.isLoaded(np)) {
                 continue;
             }
@@ -311,7 +342,7 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
             if (!mode(TransferType.ENERGY, d).canOutput()) {
                 continue;
             }
-            BlockPos np = worldPosition.relative(d);
+            BlockPos np = neighbour(d);
             if (!level.isLoaded(np)) {
                 continue;                       // выгруженный чанк не подгружаем запросом соседа
             }
@@ -340,11 +371,11 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
                     break;
                 }
             }
-            if (!wanted || !level.isLoaded(worldPosition.relative(d))) {
+            BlockPos np = neighbour(d);
+            if (!wanted || !level.isLoaded(np)) {
                 continue;
             }
-            IItemHandler target = level.getCapability(Capabilities.ItemHandler.BLOCK, worldPosition.relative(d),
-                    d.getOpposite());
+            IItemHandler target = level.getCapability(Capabilities.ItemHandler.BLOCK, np, d.getOpposite());
             if (target == null) {
                 continue;
             }
@@ -372,11 +403,11 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
             return;
         }
         for (Direction d : Direction.values()) {
-            if (!mode(TransferType.FLUIDS, d).canOutput() || !level.isLoaded(worldPosition.relative(d))) {
+            BlockPos np = neighbour(d);
+            if (!mode(TransferType.FLUIDS, d).canOutput() || !level.isLoaded(np)) {
                 continue;
             }
-            IFluidHandler target = level.getCapability(Capabilities.FluidHandler.BLOCK, worldPosition.relative(d),
-                    d.getOpposite());
+            IFluidHandler target = level.getCapability(Capabilities.FluidHandler.BLOCK, np, d.getOpposite());
             if (target == null) {
                 continue;
             }
@@ -559,8 +590,10 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
     private void sidesChanged() {
         setChanged();
         if (level != null) {
-            level.invalidateCapabilities(worldPosition);
-            level.updateNeighborsAt(worldPosition, getBlockState().getBlock());
+            for (BlockPos p : footprint()) {
+                level.invalidateCapabilities(p);
+                level.updateNeighborsAt(p, getBlockState().getBlock());
+            }
             level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Block.UPDATE_CLIENTS);
         }
     }

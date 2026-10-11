@@ -122,7 +122,7 @@ public final class PipeNetwork {
                 if (pipes.containsKey(np) || be.mode(d) == ConduitMode.OFF || !level.isLoaded(np)) {
                     continue;
                 }
-                boolean machine = level.getBlockEntity(np) instanceof MachineBlockEntity;
+                boolean machine = level.getBlockState(np).getBlock() instanceof dev.technogenesis.kontur.block.MachineBlock;
                 ConduitMode mode = be.mode(d).resolve(machine);
                 EndKey key = new EndKey(pos, d);
                 if (kind == ConduitKind.ITEMS) {

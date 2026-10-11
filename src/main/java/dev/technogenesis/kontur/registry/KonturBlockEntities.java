@@ -65,9 +65,42 @@ public final class KonturBlockEntities {
         };
     }
 
+    /** Главная часть крупной машины, если сторона side этой клетки - её разъём; иначе null. */
+    private static MachineBlockEntity portOwner(net.minecraft.world.level.Level level, BlockPos pos, BlockState state,
+                                                @org.jetbrains.annotations.Nullable net.minecraft.core.Direction side) {
+        if (side == null || !(state.getBlock() instanceof dev.technogenesis.kontur.block.MultiMachineBlock block)) {
+            return null;
+        }
+        var facing = state.getValue(dev.technogenesis.kontur.block.MachineBlock.FACING);
+        var relative = dev.technogenesis.kontur.machine.RelativeSide.of(facing, side);
+        int part = state.getValue(dev.technogenesis.kontur.block.MultiMachineBlock.PART);
+        if (!block.kind.hasPort(relative) || block.layout.portIndex(relative) != part) {
+            return null;
+        }
+        BlockPos master = block.layout.masterOf(pos, facing, part);
+        return level.isLoaded(master) && level.getBlockEntity(master) instanceof MachineBlockEntity be ? be : null;
+    }
+
     public static void registerCapabilities(RegisterCapabilitiesEvent event) {
         for (MachineKind kind : MachineKind.values()) {
             BlockEntityType<MachineBlockEntity> type = MACHINES.get(kind).get();
+            if (kind.layout() != null) {
+                // крупная машина: способности отдаёт только клетка с разъёмом на нужной стороне, запрос уходит к главной части
+                Block block = KonturBlocks.MACHINES.get(kind).get();
+                event.registerBlock(Capabilities.ItemHandler.BLOCK, (level, pos, state, be, side) -> {
+                    MachineBlockEntity owner = portOwner(level, pos, state, side);
+                    return owner == null ? null : owner.getItemHandler(side);
+                }, block);
+                event.registerBlock(Capabilities.FluidHandler.BLOCK, (level, pos, state, be, side) -> {
+                    MachineBlockEntity owner = portOwner(level, pos, state, side);
+                    return owner == null ? null : owner.getFluidHandler(side);
+                }, block);
+                event.registerBlock(Capabilities.EnergyStorage.BLOCK, (level, pos, state, be, side) -> {
+                    MachineBlockEntity owner = portOwner(level, pos, state, side);
+                    return owner == null ? null : owner.getEnergyStorage(side);
+                }, block);
+                continue;
+            }
             event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, type, (be, side) -> be.getItemHandler(side));
             event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, type, (be, side) -> be.getFluidHandler(side));
             if (kind != MachineKind.SOLAR_FARM) {

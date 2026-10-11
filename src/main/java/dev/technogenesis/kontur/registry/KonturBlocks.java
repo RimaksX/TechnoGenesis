@@ -6,7 +6,9 @@ import dev.technogenesis.kontur.block.ConduitBlock;
 import dev.technogenesis.kontur.network.CableTier;
 import dev.technogenesis.kontur.network.PipeTier;
 import dev.technogenesis.kontur.block.MachineBlock;
+import dev.technogenesis.kontur.block.MultiMachineBlock;
 import dev.technogenesis.kontur.block.SolarFarmBlock;
+import dev.technogenesis.kontur.item.MultiMachineItem;
 import dev.technogenesis.kontur.item.SolarFarmItem;
 import net.minecraft.world.item.Item;
 import dev.technogenesis.kontur.machine.MachineKind;
@@ -126,10 +128,15 @@ public final class KonturBlocks {
                     .strength(3.5f, 6.0f).sound(SoundType.METAL).requiresCorrectToolForDrops().noOcclusion()
                     .lightLevel(state -> glow && state.hasProperty(MachineBlock.ACTIVE)
                             && state.getValue(MachineBlock.ACTIVE) ? 8 : 0);
-            return kind == MachineKind.SOLAR_FARM ? new SolarFarmBlock(props, kind) : new MachineBlock(props, kind);
+            if (kind == MachineKind.SOLAR_FARM) {
+                return new SolarFarmBlock(props, kind);
+            }
+            return kind.layout() != null ? new MultiMachineBlock(props, kind) : new MachineBlock(props, kind);
         });
         if (kind == MachineKind.SOLAR_FARM) {
             KonturItems.ITEMS.register(kind.id, () -> new SolarFarmItem((SolarFarmBlock) holder.get(), new Item.Properties()));
+        } else if (kind.layout() != null) {
+            KonturItems.ITEMS.register(kind.id, () -> new MultiMachineItem((MultiMachineBlock) holder.get(), new Item.Properties()));
         } else {
             KonturItems.ITEMS.register(kind.id, () -> new dev.technogenesis.kontur.item.MachineBlockItem(holder.get(), new Item.Properties()));
         }

@@ -189,6 +189,16 @@ public enum MachineKind implements StringRepresentable {
         };
     }
 
+    /** Раскладка крупной машины; null у машин в один блок. */
+    public MultiLayout layout() {
+        return switch (this) {
+            case LEACHING_REACTOR, PRECIPITATION_REACTOR, EXTRACTOR, ATTRITOR, PLASMA_GENERATOR -> MultiLayout.SQUARE;
+            case FILTER_PRESS, ELECTROLYZER, AUTOCLAVE, PLASMA_FURNACE, VACUUM_CASTER -> MultiLayout.WIDE;
+            case ACID_REGENERATION_COLUMN, SOLVENT_REGENERATOR -> MultiLayout.TALL;
+            default -> null;
+        };
+    }
+
     public SideConfig defaultSides() {
         IoMode energy = switch (definition.energyKind) {
             case CONSUMER -> IoMode.INPUT;
