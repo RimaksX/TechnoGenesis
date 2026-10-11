@@ -41,7 +41,7 @@ public class MinerBlockEntity extends MachineBlockEntity {
     public static final int MAX_OUTER = 50;
     /** Высота головки (наконечник и корпус) и низ каретки над уровнем рамки. */
     public static final double HEAD_H = 0.625;
-    public static final double CARRIAGE_BOTTOM = 0.4375;
+    public static final double CARRIAGE_BOTTOM = 0.5;
     private static final double MOVE_SPEED = 0.35;
     private static final int ENERGY_MOVE = 60;
     private static final int ENERGY_MINE = 160;
@@ -104,11 +104,14 @@ public class MinerBlockEntity extends MachineBlockEntity {
     }
 
     private double planeTipY(MinerFrame f) {
-        return f.y();          // низ головки на уровне пола рамки: в плоскости она не цепляет блоки слоя под рамкой
+        return f.y() + CARRIAGE_BOTTOM - HEAD_H;     // верх головки вплотную к низу каретки
     }
 
+    /** Стоянка: клетка внутри рамки по диагонали от ядра, чтобы каретка не стояла внутри модели самого ядра. */
     private Vec3 home(MinerFrame f) {
-        return new Vec3(worldPosition.getX() + 0.5, planeTipY(f), worldPosition.getZ() + 0.5);
+        int dx = worldPosition.getX() <= f.minX() ? 1 : -1;
+        int dz = worldPosition.getZ() <= f.minZ() ? 1 : -1;
+        return new Vec3(worldPosition.getX() + dx + 0.5, planeTipY(f), worldPosition.getZ() + dz + 0.5);
     }
 
     /** Мировые координаты клетки слоя по номеру: змейка, чётные строки слева направо, нечётные обратно. */
@@ -291,7 +294,7 @@ public class MinerBlockEntity extends MachineBlockEntity {
                 }
                 if (isMineable(pos, state)) {
                     mining = pos;
-                    target = new Vec3(pos.getX() + 0.5, pos.getY() + 0.9, pos.getZ() + 0.5);
+                    target = new Vec3(pos.getX() + 0.5, pos.getY() + 0.8, pos.getZ() + 0.5);
                     phase = Phase.MOVE;
                     syncDirty = true;
                     setChanged();

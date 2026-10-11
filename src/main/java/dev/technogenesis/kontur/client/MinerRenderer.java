@@ -46,8 +46,8 @@ public final class MinerRenderer {
             model("miner_tip_carbide")};
 
     private static final float SPIN_PER_TICK = 28f;
-    /** Высота низа балки над полом блока рамки: колёса стоят ровно на верхней грани направляющей (12/16 блока). */
-    private static final double BEAM_LIFT = 0.6875;
+    /** Высота низа балки над полом блока рамки: балка лежит на верхней грани направляющей (12/16 блока). */
+    private static final double BEAM_LIFT = 0.75;
 
     private MinerRenderer() {
     }
@@ -81,8 +81,9 @@ public final class MinerRenderer {
         for (int x = f.minX(); x <= f.maxX(); x++) {
             part(renderer, vc, stack, level, BEAM, x - core.getX(), beamY, beamZ, core, overlay);
         }
-        part(renderer, vc, stack, level, TRUCK, f.minX() - core.getX(), beamY, beamZ, core, overlay);
-        part(renderer, vc, stack, level, TRUCK, f.maxX() - core.getX(), beamY, beamZ, core, overlay);
+        // тележки: модель нарисована так, что верх рельса приходится на высоту 4 пикселя
+        part(renderer, vc, stack, level, TRUCK, f.minX() - core.getX(), beamY - 0.25, beamZ, core, overlay);
+        part(renderer, vc, stack, level, TRUCK, f.maxX() - core.getX(), beamY - 0.25, beamZ, core, overlay);
 
         double headX = head.x - 0.5 - core.getX();
         double headZ = head.z - 0.5 - core.getZ();

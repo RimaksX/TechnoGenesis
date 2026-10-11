@@ -49,6 +49,18 @@ public final class MachinePortRenderer implements BlockEntityRenderer<MachineBlo
         return new net.minecraft.world.phys.AABB(be.getBlockPos());
     }
 
+    /** Балка и головка шахтёра видны, даже когда сам блок ядра вне кадра (иначе деталь пропадает, стоит отвернуться от ядра). */
+    @Override
+    public boolean shouldRenderOffScreen(MachineBlockEntity be) {
+        return be instanceof dev.technogenesis.kontur.blockentity.MinerBlockEntity;
+    }
+
+    @Override
+    public boolean shouldRender(MachineBlockEntity be, net.minecraft.world.phys.Vec3 camera) {
+        double range = be instanceof dev.technogenesis.kontur.blockentity.MinerBlockEntity ? 160.0 : getViewDistance();
+        return net.minecraft.world.phys.Vec3.atCenterOf(be.getBlockPos()).closerThan(camera, range);
+    }
+
     @Override
     public void render(MachineBlockEntity be, float partialTick, PoseStack stack, MultiBufferSource buffers,
                        int light, int overlay) {
