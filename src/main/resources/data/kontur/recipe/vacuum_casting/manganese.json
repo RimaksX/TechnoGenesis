@@ -1,0 +1,17 @@
+{
+  "type": "kontur:vacuum_casting",
+  "results": [
+    {
+      "id": "kontur:manganese_ingot",
+      "count": 4
+    }
+  ],
+  "energy": 20000,
+  "time": 100,
+  "fluid_input": {
+    "fluids": [
+      "kontur:manganese_melt"
+    ],
+    "amount": 500
+  }
+}

@@ -6,7 +6,7 @@ import dev.technogenesis.kontur.registry.KonturRecipes;
 import com.mojang.serialization.Codec;
 import net.minecraft.util.StringRepresentable;
 
-/** Виды машин ступеней ×2, ×3, ×5, ×8 и энергетики. */
+/** Виды машин ступеней ×2, ×3, ×5, ×8, ×12 и энергетики. */
 public enum MachineKind implements StringRepresentable {
     // Щёковая дробилка: 16 FE/t, руда -> дроблёная руда + щебень
     JAW_CRUSHER("jaw_crusher", true, false, KonturRecipes.CRUSHING, MachineDefinition.builder()
@@ -89,10 +89,26 @@ public enum MachineKind implements StringRepresentable {
     STEAM_GENERATOR("steam_generator", true, false, KonturRecipes.STEAM_GENERATION, MachineDefinition.builder()
             .tank(30, 20, 4000, false).slot(55, 38, SlotRole.INPUT).tank(112, 20, 4000, true)
             .energy(EnergyKind.CONSUMER, 3200, 192, 0, 32).arrow(78, 42).module(-20, 41).cooler(-20, 63).build()),
-    // Автоклав: 240 FE/t, шлаковая пыль + пар под давлением -> три слитка
+    // Автоклав: 240 FE/t, шлаковая пыль + пар под давлением -> три слитка + спёкшийся остаток
     AUTOCLAVE("autoclave", true, false, KonturRecipes.AUTOCLAVING, MachineDefinition.builder()
-            .tank(18, 20, 4000, false).slot(43, 38, SlotRole.INPUT).slot(101, 38, SlotRole.OUTPUT)
+            .tank(18, 20, 4000, false).slot(43, 38, SlotRole.INPUT).slot(101, 29, SlotRole.OUTPUT)
+            .slot(101, 47, SlotRole.OUTPUT)
             .energy(EnergyKind.CONSUMER, 24000, 1440, 0, 240).arrow(66, 42).module(-20, 41).cooler(-20, 63).build()),
+
+    // ---- ступень ×12 «Плазменная переработка»: плазма, плавка в плазме, вакуумная отливка
+    // Генератор плазмы: 400 FE/t, пар -> плазма (внутренняя жидкость)
+    PLASMA_GENERATOR("plasma_generator", true, false, KonturRecipes.PLASMA_GENERATION, MachineDefinition.builder()
+            .tank(36, 20, 4000, false).tank(106, 20, 4000, true)
+            .energy(EnergyKind.CONSUMER, 40000, 2400, 0, 400).arrow(66, 30).module(-20, 41).cooler(-20, 63).build()),
+    // Плазменная печь: 300 FE/t, спёкшийся остаток + плазма -> расплав металла
+    PLASMA_FURNACE("plasma_furnace", true, false, KonturRecipes.PLASMA_SMELTING, MachineDefinition.builder()
+            .tank(18, 20, 4000, false).slot(43, 38, SlotRole.INPUT).slot(101, 38, SlotRole.OUTPUT)
+            .tank(124, 20, 4000, true)
+            .energy(EnergyKind.CONSUMER, 30000, 1800, 0, 300).arrow(66, 42).module(-20, 41).cooler(-20, 63).build()),
+    // Вакуумный кристаллизатор: 200 FE/t, расплав металла -> четыре слитка
+    VACUUM_CASTER("vacuum_caster", true, false, KonturRecipes.VACUUM_CASTING, MachineDefinition.builder()
+            .tank(36, 20, 4000, false).slot(72, 45, SlotRole.OUTPUT)
+            .energy(EnergyKind.CONSUMER, 20000, 1200, 0, 200).arrow(66, 30).module(-20, 41).cooler(-20, 63).build()),
 
     // ---- энергетика: возобновляемые источники и паровая турбина
     // Ветряной ротор: 24..96 FE/t, растёт с высотой и в непогоду; нужны открытое небо и свободные бока
@@ -167,6 +183,7 @@ public enum MachineKind implements StringRepresentable {
                  ACID_REGENERATION_COLUMN -> "x3";
             case EXTRACTOR, ELECTROLYZER, SOLVENT_REGENERATOR -> "x5";
             case ATTRITOR, STEAM_GENERATOR, AUTOCLAVE -> "x8";
+            case PLASMA_GENERATOR, PLASMA_FURNACE, VACUUM_CASTER -> "x12";
             case MINER -> "mining";
             default -> "power";
         };

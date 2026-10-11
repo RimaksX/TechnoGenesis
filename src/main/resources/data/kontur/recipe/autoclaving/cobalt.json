@@ -4,6 +4,10 @@
     {
       "id": "kontur:cobalt_ingot",
       "count": 3
+    },
+    {
+      "id": "kontur:cobalt_sintered_residue",
+      "count": 1
     }
   ],
   "energy": 24000,

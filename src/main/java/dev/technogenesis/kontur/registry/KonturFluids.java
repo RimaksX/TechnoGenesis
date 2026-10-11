@@ -50,11 +50,17 @@ public final class KonturFluids {
     /** Ступень ×8: пар из парогенератора; внутренняя жидкость. */
     public static final FluidSet STEAM = new FluidSet("steam", 0xFFE6EEF2, 100, 200, false);
 
+    /** Ступень ×12: плазма из генератора плазмы; внутренняя жидкость. */
+    public static final FluidSet PLASMA = new FluidSet("plasma", 0xFFB48CFF, 50, 100, false);
+
     /** Раствор для каждого металла: жидкости разных металлов никогда не смешиваются. */
     public static final Map<Metal, FluidSet> SOLUTION = new EnumMap<>(Metal.class);
 
     /** Экстракт металла в растворителе (ступень ×5): у каждого металла свой, разные не смешиваются. */
     public static final Map<Metal, FluidSet> EXTRACT = new EnumMap<>(Metal.class);
+
+    /** Расплав металла (ступень ×12): у каждого металла свой, разные не смешиваются. */
+    public static final Map<Metal, FluidSet> MELT = new EnumMap<>(Metal.class);
 
     static {
         for (Metal metal : Metal.values()) {
@@ -62,6 +68,9 @@ public final class KonturFluids {
         }
         for (Metal metal : Metal.values()) {
             EXTRACT.put(metal, new FluidSet(metal.id() + "_extract", darker(metal.solutionTint), 1050, 1300, false));
+        }
+        for (Metal metal : Metal.values()) {
+            MELT.put(metal, new FluidSet(metal.id() + "_melt", metal.solutionTint, 2400, 6000, false));
         }
     }
 

@@ -4,6 +4,10 @@
     {
       "id": "kontur:titanium_ingot",
       "count": 3
+    },
+    {
+      "id": "kontur:titanium_sintered_residue",
+      "count": 1
     }
   ],
   "energy": 24000,

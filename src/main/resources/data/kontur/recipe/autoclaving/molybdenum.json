@@ -4,6 +4,10 @@
     {
       "id": "kontur:molybdenum_ingot",
       "count": 3
+    },
+    {
+      "id": "kontur:molybdenum_sintered_residue",
+      "count": 1
     }
   ],
   "energy": 24000,

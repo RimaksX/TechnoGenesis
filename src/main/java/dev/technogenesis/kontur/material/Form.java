@@ -17,7 +17,9 @@ public enum Form {
     /** Твёрдый шлак: отход экстрактора, сырьё ступени ×8. */
     HARD_SLAG("hard_slag"),
     /** Шлаковая пыль: сверхтонко измельчённый шлак для автоклава. */
-    SLAG_DUST("slag_dust");
+    SLAG_DUST("slag_dust"),
+    /** Спёкшийся остаток: отход автоклава, сырьё ступени ×12. */
+    SINTERED_RESIDUE("sintered_residue");
 
     public final String suffix;
 

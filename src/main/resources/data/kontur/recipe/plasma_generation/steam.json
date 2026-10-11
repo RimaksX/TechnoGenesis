@@ -1,0 +1,18 @@
+{
+  "type": "kontur:plasma_generation",
+  "results": [],
+  "energy": 20000,
+  "time": 50,
+  "fluid_input": {
+    "fluids": [
+      "kontur:steam"
+    ],
+    "amount": 1000
+  },
+  "fluid_results": [
+    {
+      "fluid": "kontur:plasma",
+      "amount": 1000
+    }
+  ]
+}

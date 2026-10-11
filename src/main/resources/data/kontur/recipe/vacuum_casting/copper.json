@@ -1,0 +1,17 @@
+{
+  "type": "kontur:vacuum_casting",
+  "results": [
+    {
+      "id": "minecraft:copper_ingot",
+      "count": 4
+    }
+  ],
+  "energy": 20000,
+  "time": 100,
+  "fluid_input": {
+    "fluids": [
+      "kontur:copper_melt"
+    ],
+    "amount": 500
+  }
+}

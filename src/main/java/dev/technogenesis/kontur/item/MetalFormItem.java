@@ -36,6 +36,8 @@ public class MetalFormItem extends Item {
             tooltip.add(Component.translatable("tooltip.kontur.tailings").withStyle(ChatFormatting.DARK_GRAY));
         } else if (form == Form.HARD_SLAG) {
             tooltip.add(Component.translatable("tooltip.kontur.hard_slag").withStyle(ChatFormatting.DARK_GRAY));
+        } else if (form == Form.SINTERED_RESIDUE) {
+            tooltip.add(Component.translatable("tooltip.kontur.sintered_residue").withStyle(ChatFormatting.DARK_GRAY));
         } else if (form == Form.CAKE_R2) {
             tooltip.add(Component.translatable("tooltip.kontur.cake_r2").withStyle(ChatFormatting.DARK_GRAY));
         }

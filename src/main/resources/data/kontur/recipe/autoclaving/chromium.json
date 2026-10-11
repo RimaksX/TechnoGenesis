@@ -4,6 +4,10 @@
     {
       "id": "kontur:chromium_ingot",
       "count": 3
+    },
+    {
+      "id": "kontur:chromium_sintered_residue",
+      "count": 1
     }
   ],
   "energy": 24000,

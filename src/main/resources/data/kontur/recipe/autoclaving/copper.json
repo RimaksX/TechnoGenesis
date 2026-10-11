@@ -4,6 +4,10 @@
     {
       "id": "minecraft:copper_ingot",
       "count": 3
+    },
+    {
+      "id": "kontur:copper_sintered_residue",
+      "count": 1
     }
   ],
   "energy": 24000,
