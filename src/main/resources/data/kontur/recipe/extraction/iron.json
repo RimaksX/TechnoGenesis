@@ -1,0 +1,30 @@
+{
+  "type": "kontur:extraction",
+  "results": [
+    {
+      "id": "kontur:mineral_fraction",
+      "count": 1,
+      "chance": 0.5
+    }
+  ],
+  "energy": 8000,
+  "time": 125,
+  "input": {
+    "ingredient": {
+      "item": "kontur:iron_cake_r2"
+    },
+    "count": 1
+  },
+  "fluid_input": {
+    "fluids": [
+      "kontur:solvent"
+    ],
+    "amount": 500
+  },
+  "fluid_results": [
+    {
+      "fluid": "kontur:iron_extract",
+      "amount": 400
+    }
+  ]
+}

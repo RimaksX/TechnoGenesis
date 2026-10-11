@@ -1,0 +1,24 @@
+{
+  "type": "kontur:solvent_regeneration",
+  "results": [
+    {
+      "id": "kontur:salt",
+      "count": 1,
+      "chance": 0.25
+    }
+  ],
+  "energy": 1920,
+  "time": 30,
+  "fluid_input": {
+    "fluids": [
+      "kontur:spent_solvent"
+    ],
+    "amount": 500
+  },
+  "fluid_results": [
+    {
+      "fluid": "kontur:solvent",
+      "amount": 400
+    }
+  ]
+}

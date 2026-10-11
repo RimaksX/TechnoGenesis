@@ -1,0 +1,23 @@
+{
+  "type": "kontur:electrolysis",
+  "results": [
+    {
+      "id": "kontur:molybdenum_ingot",
+      "count": 2
+    }
+  ],
+  "energy": 14400,
+  "time": 100,
+  "fluid_input": {
+    "fluids": [
+      "kontur:molybdenum_extract"
+    ],
+    "amount": 400
+  },
+  "fluid_results": [
+    {
+      "fluid": "kontur:spent_solvent",
+      "amount": 400
+    }
+  ]
+}

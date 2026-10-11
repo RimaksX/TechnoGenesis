@@ -1,0 +1,23 @@
+{
+  "type": "kontur:electrolysis",
+  "results": [
+    {
+      "id": "minecraft:copper_ingot",
+      "count": 2
+    }
+  ],
+  "energy": 14400,
+  "time": 100,
+  "fluid_input": {
+    "fluids": [
+      "kontur:copper_extract"
+    ],
+    "amount": 400
+  },
+  "fluid_results": [
+    {
+      "fluid": "kontur:spent_solvent",
+      "amount": 400
+    }
+  ]
+}

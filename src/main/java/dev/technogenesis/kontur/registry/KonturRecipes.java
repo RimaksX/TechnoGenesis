@@ -25,6 +25,9 @@ public final class KonturRecipes {
     public static final Kind FILTERING = new Kind("filtering");
     public static final Kind PRECIPITATION = new Kind("precipitation");
     public static final Kind ACID_REGENERATION = new Kind("acid_regeneration");
+    public static final Kind EXTRACTION = new Kind("extraction");
+    public static final Kind ELECTROLYSIS = new Kind("electrolysis");
+    public static final Kind SOLVENT_REGENERATION = new Kind("solvent_regeneration");
 
     private KonturRecipes() {
     }

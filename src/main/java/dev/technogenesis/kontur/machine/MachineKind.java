@@ -6,7 +6,7 @@ import dev.technogenesis.kontur.registry.KonturRecipes;
 import com.mojang.serialization.Codec;
 import net.minecraft.util.StringRepresentable;
 
-/** Виды машин ступени ×2 и энергетики. */
+/** Виды машин ступеней ×2, ×3, ×5 и энергетики. */
 public enum MachineKind implements StringRepresentable {
     // Щёковая дробилка: 16 FE/t, руда -> дроблёная руда + щебень
     JAW_CRUSHER("jaw_crusher", true, false, KonturRecipes.CRUSHING, MachineDefinition.builder()
@@ -60,6 +60,22 @@ public enum MachineKind implements StringRepresentable {
             .energy(EnergyKind.CONSUMER, 3200, 192, 0, 32).arrow(66, 42).module(-20, 41).cooler(-20, 63).build()),
     // Колонна регенерации кислот: 64 FE/t, возвращает 200 мБ кислоты из 300 мБ отработанного раствора
     ACID_REGENERATION_COLUMN("acid_regeneration_column", true, false, KonturRecipes.ACID_REGENERATION,
+            MachineDefinition.builder()
+            .tank(36, 20, 4000, false).tank(106, 20, 4000, true).slot(72, 45, SlotRole.OUTPUT)
+            .energy(EnergyKind.CONSUMER, 6400, 384, 0, 64).arrow(66, 30).module(-20, 41).cooler(-20, 63).build()),
+
+    // ---- ступень ×5: экстракция, электролиз, регенерация растворителя (из кека R2)
+    // Экстрактор: 64 FE/t, кек R2 + растворитель -> экстракт металла + отходы
+    EXTRACTOR("extractor", true, false, KonturRecipes.EXTRACTION, MachineDefinition.builder()
+            .tank(18, 20, 4000, false).slot(43, 38, SlotRole.INPUT).slot(101, 38, SlotRole.OUTPUT)
+            .tank(124, 20, 4000, true)
+            .energy(EnergyKind.CONSUMER, 6400, 384, 0, 64).arrow(66, 42).module(-20, 41).cooler(-20, 63).build()),
+    // Электролизёр: 144 FE/t, экстракт металла -> два слитка + отработанный растворитель
+    ELECTROLYZER("electrolyzer", true, false, KonturRecipes.ELECTROLYSIS, MachineDefinition.builder()
+            .tank(36, 20, 4000, false).tank(106, 20, 4000, true).slot(72, 45, SlotRole.OUTPUT)
+            .energy(EnergyKind.CONSUMER, 14400, 864, 0, 144).arrow(66, 30).module(-20, 41).cooler(-20, 63).build()),
+    // Регенератор растворителя: 64 FE/t, возвращает 400 мБ растворителя из 500 мБ отработанного
+    SOLVENT_REGENERATOR("solvent_regenerator", true, false, KonturRecipes.SOLVENT_REGENERATION,
             MachineDefinition.builder()
             .tank(36, 20, 4000, false).tank(106, 20, 4000, true).slot(72, 45, SlotRole.OUTPUT)
             .energy(EnergyKind.CONSUMER, 6400, 384, 0, 64).arrow(66, 30).module(-20, 41).cooler(-20, 63).build()),

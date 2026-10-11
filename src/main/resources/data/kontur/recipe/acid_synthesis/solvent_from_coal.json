@@ -1,0 +1,24 @@
+{
+  "type": "kontur:acid_synthesis",
+  "results": [],
+  "energy": 1920,
+  "time": 60,
+  "input": {
+    "ingredient": {
+      "item": "minecraft:coal"
+    },
+    "count": 1
+  },
+  "fluid_input": {
+    "fluids": [
+      "kontur:sulfuric_acid"
+    ],
+    "amount": 250
+  },
+  "fluid_results": [
+    {
+      "fluid": "kontur:solvent",
+      "amount": 500
+    }
+  ]
+}

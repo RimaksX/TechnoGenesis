@@ -43,13 +43,31 @@ public final class KonturFluids {
     public static final FluidSet SULFURIC_ACID = new FluidSet("sulfuric_acid", 0xFFC9D94A, 1830, 2000, true);
     public static final FluidSet SPENT_ACID = new FluidSet("spent_acid", 0xFF7C7A3C, 1300, 1800, true);
 
+    /** Ступень ×5: растворитель (делается в заводе кислоты из угля и кислоты) и отработанный растворитель; внутренние. */
+    public static final FluidSet SOLVENT = new FluidSet("solvent", 0xFFD9A441, 900, 1200, false);
+    public static final FluidSet SPENT_SOLVENT = new FluidSet("spent_solvent", 0xFF8A6A34, 950, 1400, false);
+
     /** Раствор для каждого металла: жидкости разных металлов никогда не смешиваются. */
     public static final Map<Metal, FluidSet> SOLUTION = new EnumMap<>(Metal.class);
+
+    /** Экстракт металла в растворителе (ступень ×5): у каждого металла свой, разные не смешиваются. */
+    public static final Map<Metal, FluidSet> EXTRACT = new EnumMap<>(Metal.class);
 
     static {
         for (Metal metal : Metal.values()) {
             SOLUTION.put(metal, new FluidSet(metal.id() + "_solution", metal.solutionTint, 1200, 1400, false));
         }
+        for (Metal metal : Metal.values()) {
+            EXTRACT.put(metal, new FluidSet(metal.id() + "_extract", darker(metal.solutionTint), 1050, 1300, false));
+        }
+    }
+
+    /** Экстракт темнее раствора того же металла: он растворён в маслянистом растворителе. */
+    private static int darker(int argb) {
+        int r = (argb >> 16 & 0xFF) * 3 / 4;
+        int g = (argb >> 8 & 0xFF) * 3 / 4;
+        int b = (argb & 0xFF) * 3 / 4;
+        return 0xFF000000 | r << 16 | g << 8 | b;
     }
 
     private KonturFluids() {
