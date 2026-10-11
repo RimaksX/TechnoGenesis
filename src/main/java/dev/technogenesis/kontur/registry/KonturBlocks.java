@@ -55,6 +55,9 @@ public final class KonturBlocks {
     public static final DeferredBlock<MachineBlock> EXTRACTOR = machine(MachineKind.EXTRACTOR);
     public static final DeferredBlock<MachineBlock> ELECTROLYZER = machine(MachineKind.ELECTROLYZER);
     public static final DeferredBlock<MachineBlock> SOLVENT_REGENERATOR = machine(MachineKind.SOLVENT_REGENERATOR);
+    public static final DeferredBlock<MachineBlock> ATTRITOR = machine(MachineKind.ATTRITOR);
+    public static final DeferredBlock<MachineBlock> STEAM_GENERATOR = machine(MachineKind.STEAM_GENERATOR);
+    public static final DeferredBlock<MachineBlock> AUTOCLAVE = machine(MachineKind.AUTOCLAVE);
     public static final DeferredBlock<MachineBlock> WIND_ROTOR = machine(MachineKind.WIND_ROTOR);
     public static final DeferredBlock<MachineBlock> THERMAL_GENERATOR = machine(MachineKind.THERMAL_GENERATOR);
     public static final DeferredBlock<MachineBlock> STEAM_TURBINE = machine(MachineKind.STEAM_TURBINE);

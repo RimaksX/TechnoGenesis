@@ -88,6 +88,9 @@ public final class KonturCreativeTabs {
                         out.accept(KonturBlocks.EXTRACTOR);
                         out.accept(KonturBlocks.ELECTROLYZER);
                         out.accept(KonturBlocks.SOLVENT_REGENERATOR);
+                        out.accept(KonturBlocks.ATTRITOR);
+                        out.accept(KonturBlocks.STEAM_GENERATOR);
+                        out.accept(KonturBlocks.AUTOCLAVE);
                         for (dev.technogenesis.kontur.network.CableTier tier : dev.technogenesis.kontur.network.CableTier.values()) {
                             out.accept(KonturBlocks.CABLES.get(tier));
                         }

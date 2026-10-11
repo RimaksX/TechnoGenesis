@@ -13,7 +13,11 @@ public enum Form {
     /** Сухой остаток после фильтр-пресса, сырьё ступени ×5. */
     CAKE_R2("cake_r2"),
     /** Металлсодержащий осадок, из которого плавится слиток. */
-    PRECIPITATE("precipitate");
+    PRECIPITATE("precipitate"),
+    /** Твёрдый шлак: отход экстрактора, сырьё ступени ×8. */
+    HARD_SLAG("hard_slag"),
+    /** Шлаковая пыль: сверхтонко измельчённый шлак для автоклава. */
+    SLAG_DUST("slag_dust");
 
     public final String suffix;
 

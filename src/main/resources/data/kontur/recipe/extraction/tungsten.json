@@ -2,9 +2,8 @@
   "type": "kontur:extraction",
   "results": [
     {
-      "id": "kontur:mineral_fraction",
-      "count": 1,
-      "chance": 0.5
+      "id": "kontur:tungsten_hard_slag",
+      "count": 1
     }
   ],
   "energy": 8000,

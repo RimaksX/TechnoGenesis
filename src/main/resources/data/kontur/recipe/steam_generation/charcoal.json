@@ -1,0 +1,25 @@
+{
+  "type": "kontur:steam_generation",
+  "results": [],
+  "energy": 3200,
+  "time": 100,
+  "input": {
+    "ingredient": {
+      "item": "minecraft:charcoal"
+    },
+    "count": 1
+  },
+  "fluid_input": {
+    "fluids": [
+      "minecraft:water",
+      "kontur:technical_water"
+    ],
+    "amount": 1000
+  },
+  "fluid_results": [
+    {
+      "fluid": "kontur:steam",
+      "amount": 1000
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "type": "kontur:attrition",
+  "results": [
+    {
+      "id": "kontur:tungsten_slag_dust",
+      "count": 1
+    }
+  ],
+  "energy": 12000,
+  "time": 100,
+  "input": {
+    "ingredient": {
+      "item": "kontur:tungsten_hard_slag"
+    },
+    "count": 1
+  }
+}

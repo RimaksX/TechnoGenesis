@@ -28,6 +28,9 @@ public final class KonturRecipes {
     public static final Kind EXTRACTION = new Kind("extraction");
     public static final Kind ELECTROLYSIS = new Kind("electrolysis");
     public static final Kind SOLVENT_REGENERATION = new Kind("solvent_regeneration");
+    public static final Kind ATTRITION = new Kind("attrition");
+    public static final Kind AUTOCLAVING = new Kind("autoclaving");
+    public static final Kind STEAM_GENERATION = new Kind("steam_generation");
 
     private KonturRecipes() {
     }

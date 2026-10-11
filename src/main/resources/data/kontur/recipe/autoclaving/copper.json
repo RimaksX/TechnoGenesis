@@ -1,0 +1,23 @@
+{
+  "type": "kontur:autoclaving",
+  "results": [
+    {
+      "id": "minecraft:copper_ingot",
+      "count": 3
+    }
+  ],
+  "energy": 24000,
+  "time": 100,
+  "input": {
+    "ingredient": {
+      "item": "kontur:copper_slag_dust"
+    },
+    "count": 1
+  },
+  "fluid_input": {
+    "fluids": [
+      "kontur:steam"
+    ],
+    "amount": 1000
+  }
+}

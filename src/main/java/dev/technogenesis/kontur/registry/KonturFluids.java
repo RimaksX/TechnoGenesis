@@ -47,6 +47,9 @@ public final class KonturFluids {
     public static final FluidSet SOLVENT = new FluidSet("solvent", 0xFFD9A441, 900, 1200, false);
     public static final FluidSet SPENT_SOLVENT = new FluidSet("spent_solvent", 0xFF8A6A34, 950, 1400, false);
 
+    /** Ступень ×8: пар из парогенератора; внутренняя жидкость. */
+    public static final FluidSet STEAM = new FluidSet("steam", 0xFFE6EEF2, 100, 200, false);
+
     /** Раствор для каждого металла: жидкости разных металлов никогда не смешиваются. */
     public static final Map<Metal, FluidSet> SOLUTION = new EnumMap<>(Metal.class);
 

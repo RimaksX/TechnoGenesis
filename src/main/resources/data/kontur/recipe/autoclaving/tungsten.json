@@ -1,0 +1,23 @@
+{
+  "type": "kontur:autoclaving",
+  "results": [
+    {
+      "id": "kontur:tungsten_ingot",
+      "count": 3
+    }
+  ],
+  "energy": 24000,
+  "time": 100,
+  "input": {
+    "ingredient": {
+      "item": "kontur:tungsten_slag_dust"
+    },
+    "count": 1
+  },
+  "fluid_input": {
+    "fluids": [
+      "kontur:steam"
+    ],
+    "amount": 1000
+  }
+}

@@ -6,7 +6,7 @@ import dev.technogenesis.kontur.registry.KonturRecipes;
 import com.mojang.serialization.Codec;
 import net.minecraft.util.StringRepresentable;
 
-/** Виды машин ступеней ×2, ×3, ×5 и энергетики. */
+/** Виды машин ступеней ×2, ×3, ×5, ×8 и энергетики. */
 public enum MachineKind implements StringRepresentable {
     // Щёковая дробилка: 16 FE/t, руда -> дроблёная руда + щебень
     JAW_CRUSHER("jaw_crusher", true, false, KonturRecipes.CRUSHING, MachineDefinition.builder()
@@ -80,6 +80,20 @@ public enum MachineKind implements StringRepresentable {
             .tank(36, 20, 4000, false).tank(106, 20, 4000, true).slot(72, 45, SlotRole.OUTPUT)
             .energy(EnergyKind.CONSUMER, 6400, 384, 0, 64).arrow(66, 30).module(-20, 41).cooler(-20, 63).build()),
 
+    // ---- ступень ×8 «Переработка под давлением»: аттритор, парогенератор, автоклав
+    // Аттритор: 120 FE/t, твёрдый шлак -> шлаковая пыль (сверхтонкое измельчение)
+    ATTRITOR("attritor", true, false, KonturRecipes.ATTRITION, MachineDefinition.builder()
+            .slot(41, 38, SlotRole.INPUT).slot(103, 38, SlotRole.OUTPUT)
+            .energy(EnergyKind.CONSUMER, 12000, 720, 0, 120).arrow(66, 42).module(-20, 41).cooler(-20, 63).build()),
+    // Парогенератор: 32 FE/t, уголь + вода -> пар (внутренняя жидкость)
+    STEAM_GENERATOR("steam_generator", true, false, KonturRecipes.STEAM_GENERATION, MachineDefinition.builder()
+            .tank(30, 20, 4000, false).slot(55, 38, SlotRole.INPUT).tank(112, 20, 4000, true)
+            .energy(EnergyKind.CONSUMER, 3200, 192, 0, 32).arrow(78, 42).module(-20, 41).cooler(-20, 63).build()),
+    // Автоклав: 240 FE/t, шлаковая пыль + пар под давлением -> три слитка
+    AUTOCLAVE("autoclave", true, false, KonturRecipes.AUTOCLAVING, MachineDefinition.builder()
+            .tank(18, 20, 4000, false).slot(43, 38, SlotRole.INPUT).slot(101, 38, SlotRole.OUTPUT)
+            .energy(EnergyKind.CONSUMER, 24000, 1440, 0, 240).arrow(66, 42).module(-20, 41).cooler(-20, 63).build()),
+
     // ---- энергетика: возобновляемые источники и паровая турбина
     // Ветряной ротор: 24..96 FE/t, растёт с высотой и в непогоду; нужны открытое небо и свободные бока
     WIND_ROTOR("wind_rotor", true, false, null, MachineDefinition.builder()
@@ -152,6 +166,7 @@ public enum MachineKind implements StringRepresentable {
             case TAILINGS_MILL, ACID_PLANT, LEACHING_REACTOR, FILTER_PRESS, PRECIPITATION_REACTOR,
                  ACID_REGENERATION_COLUMN -> "x3";
             case EXTRACTOR, ELECTROLYZER, SOLVENT_REGENERATOR -> "x5";
+            case ATTRITOR, STEAM_GENERATOR, AUTOCLAVE -> "x8";
             case MINER -> "mining";
             default -> "power";
         };
