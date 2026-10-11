@@ -17,7 +17,7 @@ public enum MachineKind implements StringRepresentable {
             .tank(18, 20, 4000, false).slot(43, 38, SlotRole.INPUT).arrow(66, 42)
             .slot(101, 29, SlotRole.OUTPUT).slot(101, 47, SlotRole.OUTPUT).tank(124, 20, 4000, true)
             .energy(EnergyKind.CONSUMER, 1200, 72, 0, 12).module(-20, 41).cooler(-20, 63).build()),
-    // Магнитно-плотностной сепаратор: 16 FE/t, промытая руда -> концентрат + хвосты R1 + фракция
+    // Магнитно-плотностной сепаратор: 16 FE/t, промытая руда -> концентрат + хвосты обогащения + фракция
     MAGNETIC_SEPARATOR("magnetic_separator", true, false, KonturRecipes.SEPARATING, MachineDefinition.builder()
             .slot(41, 38, SlotRole.INPUT).slot(103, 20, SlotRole.OUTPUT).slot(103, 38, SlotRole.OUTPUT)
             .slot(103, 56, SlotRole.OUTPUT)
@@ -35,8 +35,8 @@ public enum MachineKind implements StringRepresentable {
     CARBON_CAPACITOR("carbon_capacitor", false, true, null, MachineDefinition.builder()
             .energy(EnergyKind.STORAGE, 1_200_000, 3072, 3072, 3072).build()),
 
-    // ---- ступень ×3: химическое извлечение из хвостов R1
-    // Роторная мельница хвостов: 32 FE/t, R1 -> тонкая смесь + минеральная фракция
+    // ---- ступень ×3 «Выщелачивание»: химическое извлечение из хвостов обогащения
+    // Роторная мельница хвостов: 32 FE/t, хвосты обогащения -> измельчённые хвосты + минеральная фракция
     TAILINGS_MILL("tailings_mill", true, false, KonturRecipes.MILLING, MachineDefinition.builder()
             .slot(41, 38, SlotRole.INPUT).slot(103, 29, SlotRole.OUTPUT).slot(103, 47, SlotRole.OUTPUT)
             .energy(EnergyKind.CONSUMER, 3200, 192, 0, 32).arrow(66, 42).module(-20, 41).cooler(-20, 63).build()),
@@ -44,12 +44,12 @@ public enum MachineKind implements StringRepresentable {
     ACID_PLANT("acid_plant", true, false, KonturRecipes.ACID_SYNTHESIS, MachineDefinition.builder()
             .tank(30, 20, 4000, false).slot(55, 38, SlotRole.INPUT).tank(112, 20, 4000, true)
             .energy(EnergyKind.CONSUMER, 3200, 192, 0, 32).arrow(78, 42).module(-20, 41).cooler(-20, 63).build()),
-    // Реактор выщелачивания: 32 FE/t, тонкая смесь + кислота -> раствор металла + влажный кек
+    // Реактор выщелачивания: 32 FE/t, измельчённые хвосты + кислота -> раствор металла + пульпа выщелачивания
     LEACHING_REACTOR("leaching_reactor", true, false, KonturRecipes.LEACHING, MachineDefinition.builder()
             .tank(18, 20, 4000, false).slot(43, 38, SlotRole.INPUT).slot(101, 38, SlotRole.OUTPUT)
             .tank(124, 20, 4000, true)
             .energy(EnergyKind.CONSUMER, 3200, 192, 0, 32).arrow(66, 42).module(-20, 41).cooler(-20, 63).build()),
-    // Фильтр-пресс: 16 FE/t, влажный кек -> кек R2 + возвращённый раствор
+    // Фильтр-пресс: 16 FE/t, пульпа -> остаточный кек + возвращённый раствор
     FILTER_PRESS("filter_press", true, false, KonturRecipes.FILTERING, MachineDefinition.builder()
             .slot(31, 38, SlotRole.INPUT).slot(89, 38, SlotRole.OUTPUT).tank(112, 20, 4000, true)
             .energy(EnergyKind.CONSUMER, 1600, 96, 0, 16).arrow(54, 42).module(-20, 41).cooler(-20, 63).build()),
@@ -64,8 +64,8 @@ public enum MachineKind implements StringRepresentable {
             .tank(36, 20, 4000, false).tank(106, 20, 4000, true).slot(72, 45, SlotRole.OUTPUT)
             .energy(EnergyKind.CONSUMER, 6400, 384, 0, 64).arrow(66, 30).module(-20, 41).cooler(-20, 63).build()),
 
-    // ---- ступень ×5: экстракция, электролиз, регенерация растворителя (из кека R2)
-    // Экстрактор: 64 FE/t, кек R2 + растворитель -> экстракт металла + отходы
+    // ---- ступень ×5 «Экстракция»: экстракция, электролиз, регенерация растворителя (из остаточного кека)
+    // Экстрактор: 64 FE/t, остаточный кек + растворитель -> экстракт металла + отходы
     EXTRACTOR("extractor", true, false, KonturRecipes.EXTRACTION, MachineDefinition.builder()
             .tank(18, 20, 4000, false).slot(43, 38, SlotRole.INPUT).slot(101, 38, SlotRole.OUTPUT)
             .tank(124, 20, 4000, true)
@@ -143,6 +143,18 @@ public enum MachineKind implements StringRepresentable {
             return false;   // снизу водозабор, а не разъём
         }
         return !(side == RelativeSide.TOP && (this == SOLAR_PANEL || this == SOLAR_PANEL_ADVANCED));
+    }
+
+    /** Ступень переработки: ключ названия в языковом файле (x2 «Обогащение», x3 «Выщелачивание», x5 «Экстракция»). */
+    public String stage() {
+        return switch (this) {
+            case JAW_CRUSHER, WASHING_DRUM, MAGNETIC_SEPARATOR, SETTLING_TANK -> "x2";
+            case TAILINGS_MILL, ACID_PLANT, LEACHING_REACTOR, FILTER_PRESS, PRECIPITATION_REACTOR,
+                 ACID_REGENERATION_COLUMN -> "x3";
+            case EXTRACTOR, ELECTROLYZER, SOLVENT_REGENERATOR -> "x5";
+            case MINER -> "mining";
+            default -> "power";
+        };
     }
 
     public SideConfig defaultSides() {

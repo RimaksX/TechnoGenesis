@@ -125,7 +125,7 @@ public final class KonturBlocks {
         if (kind == MachineKind.SOLAR_FARM) {
             KonturItems.ITEMS.register(kind.id, () -> new SolarFarmItem((SolarFarmBlock) holder.get(), new Item.Properties()));
         } else {
-            KonturItems.ITEMS.registerSimpleBlockItem(kind.id, holder);
+            KonturItems.ITEMS.register(kind.id, () -> new dev.technogenesis.kontur.item.MachineBlockItem(holder.get(), new Item.Properties()));
         }
         MACHINES.put(kind, holder);
         return holder;
