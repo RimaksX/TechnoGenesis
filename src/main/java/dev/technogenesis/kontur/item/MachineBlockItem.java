@@ -12,15 +12,18 @@ import net.minecraft.world.item.TooltipFlag;
 /** Предмет машины: в подсказке показывает, к какой ступени переработки она относится. */
 public class MachineBlockItem extends BlockItem {
     private final String stage;
+    private final String id;
 
     public MachineBlockItem(MachineBlock block, Item.Properties properties) {
         super(block, properties);
         this.stage = block.kind.stage();
+        this.id = block.kind.id;
     }
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
         tooltip.add(Component.translatable("tooltip.kontur.stage", Component.translatable("tooltip.kontur.stage." + stage))
                 .withStyle(ChatFormatting.GRAY));
+        tooltip.add(Component.translatable("tooltip.kontur.machine." + id).withStyle(ChatFormatting.DARK_GRAY));
     }
 }

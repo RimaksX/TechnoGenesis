@@ -22,6 +22,7 @@ public class SolarFarmItem extends BlockItem {
     public void appendHoverText(net.minecraft.world.item.ItemStack stack, TooltipContext context, List<Component> tooltip,
                                 net.minecraft.world.item.TooltipFlag flag) {
         tooltip.add(Component.translatable("tooltip.kontur.size", 3, 2, 1).withStyle(net.minecraft.ChatFormatting.GRAY));
+        tooltip.add(Component.translatable("tooltip.kontur.machine.solar_farm").withStyle(net.minecraft.ChatFormatting.DARK_GRAY));
     }
 
     @Override
