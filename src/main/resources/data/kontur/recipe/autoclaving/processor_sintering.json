@@ -1,0 +1,23 @@
+{
+  "type": "kontur:autoclaving",
+  "results": [
+    {
+      "id": "kontur:processor",
+      "count": 1
+    }
+  ],
+  "energy": 24000,
+  "time": 100,
+  "input": {
+    "ingredient": {
+      "item": "kontur:processor_blank"
+    },
+    "count": 1
+  },
+  "fluid_input": {
+    "fluids": [
+      "kontur:steam"
+    ],
+    "amount": 1000
+  }
+}

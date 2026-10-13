@@ -4,7 +4,7 @@
   "pattern": [
     "GCG",
     "GFG",
-    "IWI"
+    "WDW"
   ],
   "key": {
     "G": {
@@ -13,14 +13,14 @@
     "C": {
       "item": "minecraft:cauldron"
     },
+    "W": {
+      "item": "kontur:winding"
+    },
+    "D": {
+      "item": "kontur:gear_drive"
+    },
     "F": {
       "item": "kontur:machine_frame"
-    },
-    "I": {
-      "item": "minecraft:iron_ingot"
-    },
-    "W": {
-      "item": "kontur:copper_wire"
     }
   },
   "result": {

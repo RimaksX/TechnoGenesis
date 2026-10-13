@@ -4,14 +4,14 @@
   "pattern": [
     "AAA",
     "AAA",
-    "IFI"
+    "CFC"
   ],
   "key": {
     "A": {
       "item": "kontur:solar_panel_advanced"
     },
-    "I": {
-      "item": "minecraft:iron_ingot"
+    "C": {
+      "item": "kontur:control_circuit"
     },
     "F": {
       "item": "kontur:machine_frame"

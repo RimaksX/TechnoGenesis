@@ -4,7 +4,7 @@
   "pattern": [
     "IPI",
     "SFS",
-    "IWI"
+    "WDC"
   ],
   "key": {
     "I": {
@@ -16,11 +16,17 @@
     "S": {
       "item": "minecraft:smooth_stone"
     },
+    "W": {
+      "item": "kontur:winding"
+    },
+    "D": {
+      "item": "kontur:gear_drive"
+    },
+    "C": {
+      "item": "kontur:control_circuit"
+    },
     "F": {
       "item": "kontur:machine_frame"
-    },
-    "W": {
-      "item": "kontur:copper_wire"
     }
   },
   "result": {

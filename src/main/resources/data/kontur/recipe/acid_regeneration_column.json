@@ -4,7 +4,7 @@
   "pattern": [
     "BGB",
     "HFH",
-    "IWI"
+    "WCV"
   ],
   "key": {
     "B": {
@@ -16,14 +16,17 @@
     "H": {
       "item": "minecraft:hopper"
     },
+    "W": {
+      "item": "kontur:winding"
+    },
+    "C": {
+      "item": "kontur:control_circuit"
+    },
+    "V": {
+      "item": "kontur:valve_block"
+    },
     "F": {
       "item": "kontur:machine_frame"
-    },
-    "I": {
-      "item": "minecraft:iron_ingot"
-    },
-    "W": {
-      "item": "kontur:copper_wire"
     }
   },
   "result": {

@@ -2,28 +2,31 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "pattern": [
-    "GCG",
+    "GKG",
     "BFB",
-    "IWI"
+    "WCV"
   ],
   "key": {
     "G": {
       "item": "minecraft:glass"
     },
-    "C": {
+    "K": {
       "item": "minecraft:cauldron"
     },
     "B": {
       "item": "minecraft:bricks"
     },
+    "W": {
+      "item": "kontur:winding"
+    },
+    "C": {
+      "item": "kontur:control_circuit"
+    },
+    "V": {
+      "item": "kontur:valve_block"
+    },
     "F": {
       "item": "kontur:machine_frame"
-    },
-    "I": {
-      "item": "minecraft:iron_ingot"
-    },
-    "W": {
-      "item": "kontur:copper_wire"
     }
   },
   "result": {

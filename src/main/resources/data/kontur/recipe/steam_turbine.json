@@ -3,8 +3,8 @@
   "category": "misc",
   "pattern": [
     "IKI",
-    "CFC",
-    "RWR"
+    "WFW",
+    "RDR"
   ],
   "key": {
     "I": {
@@ -13,17 +13,17 @@
     "K": {
       "item": "minecraft:cauldron"
     },
-    "C": {
-      "item": "minecraft:copper_ingot"
-    },
-    "F": {
-      "item": "kontur:machine_frame"
+    "W": {
+      "item": "kontur:winding"
     },
     "R": {
       "item": "minecraft:redstone"
     },
-    "W": {
-      "item": "kontur:copper_wire"
+    "D": {
+      "item": "kontur:gear_drive"
+    },
+    "F": {
+      "item": "kontur:machine_frame"
     }
   },
   "result": {

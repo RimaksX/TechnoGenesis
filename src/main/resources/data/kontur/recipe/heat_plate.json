@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "TMT",
+    "KKK",
+    "TMT"
+  ],
+  "key": {
+    "T": {
+      "item": "kontur:tungsten_ingot"
+    },
+    "M": {
+      "item": "kontur:molybdenum_ingot"
+    },
+    "K": {
+      "item": "kontur:titanium_ingot"
+    }
+  },
+  "result": {
+    "id": "kontur:heat_plate",
+    "count": 2
+  }
+}

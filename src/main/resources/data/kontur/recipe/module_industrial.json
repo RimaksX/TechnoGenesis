@@ -2,13 +2,16 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "pattern": [
-    "GRG",
+    "GCG",
     "RMR",
-    "GRG"
+    "GCG"
   ],
   "key": {
     "G": {
       "item": "minecraft:gold_ingot"
+    },
+    "C": {
+      "item": "kontur:control_circuit"
     },
     "R": {
       "item": "minecraft:redstone"

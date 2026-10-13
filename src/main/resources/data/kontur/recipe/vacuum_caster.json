@@ -4,7 +4,7 @@
   "pattern": [
     "MGM",
     "TFT",
-    "IWI"
+    "HZH"
   ],
   "key": {
     "M": {
@@ -16,14 +16,14 @@
     "T": {
       "item": "kontur:titanium_ingot"
     },
+    "H": {
+      "item": "kontur:heat_plate"
+    },
+    "Z": {
+      "item": "kontur:plasma_controller"
+    },
     "F": {
       "item": "kontur:machine_frame"
-    },
-    "I": {
-      "item": "minecraft:iron_ingot"
-    },
-    "W": {
-      "item": "kontur:copper_wire"
     }
   },
   "result": {

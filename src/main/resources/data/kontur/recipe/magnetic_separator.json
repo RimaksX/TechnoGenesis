@@ -3,8 +3,8 @@
   "category": "misc",
   "pattern": [
     "IMI",
-    "RFR",
-    "IWI"
+    "WFW",
+    "IDI"
   ],
   "key": {
     "I": {
@@ -13,14 +13,14 @@
     "M": {
       "item": "minecraft:iron_block"
     },
-    "R": {
-      "item": "minecraft:redstone"
+    "W": {
+      "item": "kontur:winding"
+    },
+    "D": {
+      "item": "kontur:gear_drive"
     },
     "F": {
       "item": "kontur:machine_frame"
-    },
-    "W": {
-      "item": "kontur:copper_wire"
     }
   },
   "result": {

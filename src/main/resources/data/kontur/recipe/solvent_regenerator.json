@@ -4,7 +4,7 @@
   "pattern": [
     "BKB",
     "HFH",
-    "IWI"
+    "VPC"
   ],
   "key": {
     "B": {
@@ -16,14 +16,17 @@
     "H": {
       "item": "minecraft:hopper"
     },
+    "V": {
+      "item": "kontur:valve_block"
+    },
+    "P": {
+      "item": "kontur:precision_drive"
+    },
+    "C": {
+      "item": "kontur:control_circuit"
+    },
     "F": {
       "item": "kontur:machine_frame"
-    },
-    "I": {
-      "item": "minecraft:iron_ingot"
-    },
-    "W": {
-      "item": "kontur:copper_wire"
     }
   },
   "result": {

@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "CGC",
+    "DHD",
+    "CGC"
+  ],
+  "key": {
+    "C": {
+      "item": "kontur:chromium_ingot"
+    },
+    "G": {
+      "item": "minecraft:glass"
+    },
+    "D": {
+      "item": "kontur:gear_drive"
+    },
+    "H": {
+      "item": "minecraft:hopper"
+    }
+  },
+  "result": {
+    "id": "kontur:valve_block",
+    "count": 2
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "type": "kontur:extraction",
+  "results": [
+    {
+      "id": "kontur:magnet",
+      "count": 1
+    }
+  ],
+  "energy": 6400,
+  "time": 100,
+  "input": {
+    "ingredient": {
+      "item": "kontur:cobalt_ingot"
+    },
+    "count": 1
+  },
+  "fluid_input": {
+    "fluids": [
+      "kontur:solvent"
+    ],
+    "amount": 200
+  }
+}

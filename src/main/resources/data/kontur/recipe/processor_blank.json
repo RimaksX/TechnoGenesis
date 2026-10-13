@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "QGQ",
+    "CBC",
+    "QGQ"
+  ],
+  "key": {
+    "Q": {
+      "item": "minecraft:quartz"
+    },
+    "G": {
+      "item": "minecraft:gold_ingot"
+    },
+    "C": {
+      "item": "kontur:control_circuit"
+    },
+    "B": {
+      "item": "kontur:cobalt_ingot"
+    }
+  },
+  "result": {
+    "id": "kontur:processor_blank",
+    "count": 1
+  }
+}

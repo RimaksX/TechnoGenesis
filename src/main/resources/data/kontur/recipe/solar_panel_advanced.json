@@ -4,7 +4,7 @@
   "pattern": [
     "QQQ",
     "BFB",
-    "IWI"
+    "ICI"
   ],
   "key": {
     "Q": {
@@ -13,14 +13,14 @@
     "B": {
       "item": "kontur:solar_panel"
     },
-    "F": {
-      "item": "kontur:machine_frame"
-    },
     "I": {
       "item": "minecraft:iron_ingot"
     },
-    "W": {
-      "item": "kontur:copper_wire"
+    "C": {
+      "item": "kontur:control_circuit"
+    },
+    "F": {
+      "item": "kontur:machine_frame"
     }
   },
   "result": {

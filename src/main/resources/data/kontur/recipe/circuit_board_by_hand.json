@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "kontur:circuit_blank"
+    },
+    {
+      "item": "kontur:copper_wire"
+    },
+    {
+      "item": "kontur:copper_wire"
+    },
+    {
+      "item": "minecraft:redstone"
+    }
+  ],
+  "result": {
+    "id": "kontur:circuit_board",
+    "count": 1
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "MDM",
+    "CKC",
+    "MDM"
+  ],
+  "key": {
+    "M": {
+      "item": "kontur:molybdenum_ingot"
+    },
+    "D": {
+      "item": "kontur:gear_drive"
+    },
+    "C": {
+      "item": "kontur:chromium_ingot"
+    },
+    "K": {
+      "item": "kontur:circuit_board"
+    }
+  },
+  "result": {
+    "id": "kontur:precision_drive",
+    "count": 1
+  }
+}

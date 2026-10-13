@@ -2,13 +2,16 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "pattern": [
-    "DBD",
+    "DPD",
     "BMB",
-    "DBD"
+    "DPD"
   ],
   "key": {
     "D": {
       "item": "minecraft:diamond"
+    },
+    "P": {
+      "item": "kontur:power_module"
     },
     "B": {
       "item": "minecraft:redstone_block"

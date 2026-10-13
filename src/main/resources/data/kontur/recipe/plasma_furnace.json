@@ -4,7 +4,7 @@
   "pattern": [
     "TBT",
     "DFD",
-    "IWI"
+    "HXM"
   ],
   "key": {
     "T": {
@@ -16,14 +16,17 @@
     "D": {
       "item": "minecraft:diamond"
     },
+    "H": {
+      "item": "kontur:heat_plate"
+    },
+    "X": {
+      "item": "kontur:processor"
+    },
+    "M": {
+      "item": "kontur:power_module"
+    },
     "F": {
       "item": "kontur:machine_frame"
-    },
-    "I": {
-      "item": "minecraft:iron_ingot"
-    },
-    "W": {
-      "item": "kontur:copper_wire"
     }
   },
   "result": {

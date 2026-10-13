@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "WMW",
+    "NCN",
+    "WMW"
+  ],
+  "key": {
+    "W": {
+      "item": "kontur:winding"
+    },
+    "M": {
+      "item": "kontur:magnet"
+    },
+    "N": {
+      "item": "kontur:manganese_ingot"
+    },
+    "C": {
+      "item": "kontur:control_circuit"
+    }
+  },
+  "result": {
+    "id": "kontur:power_module",
+    "count": 1
+  }
+}

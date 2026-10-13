@@ -4,7 +4,7 @@
   "pattern": [
     "TTT",
     "TRT",
-    "TDT"
+    "THT"
   ],
   "key": {
     "T": {
@@ -13,8 +13,8 @@
     "R": {
       "item": "kontur:radiator_aluminum"
     },
-    "D": {
-      "item": "minecraft:diamond"
+    "H": {
+      "item": "kontur:heat_plate"
     }
   },
   "result": {

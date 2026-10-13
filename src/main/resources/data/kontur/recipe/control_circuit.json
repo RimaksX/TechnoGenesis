@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "CRC",
+    "NBN",
+    "CRC"
+  ],
+  "key": {
+    "C": {
+      "item": "kontur:copper_wire"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "N": {
+      "item": "kontur:nickel_ingot"
+    },
+    "B": {
+      "item": "kontur:circuit_board"
+    }
+  },
+  "result": {
+    "id": "kontur:control_circuit",
+    "count": 1
+  }
+}

@@ -4,23 +4,23 @@
   "pattern": [
     "IWI",
     "BFB",
-    "ICI"
+    "IDI"
   ],
   "key": {
     "I": {
       "item": "minecraft:iron_ingot"
     },
     "W": {
-      "item": "kontur:copper_wire"
+      "item": "kontur:winding"
     },
     "B": {
       "item": "minecraft:furnace"
     },
+    "D": {
+      "item": "kontur:gear_drive"
+    },
     "F": {
       "item": "kontur:machine_frame"
-    },
-    "C": {
-      "item": "minecraft:copper_ingot"
     }
   },
   "result": {

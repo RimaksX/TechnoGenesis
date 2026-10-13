@@ -1,0 +1,23 @@
+{
+  "type": "kontur:plasma_smelting",
+  "results": [
+    {
+      "id": "kontur:plasma_controller",
+      "count": 1
+    }
+  ],
+  "energy": 30000,
+  "time": 100,
+  "input": {
+    "ingredient": {
+      "item": "kontur:processor"
+    },
+    "count": 1
+  },
+  "fluid_input": {
+    "fluids": [
+      "kontur:plasma"
+    ],
+    "amount": 500
+  }
+}

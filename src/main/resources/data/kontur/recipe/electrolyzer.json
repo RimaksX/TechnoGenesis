@@ -2,28 +2,28 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "pattern": [
-    "GCG",
+    "GNG",
     "RFR",
-    "IWI"
+    "MCM"
   ],
   "key": {
     "G": {
       "item": "kontur:graphite"
     },
-    "C": {
+    "N": {
       "item": "minecraft:copper_ingot"
     },
     "R": {
       "item": "minecraft:redstone"
     },
+    "M": {
+      "item": "kontur:power_module"
+    },
+    "C": {
+      "item": "kontur:control_circuit"
+    },
     "F": {
       "item": "kontur:machine_frame"
-    },
-    "I": {
-      "item": "minecraft:iron_ingot"
-    },
-    "W": {
-      "item": "kontur:copper_wire"
     }
   },
   "result": {

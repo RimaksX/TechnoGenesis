@@ -4,7 +4,7 @@
   "pattern": [
     "IBI",
     "BFB",
-    "IWI"
+    "VHM"
   ],
   "key": {
     "I": {
@@ -13,11 +13,17 @@
     "B": {
       "item": "minecraft:iron_block"
     },
+    "V": {
+      "item": "kontur:valve_block"
+    },
+    "H": {
+      "item": "kontur:heat_plate"
+    },
+    "M": {
+      "item": "kontur:power_module"
+    },
     "F": {
       "item": "kontur:machine_frame"
-    },
-    "W": {
-      "item": "kontur:copper_wire"
     }
   },
   "result": {

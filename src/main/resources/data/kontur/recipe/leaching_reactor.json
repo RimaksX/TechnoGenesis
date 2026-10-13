@@ -3,8 +3,8 @@
   "category": "misc",
   "pattern": [
     "BGB",
-    "CFC",
-    "IWI"
+    "NFN",
+    "WCV"
   ],
   "key": {
     "B": {
@@ -13,17 +13,20 @@
     "G": {
       "item": "minecraft:glass"
     },
-    "C": {
+    "N": {
       "item": "kontur:nickel_ingot"
+    },
+    "W": {
+      "item": "kontur:winding"
+    },
+    "C": {
+      "item": "kontur:control_circuit"
+    },
+    "V": {
+      "item": "kontur:valve_block"
     },
     "F": {
       "item": "kontur:machine_frame"
-    },
-    "I": {
-      "item": "minecraft:iron_ingot"
-    },
-    "W": {
-      "item": "kontur:copper_wire"
     }
   },
   "result": {

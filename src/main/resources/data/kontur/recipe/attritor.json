@@ -4,7 +4,7 @@
   "pattern": [
     "IGI",
     "SFS",
-    "IWI"
+    "PMP"
   ],
   "key": {
     "I": {
@@ -16,11 +16,14 @@
     "S": {
       "item": "minecraft:smooth_stone"
     },
+    "P": {
+      "item": "kontur:precision_drive"
+    },
+    "M": {
+      "item": "kontur:power_module"
+    },
     "F": {
       "item": "kontur:machine_frame"
-    },
-    "W": {
-      "item": "kontur:copper_wire"
     }
   },
   "result": {

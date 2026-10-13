@@ -4,7 +4,7 @@
   "pattern": [
     "IPI",
     "WFW",
-    "ICI"
+    "CMC"
   ],
   "key": {
     "I": {
@@ -14,13 +14,16 @@
       "item": "minecraft:piston"
     },
     "W": {
-      "item": "kontur:copper_wire"
+      "item": "kontur:winding"
+    },
+    "C": {
+      "item": "kontur:control_circuit"
+    },
+    "M": {
+      "item": "kontur:module_worker"
     },
     "F": {
       "item": "kontur:machine_frame"
-    },
-    "C": {
-      "item": "kontur:module_worker"
     }
   },
   "result": {

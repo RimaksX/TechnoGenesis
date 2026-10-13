@@ -1,0 +1,23 @@
+{
+  "type": "kontur:leaching",
+  "results": [
+    {
+      "id": "kontur:circuit_board",
+      "count": 2
+    }
+  ],
+  "energy": 2400,
+  "time": 80,
+  "input": {
+    "ingredient": {
+      "item": "kontur:circuit_blank"
+    },
+    "count": 1
+  },
+  "fluid_input": {
+    "fluids": [
+      "kontur:sulfuric_acid"
+    ],
+    "amount": 100
+  }
+}

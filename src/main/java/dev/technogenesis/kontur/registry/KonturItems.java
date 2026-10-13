@@ -30,6 +30,12 @@ public final class KonturItems {
             new EnumMap<>(dev.technogenesis.kontur.machine.CoatingTier.class);
     public static final Map<dev.technogenesis.kontur.machine.DrillTier, DeferredItem<Item>> DRILL_TIPS =
             new EnumMap<>(dev.technogenesis.kontur.machine.DrillTier.class);
+    /** Детали для крафта машин в порядке показа: платы, обмотки, приводы, процессоры. */
+    public static final java.util.List<DeferredItem<Item>> COMPONENTS = new java.util.ArrayList<>();
+    public static final String[] COMPONENT_IDS = {
+            "circuit_blank", "circuit_board", "control_circuit", "processor_blank", "processor", "plasma_controller",
+            "winding", "magnet", "power_module", "gear_drive", "precision_drive", "valve_block", "heat_plate"
+    };
     public static final DeferredItem<Item> WRENCH = ITEMS.register("wrench", () -> new WrenchItem(new Item.Properties()));
     public static final DeferredItem<Item> GANGUE = simple("gangue");
     public static final DeferredItem<Item> ASH = simple("ash");
@@ -41,6 +47,9 @@ public final class KonturItems {
     public static final DeferredItem<Item> GRAPHITE = simple("graphite");
 
     static {
+        for (String id : COMPONENT_IDS) {
+            COMPONENTS.add(ITEMS.register(id, () -> new dev.technogenesis.kontur.item.ComponentItem(new Item.Properties(), id)));
+        }
         for (Mineral mineral : Mineral.values()) {
             RAW.put(mineral, simple(mineral.rawId));
         }

@@ -2,25 +2,28 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "pattern": [
-    "BCB",
+    "BKB",
     "BFB",
-    "IWI"
+    "VHC"
   ],
   "key": {
     "B": {
       "item": "minecraft:bricks"
     },
-    "C": {
+    "K": {
       "item": "minecraft:cauldron"
+    },
+    "V": {
+      "item": "kontur:valve_block"
+    },
+    "H": {
+      "item": "kontur:heat_plate"
+    },
+    "C": {
+      "item": "kontur:control_circuit"
     },
     "F": {
       "item": "kontur:machine_frame"
-    },
-    "I": {
-      "item": "minecraft:iron_ingot"
-    },
-    "W": {
-      "item": "kontur:copper_wire"
     }
   },
   "result": {
