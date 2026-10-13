@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "SWS",
+    "DPD",
+    "SWS"
+  ],
+  "key": {
+    "S": {
+      "item": "kontur:steel_ingot"
+    },
+    "W": {
+      "item": "kontur:winding"
+    },
+    "D": {
+      "item": "kontur:gear_drive"
+    },
+    "P": {
+      "item": "kontur:precision_drive"
+    }
+  },
+  "result": {
+    "id": "kontur:turbine_rotor",
+    "count": 2
+  }
+}

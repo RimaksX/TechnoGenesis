@@ -29,8 +29,8 @@ public class CoolingTowerBlockEntity extends MachineBlockEntity implements Assem
     }
 
     @Override
-    public boolean isFormed() {
-        return tracker.formed();
+    public AssemblyTracker tracker() {
+        return tracker;
     }
 
     @Override
@@ -43,7 +43,7 @@ public class CoolingTowerBlockEntity extends MachineBlockEntity implements Assem
         if (tracker.needsCheck() || phaseTick(20)) {
             tracker.revalidate(level, worldPosition, facing());
         }
-        if (!tracker.formed()) {
+        if (!tracker.active()) {
             setStatus(tracker.status());
             return;
         }
@@ -67,6 +67,16 @@ public class CoolingTowerBlockEntity extends MachineBlockEntity implements Assem
         tanks[1].fill(water, FluidAction.EXECUTE);
         setStatus(MachineStatus.RUNNING);
         setChanged();
+    }
+
+    @Override
+    protected void saveExtra(net.minecraft.nbt.CompoundTag tag) {
+        tag.putBoolean("formed", tracker.formed());
+    }
+
+    @Override
+    protected void loadExtra(net.minecraft.nbt.CompoundTag tag) {
+        tracker.load(tag.getBoolean("formed"));
     }
 
     @Override

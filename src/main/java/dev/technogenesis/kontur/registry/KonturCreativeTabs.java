@@ -108,6 +108,7 @@ public final class KonturCreativeTabs {
                         out.accept(KonturBlocks.ASSEMBLY_PORT);
                         out.accept(KonturBlocks.FUSION_REACTOR);
                         out.accept(KonturBlocks.TURBINE_CASING);
+                        out.accept(KonturBlocks.TURBINE_ROTOR);
                         out.accept(KonturBlocks.TURBINE_HALL);
                         out.accept(KonturBlocks.COOLER_CASING);
                         out.accept(KonturBlocks.COOLING_TOWER);

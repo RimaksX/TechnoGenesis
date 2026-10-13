@@ -1,0 +1,33 @@
+{
+  "render_type": "minecraft:translucent",
+  "textures": {
+    "particle": "kontur:block/machine_side",
+    "0": "kontur:block/assembly/blast_furnace_f37"
+  },
+  "elements": [
+    {
+      "name": "p5 [0,0,0]-[16,12,16]",
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        12,
+        16
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0.0,
+            0.0,
+            8.0,
+            8.0
+          ],
+          "texture": "#0"
+        }
+      }
+    }
+  ]
+}

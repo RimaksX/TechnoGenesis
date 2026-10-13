@@ -1,0 +1,78 @@
+{
+  "render_type": "minecraft:translucent",
+  "textures": {
+    "particle": "kontur:block/machine_side",
+    "0": "kontur:block/assembly/blast_furnace_f119"
+  },
+  "elements": [
+    {
+      "name": "p151 [3,14,0]-[14,15,1]",
+      "from": [
+        3,
+        14,
+        0
+      ],
+      "to": [
+        14,
+        15,
+        1
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0.0,
+            0.0,
+            5.5,
+            0.5
+          ],
+          "texture": "#0"
+        },
+        "south": {
+          "uv": [
+            6.0,
+            0.0,
+            11.5,
+            0.5
+          ],
+          "texture": "#0"
+        },
+        "east": {
+          "uv": [
+            12.0,
+            1.0,
+            12.5,
+            1.5
+          ],
+          "texture": "#0"
+        },
+        "west": {
+          "uv": [
+            13.0,
+            1.0,
+            13.5,
+            1.5
+          ],
+          "texture": "#0"
+        },
+        "up": {
+          "uv": [
+            0.0,
+            1.0,
+            5.5,
+            1.5
+          ],
+          "texture": "#0"
+        },
+        "down": {
+          "uv": [
+            6.0,
+            1.0,
+            11.5,
+            1.5
+          ],
+          "texture": "#0"
+        }
+      }
+    }
+  ]
+}

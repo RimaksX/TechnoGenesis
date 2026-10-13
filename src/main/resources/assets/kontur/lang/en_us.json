@@ -536,10 +536,10 @@
   "block.kontur.fusion_casing": "Reactor Casing",
   "block.kontur.assembly_port": "Casing Port",
   "block.kontur.fusion_reactor": "Fusion Reactor",
-  "tooltip.kontur.stage.fusion": "Fusion Power Plant",
+  "tooltip.kontur.stage.fusion": "Fusion Power",
   "status.kontur.structure_missing": "Incomplete: casing blocks are missing",
   "status.kontur.structure_blocked": "A foreign block is inside the chamber",
-  "tooltip.kontur.machine.fusion_reactor": "Built from casing: a 5x5x4 box with an empty 3x3x2 chamber, the controller in the middle of the front wall on the second row, ports anywhere on the wall. Burns hydrogen and plasma with a lithium rod; water carries the heat away and turns to steam (up to 100 mB/t). No water means overheating and an emergency stop. The turbine makes the power",
+  "tooltip.kontur.machine.fusion_reactor": "Built from casing: a 5x5x4 box with an empty 3x3x2 chamber, the controller in the middle of the front wall on the second row, ports anywhere on the wall. Needs hydrogen, plasma and water through gas and fluid pipes and a lithium rod (5 minutes). 8000 FE/t",
   "block.kontur.furnace_casing": "Refractory Casing",
   "block.kontur.blast_furnace": "Blast Furnace",
   "item.kontur.lithium_rod": "Lithium Rod",
@@ -554,6 +554,12 @@
   "status.kontur.scram": "Emergency stop: the reactor is cooling down",
   "gui.kontur.reactor_heat": "Reactor temperature: %s%%",
   "gui.kontur.reactor_scram": "Stopped: restarts below 40%",
-  "tooltip.kontur.machine.turbine_hall": "Built from turbine casing: a 3x7x3 box with a 1x5x1 rotor tunnel, the controller in the middle of the front wall. Steam gives up to 12,800 FE/t (80 FE per mB, up to 160 mB/t), spent steam leaves as condensate",
-  "tooltip.kontur.machine.cooling_tower": "Built from cooling tower casing: a 3x3x6 tower with a 1x1x4 shaft, the controller in the middle of the front wall. Cools condensate to water (95%, up to 200 mB/t), the fans take 150 FE/t"
+  "tooltip.kontur.machine.turbine_hall": "Built from turbine casing: a 3x7x3 box, five rotor blocks go into the 1x5x1 tunnel, the controller in the middle of the front wall. Steam gives up to 12,800 FE/t (80 FE per mB, up to 160 mB/t), spent steam leaves as condensate. With the wrench in hand you see a projection of the missing blocks, and a wrench click gives the finished look",
+  "tooltip.kontur.machine.cooling_tower": "Built from cooling tower casing: a 3x3x6 tower with a 1x1x4 shaft, the controller in the middle of the front wall. Cools condensate to water (95%, up to 200 mB/t), the fans take 150 FE/t",
+  "block.kontur.turbine_rotor": "Rotor Block",
+  "status.kontur.structure_ready": "Structure complete: click the controller with the wrench",
+  "message.kontur.assembly_ready": "Structure complete: click the controller with the wrench and the machine takes its finished look",
+  "wrench.kontur.assembly_on": "Machine assembled",
+  "wrench.kontur.assembly_off": "Machine taken apart into blocks",
+  "wrench.kontur.assembly_is": "Machine assembled (Shift + wrench to take apart)"
 }

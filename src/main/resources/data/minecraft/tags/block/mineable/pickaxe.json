@@ -78,6 +78,7 @@
     "kontur:thermal_generator",
     "kontur:turbine_casing",
     "kontur:turbine_hall",
+    "kontur:turbine_rotor",
     "kontur:vacuum_caster",
     "kontur:washing_drum",
     "kontur:water_pump",

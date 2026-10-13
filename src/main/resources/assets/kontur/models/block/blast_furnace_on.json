@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:block/orientable",
   "textures": {
-    "top": "kontur:block/furnace_casing",
+    "top": "kontur:block/furnace_casing_top",
     "side": "kontur:block/furnace_casing",
     "front": "kontur:block/blast_furnace_front_on"
   }

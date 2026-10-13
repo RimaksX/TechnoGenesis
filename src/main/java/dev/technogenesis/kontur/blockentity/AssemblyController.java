@@ -1,6 +1,12 @@
 package dev.technogenesis.kontur.blockentity;
 
-/** Контроллер собираемой игроком машины: порты корпуса работают, только пока схема цела. */
+import dev.technogenesis.kontur.machine.AssemblyTracker;
+
+/** Контроллер собираемой игроком машины: порты корпуса работают, только пока машина собрана и цела. */
 public interface AssemblyController {
-    boolean isFormed();
+    AssemblyTracker tracker();
+
+    default boolean isFormed() {
+        return tracker().active();
+    }
 }

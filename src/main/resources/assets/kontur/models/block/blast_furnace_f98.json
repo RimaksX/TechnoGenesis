@@ -1,0 +1,111 @@
+{
+  "render_type": "minecraft:translucent",
+  "textures": {
+    "particle": "kontur:block/machine_side",
+    "0": "kontur:block/assembly/blast_furnace_f98"
+  },
+  "elements": [
+    {
+      "name": "p108 [2,0,6]-[6,16,10]",
+      "from": [
+        2,
+        0,
+        6
+      ],
+      "to": [
+        6,
+        16,
+        10
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0.0,
+            0.0,
+            2.0,
+            8.0
+          ],
+          "texture": "#0"
+        },
+        "south": {
+          "uv": [
+            2.5,
+            0.0,
+            4.5,
+            8.0
+          ],
+          "texture": "#0"
+        },
+        "east": {
+          "uv": [
+            5.0,
+            0.0,
+            7.0,
+            8.0
+          ],
+          "texture": "#0"
+        },
+        "west": {
+          "uv": [
+            7.5,
+            0.0,
+            9.5,
+            8.0
+          ],
+          "texture": "#0"
+        }
+      }
+    },
+    {
+      "name": "p112 [0,8,6]-[2,10,10]",
+      "from": [
+        0,
+        8,
+        6
+      ],
+      "to": [
+        2,
+        10,
+        10
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            13.0,
+            0.0,
+            14.0,
+            1.0
+          ],
+          "texture": "#0"
+        },
+        "south": {
+          "uv": [
+            14.5,
+            0.0,
+            15.5,
+            1.0
+          ],
+          "texture": "#0"
+        },
+        "up": {
+          "uv": [
+            10.0,
+            0.0,
+            11.0,
+            2.0
+          ],
+          "texture": "#0"
+        },
+        "down": {
+          "uv": [
+            11.5,
+            0.0,
+            12.5,
+            2.0
+          ],
+          "texture": "#0"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "render_type": "minecraft:translucent",
+  "textures": {
+    "particle": "kontur:block/machine_side",
+    "0": "kontur:block/assembly/turbine_hall_f22"
+  },
+  "elements": [
+    {
+      "name": "p167 [0,0,3]-[16,2,12]",
+      "from": [
+        0,
+        0,
+        3
+      ],
+      "to": [
+        16,
+        2,
+        12
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0.0,
+            5.0,
+            8.0,
+            6.0
+          ],
+          "texture": "#0"
+        },
+        "south": {
+          "uv": [
+            0.0,
+            6.5,
+            8.0,
+            7.5
+          ],
+          "texture": "#0"
+        },
+        "up": {
+          "uv": [
+            0.0,
+            0.0,
+            8.0,
+            4.5
+          ],
+          "texture": "#0"
+        }
+      }
+    }
+  ]
+}

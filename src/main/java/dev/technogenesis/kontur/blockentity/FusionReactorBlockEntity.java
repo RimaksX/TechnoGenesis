@@ -46,8 +46,8 @@ public class FusionReactorBlockEntity extends MachineBlockEntity implements Asse
     }
 
     @Override
-    public boolean isFormed() {
-        return tracker.formed();
+    public AssemblyTracker tracker() {
+        return tracker;
     }
 
     @Override
@@ -84,7 +84,7 @@ public class FusionReactorBlockEntity extends MachineBlockEntity implements Asse
         if (tracker.needsCheck() || phaseTick(20)) {
             tracker.revalidate(level, worldPosition, facing());
         }
-        if (!tracker.formed()) {
+        if (!tracker.active()) {
             heat = Math.max(0, heat - IDLE_COOLING);
             setStatus(tracker.status());
             return;
@@ -158,6 +158,7 @@ public class FusionReactorBlockEntity extends MachineBlockEntity implements Asse
         tag.putInt("rodLeft", rodLeft);
         tag.putInt("coreHeat", heat);
         tag.putBoolean("scram", overheated);
+        tag.putBoolean("formed", tracker.formed());
     }
 
     @Override
@@ -165,6 +166,7 @@ public class FusionReactorBlockEntity extends MachineBlockEntity implements Asse
         rodLeft = tag.getInt("rodLeft");
         heat = tag.getInt("coreHeat");
         overheated = tag.getBoolean("scram");
+        tracker.load(tag.getBoolean("formed"));
     }
 
     @Override

@@ -9,12 +9,18 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
-/** Порт корпуса термоядерного реактора: стоит в любом месте стенки, подключает трубы и кабели к контроллеру. */
+/** Порт корпуса собираемой машины: стоит в любом месте стенки, подключает трубы и кабели к контроллеру; остаётся видимым и после сборки. */
 public class AssemblyPortBlock extends BaseEntityBlock {
     public static final MapCodec<AssemblyPortBlock> CODEC = simpleCodec(AssemblyPortBlock::new);
 
     public AssemblyPortBlock(Properties properties) {
         super(properties);
+        registerDefaultState(stateDefinition.any().setValue(AssemblyCasingBlock.FORMED, false));
+    }
+
+    @Override
+    protected void createBlockStateDefinition(net.minecraft.world.level.block.state.StateDefinition.Builder<net.minecraft.world.level.block.Block, BlockState> builder) {
+        builder.add(AssemblyCasingBlock.FORMED);
     }
 
     @Override

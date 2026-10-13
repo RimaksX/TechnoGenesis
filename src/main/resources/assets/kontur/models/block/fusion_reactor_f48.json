@@ -1,0 +1,111 @@
+{
+  "render_type": "minecraft:translucent",
+  "textures": {
+    "particle": "kontur:block/machine_side",
+    "0": "kontur:block/assembly/fusion_reactor_f48"
+  },
+  "elements": [
+    {
+      "name": "p61 [0,0,0]-[16,9,13]",
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        9,
+        13
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            4.25,
+            0.0,
+            8.25,
+            2.25
+          ],
+          "texture": "#0"
+        },
+        "south": {
+          "uv": [
+            8.5,
+            0.0,
+            12.5,
+            2.25
+          ],
+          "texture": "#0"
+        },
+        "east": {
+          "uv": [
+            12.75,
+            0.0,
+            16.0,
+            2.25
+          ],
+          "texture": "#0"
+        },
+        "up": {
+          "uv": [
+            0.0,
+            0.0,
+            4.0,
+            3.25
+          ],
+          "texture": "#0"
+        }
+      }
+    },
+    {
+      "name": "p62 [0,9,5]-[16,14,8]",
+      "from": [
+        0,
+        9,
+        5
+      ],
+      "to": [
+        16,
+        14,
+        8
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0.0,
+            3.5,
+            4.0,
+            4.75
+          ],
+          "texture": "#0"
+        },
+        "south": {
+          "uv": [
+            4.25,
+            3.5,
+            8.25,
+            4.75
+          ],
+          "texture": "#0"
+        },
+        "east": {
+          "uv": [
+            8.5,
+            3.5,
+            9.25,
+            4.75
+          ],
+          "texture": "#0"
+        },
+        "up": {
+          "uv": [
+            9.5,
+            3.5,
+            13.5,
+            4.25
+          ],
+          "texture": "#0"
+        }
+      }
+    }
+  ]
+}

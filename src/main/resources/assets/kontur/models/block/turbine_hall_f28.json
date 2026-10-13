@@ -1,0 +1,42 @@
+{
+  "render_type": "minecraft:translucent",
+  "textures": {
+    "particle": "kontur:block/machine_side",
+    "0": "kontur:block/assembly/turbine_hall_f28"
+  },
+  "elements": [
+    {
+      "name": "p99 [0,0,4]-[16,16,10]",
+      "from": [
+        0,
+        0,
+        4
+      ],
+      "to": [
+        16,
+        16,
+        10
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0.0,
+            0.0,
+            4.0,
+            4.0
+          ],
+          "texture": "#0"
+        },
+        "south": {
+          "uv": [
+            4.25,
+            0.0,
+            8.25,
+            4.0
+          ],
+          "texture": "#0"
+        }
+      }
+    }
+  ]
+}

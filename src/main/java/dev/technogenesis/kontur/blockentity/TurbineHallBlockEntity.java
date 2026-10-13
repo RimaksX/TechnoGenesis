@@ -28,8 +28,8 @@ public class TurbineHallBlockEntity extends MachineBlockEntity implements Assemb
     }
 
     @Override
-    public boolean isFormed() {
-        return tracker.formed();
+    public AssemblyTracker tracker() {
+        return tracker;
     }
 
     @Override
@@ -43,7 +43,7 @@ public class TurbineHallBlockEntity extends MachineBlockEntity implements Assemb
         if (tracker.needsCheck() || phaseTick(20)) {
             tracker.revalidate(level, worldPosition, facing());
         }
-        if (!tracker.formed()) {
+        if (!tracker.active()) {
             setStatus(tracker.status());
             return;
         }
@@ -69,6 +69,16 @@ public class TurbineHallBlockEntity extends MachineBlockEntity implements Assemb
         energy.produce(lastOutput);
         setStatus(MachineStatus.RUNNING);
         setChanged();
+    }
+
+    @Override
+    protected void saveExtra(net.minecraft.nbt.CompoundTag tag) {
+        tag.putBoolean("formed", tracker.formed());
+    }
+
+    @Override
+    protected void loadExtra(net.minecraft.nbt.CompoundTag tag) {
+        tracker.load(tag.getBoolean("formed"));
     }
 
     @Override

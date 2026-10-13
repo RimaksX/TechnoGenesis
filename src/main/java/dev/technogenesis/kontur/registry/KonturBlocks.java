@@ -46,16 +46,20 @@ public final class KonturBlocks {
                     .requiresCorrectToolForDrops().noOcclusion()));
 
     /** Корпуса и порты собираемых игроком машин: из них строится коробка по схеме (см. AssemblyShape). */
-    public static final DeferredBlock<Block> FUSION_CASING = block("fusion_casing", () -> new Block(
+    public static final DeferredBlock<Block> FUSION_CASING = block("fusion_casing", () -> new dev.technogenesis.kontur.block.AssemblyCasingBlock(
             BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(4.0f, 12.0f).sound(SoundType.METAL)
                     .requiresCorrectToolForDrops()));
-    public static final DeferredBlock<Block> TURBINE_CASING = block("turbine_casing", () -> new Block(
+    public static final DeferredBlock<Block> TURBINE_CASING = block("turbine_casing", () -> new dev.technogenesis.kontur.block.AssemblyCasingBlock(
             BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(4.0f, 12.0f).sound(SoundType.METAL)
                     .requiresCorrectToolForDrops()));
-    public static final DeferredBlock<Block> COOLER_CASING = block("cooler_casing", () -> new Block(
+    public static final DeferredBlock<Block> COOLER_CASING = block("cooler_casing", () -> new dev.technogenesis.kontur.block.AssemblyCasingBlock(
             BlockBehaviour.Properties.of().mapColor(MapColor.QUARTZ).strength(3.0f, 9.0f).sound(SoundType.STONE)
                     .requiresCorrectToolForDrops()));
-    public static final DeferredBlock<Block> FURNACE_CASING = block("furnace_casing", () -> new Block(
+    /** Ротор паротурбинного зала: блоки вала с лопатками, которые игрок ставит в тоннель. */
+    public static final DeferredBlock<Block> TURBINE_ROTOR = block("turbine_rotor", () -> new dev.technogenesis.kontur.block.AssemblyCasingBlock(
+            BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(3.0f, 9.0f).sound(SoundType.METAL)
+                    .requiresCorrectToolForDrops().noOcclusion()));
+    public static final DeferredBlock<Block> FURNACE_CASING = block("furnace_casing", () -> new dev.technogenesis.kontur.block.AssemblyCasingBlock(
             BlockBehaviour.Properties.of().mapColor(MapColor.TERRACOTTA_RED).strength(3.0f, 9.0f).sound(SoundType.STONE)
                     .requiresCorrectToolForDrops()));
     public static final DeferredBlock<dev.technogenesis.kontur.block.AssemblyPortBlock> ASSEMBLY_PORT = block("assembly_port",

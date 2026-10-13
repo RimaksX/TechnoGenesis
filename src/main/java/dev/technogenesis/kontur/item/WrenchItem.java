@@ -136,6 +136,10 @@ public class WrenchItem extends Item {
         if (be == null) {
             return InteractionResult.PASS;
         }
+        if (be instanceof dev.technogenesis.kontur.blockentity.AssemblyController assembled) {
+            assemble(be, assembled, player);       // у собираемых машин ключ собирает и разбирает, а не настраивает стороны
+            return InteractionResult.CONSUME;
+        }
         if (be instanceof MinerBlockEntity miner && !miner.isVerified()) {
             reportMinerCheck(miner, player);          // пока постройка не проверена, ключ только проверяет
             return InteractionResult.CONSUME;
@@ -162,6 +166,34 @@ public class WrenchItem extends Item {
                     modeTitle(mode), colored("gui.kontur.mode." + result.key, ioColor(result))), true);
         }
         return InteractionResult.CONSUME;
+    }
+
+    /** Ключ по контроллеру: замкнуть собранную схему (машина принимает готовый вид), Shift - разобрать обратно. */
+    private static void assemble(MachineBlockEntity be, dev.technogenesis.kontur.blockentity.AssemblyController assembled,
+                                 Player player) {
+        net.minecraft.world.level.Level level = be.getLevel();
+        BlockPos pos = be.getBlockPos();
+        net.minecraft.core.Direction facing = be.getBlockState().getValue(MachineBlock.FACING);
+        var tracker = assembled.tracker();
+        if (tracker.formed()) {
+            if (player.isShiftKeyDown()) {
+                tracker.setFormed(level, pos, facing, false);
+                player.displayClientMessage(Component.translatable("wrench.kontur.assembly_off").withStyle(ChatFormatting.GOLD), true);
+            } else {
+                player.displayClientMessage(Component.translatable("wrench.kontur.assembly_is").withStyle(ChatFormatting.GRAY), true);
+            }
+            return;
+        }
+        if (tracker.tryForm(level, pos, facing)) {
+            level.playSound(null, pos, net.minecraft.sounds.SoundEvents.ANVIL_USE, net.minecraft.sounds.SoundSource.BLOCKS, 0.6f, 1.2f);
+            player.displayClientMessage(Component.translatable("wrench.kontur.assembly_on").withStyle(ChatFormatting.GREEN), true);
+        } else {
+            var r = be.kind().shape().check(level, pos, facing);
+            if (r.first() != null) {
+                player.displayClientMessage(Component.translatable("message.kontur.assembly_problem", r.problems(),
+                        r.first()[0], r.first()[1], r.first()[2]).withStyle(ChatFormatting.RED), true);
+            }
+        }
     }
 
     private static void reportMinerCheck(MinerBlockEntity miner, Player player) {

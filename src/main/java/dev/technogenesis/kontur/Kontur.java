@@ -20,6 +20,7 @@ import net.neoforged.neoforge.event.tick.LevelTickEvent;
 @Mod(Kontur.MODID)
 public class Kontur {
     public static final String MODID = "kontur";
+    public static final org.slf4j.Logger LOGGER = com.mojang.logging.LogUtils.getLogger();
 
     public static ResourceLocation id(String path) {
         return ResourceLocation.fromNamespaceAndPath(MODID, path);

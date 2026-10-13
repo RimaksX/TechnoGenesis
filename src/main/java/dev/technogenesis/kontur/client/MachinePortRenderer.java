@@ -47,9 +47,8 @@ public final class MachinePortRenderer implements BlockEntityRenderer<MachineBlo
         if (be instanceof dev.technogenesis.kontur.blockentity.MinerBlockEntity miner) {
             return miner.renderArea();
         }
-        if (be instanceof dev.technogenesis.kontur.blockentity.FusionReactorBlockEntity
-                || be instanceof dev.technogenesis.kontur.blockentity.TurbineHallBlockEntity) {
-            return new net.minecraft.world.phys.AABB(be.getBlockPos()).inflate(8);      // камера и ротор за пределами блока
+        if (be instanceof dev.technogenesis.kontur.blockentity.AssemblyController) {
+            return new net.minecraft.world.phys.AABB(be.getBlockPos()).inflate(8);      // вся собранная машина вокруг контроллера
         }
         if (be.kind().layout() != null) {
             var cells = be.footprint();
@@ -80,11 +79,13 @@ public final class MachinePortRenderer implements BlockEntityRenderer<MachineBlo
         if (be instanceof dev.technogenesis.kontur.blockentity.MinerBlockEntity miner) {
             MinerRenderer.render(miner, partialTick, stack, buffers, light, overlay);
         }
-        if (be instanceof dev.technogenesis.kontur.blockentity.TurbineHallBlockEntity turbine) {
-            TurbineRotorRenderer.render(turbine, partialTick, stack, buffers, light, overlay);
-        }
-        if (be instanceof dev.technogenesis.kontur.blockentity.FusionReactorBlockEntity fusion) {
-            FusionPlasmaRenderer.render(fusion, partialTick, stack, buffers, light, overlay);
+        if (be instanceof dev.technogenesis.kontur.blockentity.AssemblyController) {
+            AssemblyRenderer.render(be, partialTick, stack, buffers);
+            boolean formed = be.getBlockState().getValue(dev.technogenesis.kontur.block.AssemblyCasingBlock.FORMED);
+            if (formed && be instanceof dev.technogenesis.kontur.blockentity.TurbineHallBlockEntity turbine) {
+                TurbineRotorRenderer.render(turbine, partialTick, stack, buffers, light, overlay);
+            }
+            return;
         }
         if (be instanceof dev.technogenesis.kontur.blockentity.WindRotorBlockEntity rotor) {
             WindBladesRenderer.render(rotor, partialTick, stack, buffers, light, overlay);

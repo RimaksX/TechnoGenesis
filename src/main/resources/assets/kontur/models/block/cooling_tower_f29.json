@@ -1,0 +1,60 @@
+{
+  "render_type": "minecraft:translucent",
+  "textures": {
+    "particle": "kontur:block/machine_side",
+    "0": "kontur:block/assembly/cooling_tower_f29"
+  },
+  "elements": [
+    {
+      "name": "p112 [2,0,12]-[4,16,14]",
+      "from": [
+        2,
+        0,
+        12
+      ],
+      "to": [
+        4,
+        16,
+        14
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0.0,
+            0.0,
+            1.0,
+            8.0
+          ],
+          "texture": "#0"
+        },
+        "south": {
+          "uv": [
+            1.5,
+            0.0,
+            2.5,
+            8.0
+          ],
+          "texture": "#0"
+        },
+        "east": {
+          "uv": [
+            3.0,
+            0.0,
+            4.0,
+            8.0
+          ],
+          "texture": "#0"
+        },
+        "west": {
+          "uv": [
+            4.5,
+            0.0,
+            5.5,
+            8.0
+          ],
+          "texture": "#0"
+        }
+      }
+    }
+  ]
+}
