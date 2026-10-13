@@ -121,9 +121,10 @@ final class MachineRecipeCategory implements IRecipeCategory<RecipeHolder<Machin
                         tooltip.add(Component.translatable("jei.kontur.chance", percent)));
             }
         }
-        for (MachineRecipe.FluidOutput fo : recipe.fluidResults()) {
-            builder.addSlot(RecipeIngredientRole.OUTPUT, OUT_TANK_X + 1, TANK_Y + 1)
-                    .addIngredient(NeoForgeTypes.FLUID_STACK, fo.stack())
+        int fluidOuts = recipe.fluidResults().size();
+        for (int i = 0; i < fluidOuts; i++) {
+            builder.addSlot(RecipeIngredientRole.OUTPUT, outTankX(i, fluidOuts) + 1, TANK_Y + 1)
+                    .addIngredient(NeoForgeTypes.FLUID_STACK, recipe.fluidResults().get(i).stack())
                     .setFluidRenderer(1000, false, TANK_W - 2, TANK_H - 2);
         }
     }
@@ -135,8 +136,9 @@ final class MachineRecipeCategory implements IRecipeCategory<RecipeHolder<Machin
         if (recipe.fluidInput().isPresent()) {
             tankFrame(g, IN_TANK_X, TANK_Y);
         }
-        if (!recipe.fluidResults().isEmpty()) {
-            tankFrame(g, OUT_TANK_X, TANK_Y);
+        int fluidOuts = recipe.fluidResults().size();
+        for (int i = 0; i < fluidOuts; i++) {
+            tankFrame(g, outTankX(i, fluidOuts), TANK_Y);
         }
         arrows.computeIfAbsent(recipe.time(), t -> helper.createAnimatedRecipeArrow(t)).draw(g, ARROW_X, ARROW_Y);
 
@@ -144,6 +146,11 @@ final class MachineRecipeCategory implements IRecipeCategory<RecipeHolder<Machin
         String seconds = String.format(Locale.ROOT, "%.2f", recipe.time() / 20.0).replaceAll("0+$", "").replaceAll("\\.$", "");
         g.drawString(Minecraft.getInstance().font, Component.translatable("jei.kontur.stats", energy, seconds),
                 4, HEIGHT - 12, 0xFF555555, false);
+    }
+
+    /** Несколько выходных жидкостей (водород и кислород) стоят рядом: последняя у правого края. */
+    private static int outTankX(int index, int count) {
+        return OUT_TANK_X - (count - 1 - index) * (TANK_W + 4);
     }
 
     /** Утопленная рамка бака под жидкость в стиле интерфейса машин. */
