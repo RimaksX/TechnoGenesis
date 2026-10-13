@@ -164,9 +164,9 @@ public enum MachineKind implements StringRepresentable {
         return id;
     }
 
-    /** Нарисован ли на модели разъём с этой стороны (ферма не имеет разъёмов, у панелей нет верхнего). */
+    /** Нарисован ли на модели разъём с этой стороны (ферма не имеет разъёмов, у шахтёра и ротора нет переднего, у панелей нет верхнего). */
     public boolean hasPort(RelativeSide side) {
-        if (side == RelativeSide.FRONT || this == SOLAR_FARM) {
+        if (this == SOLAR_FARM || side == RelativeSide.FRONT && (this == MINER || this == WIND_ROTOR)) {
             return false;
         }
         if (this == WATER_PUMP && side == RelativeSide.BOTTOM) {
@@ -192,9 +192,17 @@ public enum MachineKind implements StringRepresentable {
     /** Раскладка крупной машины; null у машин в один блок. */
     public MultiLayout layout() {
         return switch (this) {
-            case LEACHING_REACTOR, PRECIPITATION_REACTOR, EXTRACTOR, ATTRITOR, PLASMA_GENERATOR -> MultiLayout.SQUARE;
-            case FILTER_PRESS, ELECTROLYZER, AUTOCLAVE, PLASMA_FURNACE, VACUUM_CASTER -> MultiLayout.WIDE;
-            case ACID_REGENERATION_COLUMN, SOLVENT_REGENERATOR -> MultiLayout.TALL;
+            case WASHING_DRUM, JAW_CRUSHER, MAGNETIC_SEPARATOR, TAILINGS_MILL, STEAM_TURBINE -> MultiLayout.of(2, 1, 1);
+            case SOLID_FUEL_GENERATOR -> MultiLayout.of(1, 1, 2);
+            case SETTLING_TANK -> MultiLayout.of(2, 2, 1);
+            case STEAM_GENERATOR -> MultiLayout.of(1, 1, 2);
+            case ACID_PLANT, LEACHING_REACTOR, PRECIPITATION_REACTOR, ATTRITOR, PLASMA_GENERATOR ->
+                    MultiLayout.of(2, 2, 2);
+            case FILTER_PRESS, EXTRACTOR, VACUUM_CASTER -> MultiLayout.of(3, 2, 1);
+            case ELECTROLYZER, AUTOCLAVE -> MultiLayout.of(3, 2, 2);
+            case PLASMA_FURNACE -> MultiLayout.of(2, 3, 2);
+            case ACID_REGENERATION_COLUMN -> MultiLayout.of(1, 1, 3);
+            case SOLVENT_REGENERATOR -> MultiLayout.of(2, 1, 3);
             default -> null;
         };
     }

@@ -345,6 +345,7 @@
   "gui.kontur.letter.bottom": "B",
   "gui.kontur.letter.right": "R",
   "gui.kontur.letter.left": "L",
+  "gui.kontur.letter.front": "F",
   "gui.kontur.letter.back": "K",
   "gui.kontur.legend.none": "Closed",
   "gui.kontur.legend.input": "Input",

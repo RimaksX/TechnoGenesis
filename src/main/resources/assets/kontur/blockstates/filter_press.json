@@ -97,7 +97,7 @@
         "active": "true"
       },
       "apply": {
-        "model": "kontur:block/filter_press_p2_on"
+        "model": "kontur:block/filter_press_p2"
       }
     },
     {
@@ -226,7 +226,7 @@
         "active": "true"
       },
       "apply": {
-        "model": "kontur:block/filter_press_p2_on",
+        "model": "kontur:block/filter_press_p2",
         "y": 90
       }
     },
@@ -358,7 +358,7 @@
         "active": "true"
       },
       "apply": {
-        "model": "kontur:block/filter_press_p2_on",
+        "model": "kontur:block/filter_press_p2",
         "y": 180
       }
     },
@@ -490,7 +490,7 @@
         "active": "true"
       },
       "apply": {
-        "model": "kontur:block/filter_press_p2_on",
+        "model": "kontur:block/filter_press_p2",
         "y": 270
       }
     },

@@ -17,7 +17,7 @@
         "active": "true"
       },
       "apply": {
-        "model": "kontur:block/vacuum_caster_p0"
+        "model": "kontur:block/vacuum_caster_p0_on"
       }
     },
     {
@@ -117,7 +117,7 @@
         "active": "true"
       },
       "apply": {
-        "model": "kontur:block/vacuum_caster_p5_on"
+        "model": "kontur:block/vacuum_caster_p5"
       }
     },
     {
@@ -138,7 +138,7 @@
         "active": "true"
       },
       "apply": {
-        "model": "kontur:block/vacuum_caster_p0",
+        "model": "kontur:block/vacuum_caster_p0_on",
         "y": 90
       }
     },
@@ -248,7 +248,7 @@
         "active": "true"
       },
       "apply": {
-        "model": "kontur:block/vacuum_caster_p5_on",
+        "model": "kontur:block/vacuum_caster_p5",
         "y": 90
       }
     },
@@ -270,7 +270,7 @@
         "active": "true"
       },
       "apply": {
-        "model": "kontur:block/vacuum_caster_p0",
+        "model": "kontur:block/vacuum_caster_p0_on",
         "y": 180
       }
     },
@@ -380,7 +380,7 @@
         "active": "true"
       },
       "apply": {
-        "model": "kontur:block/vacuum_caster_p5_on",
+        "model": "kontur:block/vacuum_caster_p5",
         "y": 180
       }
     },
@@ -402,7 +402,7 @@
         "active": "true"
       },
       "apply": {
-        "model": "kontur:block/vacuum_caster_p0",
+        "model": "kontur:block/vacuum_caster_p0_on",
         "y": 270
       }
     },
@@ -512,7 +512,7 @@
         "active": "true"
       },
       "apply": {
-        "model": "kontur:block/vacuum_caster_p5_on",
+        "model": "kontur:block/vacuum_caster_p5",
         "y": 270
       }
     }

@@ -148,10 +148,6 @@ public class WrenchItem extends Item {
             return InteractionResult.CONSUME;
         }
         RelativeSide side = RelativeSide.of(be.getBlockState().getValue(MachineBlock.FACING), ctx.getClickedFace());
-        if (side == RelativeSide.FRONT) {
-            player.displayClientMessage(Component.translatable("wrench.kontur.front").withStyle(ChatFormatting.GRAY), true);
-            return InteractionResult.CONSUME;
-        }
         if (!be.kind().hasPort(side)) {
             player.displayClientMessage(Component.translatable("gui.kontur.no_port").withStyle(ChatFormatting.GRAY), true);
             return InteractionResult.CONSUME;

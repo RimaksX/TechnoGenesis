@@ -345,6 +345,7 @@
   "gui.kontur.letter.bottom": "Н",
   "gui.kontur.letter.right": "П",
   "gui.kontur.letter.left": "Л",
+  "gui.kontur.letter.front": "Ф",
   "gui.kontur.letter.back": "З",
   "gui.kontur.legend.none": "Закрыто",
   "gui.kontur.legend.input": "Вход",

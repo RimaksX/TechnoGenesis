@@ -21,13 +21,12 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * Крупная машина из нескольких блоков (2x2, 3x2 или колонна в два блока). Все части - один блок со своим номером PART;
+ * Крупная машина из нескольких блоков (до 3x2x2 и колонны в три блока). Все части - один блок со своим номером PART;
  * блок-сущность, тик и меню только у части 0, остальные пробрасывают к ней взаимодействие. Подключение труб и кабелей
  * идёт через одну назначенную клетку на каждой стороне (см. MultiLayout). Сломанная часть убирает всю машину.
  */
 public class MultiMachineBlock extends MachineBlock {
-    public static final int MAX_PARTS = 6;
-    public static final IntegerProperty PART = IntegerProperty.create("part", 0, MAX_PARTS - 1);
+    public static final IntegerProperty PART = IntegerProperty.create("part", 0, MultiLayout.MAX_PARTS - 1);
 
     public static final MapCodec<MultiMachineBlock> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
             propertiesCodec(),

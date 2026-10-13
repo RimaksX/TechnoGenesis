@@ -17,27 +17,27 @@
         "active": "true"
       },
       "apply": {
-        "model": "kontur:block/extractor_p0_on"
+        "model": "kontur:block/extractor_p0"
       }
     },
     {
       "when": {
         "facing": "north",
-        "part": "2",
+        "part": "3",
         "active": "false"
       },
       "apply": {
-        "model": "kontur:block/extractor_p2"
+        "model": "kontur:block/extractor_p3"
       }
     },
     {
       "when": {
         "facing": "north",
-        "part": "2",
+        "part": "3",
         "active": "true"
       },
       "apply": {
-        "model": "kontur:block/extractor_p2"
+        "model": "kontur:block/extractor_p3_on"
       }
     },
     {
@@ -63,21 +63,61 @@
     {
       "when": {
         "facing": "north",
-        "part": "3",
+        "part": "4",
         "active": "false"
       },
       "apply": {
-        "model": "kontur:block/extractor_p3"
+        "model": "kontur:block/extractor_p4"
       }
     },
     {
       "when": {
         "facing": "north",
-        "part": "3",
+        "part": "4",
         "active": "true"
       },
       "apply": {
-        "model": "kontur:block/extractor_p3"
+        "model": "kontur:block/extractor_p4_on"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "part": "2",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/extractor_p2"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "part": "2",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/extractor_p2"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "part": "5",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/extractor_p5"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "part": "5",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/extractor_p5_on"
       }
     },
     {
@@ -98,29 +138,29 @@
         "active": "true"
       },
       "apply": {
-        "model": "kontur:block/extractor_p0_on",
+        "model": "kontur:block/extractor_p0",
         "y": 90
       }
     },
     {
       "when": {
         "facing": "east",
-        "part": "2",
+        "part": "3",
         "active": "false"
       },
       "apply": {
-        "model": "kontur:block/extractor_p2",
+        "model": "kontur:block/extractor_p3",
         "y": 90
       }
     },
     {
       "when": {
         "facing": "east",
-        "part": "2",
+        "part": "3",
         "active": "true"
       },
       "apply": {
-        "model": "kontur:block/extractor_p2",
+        "model": "kontur:block/extractor_p3_on",
         "y": 90
       }
     },
@@ -149,22 +189,66 @@
     {
       "when": {
         "facing": "east",
-        "part": "3",
+        "part": "4",
         "active": "false"
       },
       "apply": {
-        "model": "kontur:block/extractor_p3",
+        "model": "kontur:block/extractor_p4",
         "y": 90
       }
     },
     {
       "when": {
         "facing": "east",
-        "part": "3",
+        "part": "4",
         "active": "true"
       },
       "apply": {
-        "model": "kontur:block/extractor_p3",
+        "model": "kontur:block/extractor_p4_on",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "2",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/extractor_p2",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "2",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/extractor_p2",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "5",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/extractor_p5",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "5",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/extractor_p5_on",
         "y": 90
       }
     },
@@ -186,29 +270,29 @@
         "active": "true"
       },
       "apply": {
-        "model": "kontur:block/extractor_p0_on",
+        "model": "kontur:block/extractor_p0",
         "y": 180
       }
     },
     {
       "when": {
         "facing": "south",
-        "part": "2",
+        "part": "3",
         "active": "false"
       },
       "apply": {
-        "model": "kontur:block/extractor_p2",
+        "model": "kontur:block/extractor_p3",
         "y": 180
       }
     },
     {
       "when": {
         "facing": "south",
-        "part": "2",
+        "part": "3",
         "active": "true"
       },
       "apply": {
-        "model": "kontur:block/extractor_p2",
+        "model": "kontur:block/extractor_p3_on",
         "y": 180
       }
     },
@@ -237,22 +321,66 @@
     {
       "when": {
         "facing": "south",
-        "part": "3",
+        "part": "4",
         "active": "false"
       },
       "apply": {
-        "model": "kontur:block/extractor_p3",
+        "model": "kontur:block/extractor_p4",
         "y": 180
       }
     },
     {
       "when": {
         "facing": "south",
-        "part": "3",
+        "part": "4",
         "active": "true"
       },
       "apply": {
-        "model": "kontur:block/extractor_p3",
+        "model": "kontur:block/extractor_p4_on",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "2",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/extractor_p2",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "2",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/extractor_p2",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "5",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/extractor_p5",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "5",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/extractor_p5_on",
         "y": 180
       }
     },
@@ -274,29 +402,29 @@
         "active": "true"
       },
       "apply": {
-        "model": "kontur:block/extractor_p0_on",
+        "model": "kontur:block/extractor_p0",
         "y": 270
       }
     },
     {
       "when": {
         "facing": "west",
-        "part": "2",
+        "part": "3",
         "active": "false"
       },
       "apply": {
-        "model": "kontur:block/extractor_p2",
+        "model": "kontur:block/extractor_p3",
         "y": 270
       }
     },
     {
       "when": {
         "facing": "west",
-        "part": "2",
+        "part": "3",
         "active": "true"
       },
       "apply": {
-        "model": "kontur:block/extractor_p2",
+        "model": "kontur:block/extractor_p3_on",
         "y": 270
       }
     },
@@ -325,22 +453,66 @@
     {
       "when": {
         "facing": "west",
-        "part": "3",
+        "part": "4",
         "active": "false"
       },
       "apply": {
-        "model": "kontur:block/extractor_p3",
+        "model": "kontur:block/extractor_p4",
         "y": 270
       }
     },
     {
       "when": {
         "facing": "west",
-        "part": "3",
+        "part": "4",
         "active": "true"
       },
       "apply": {
-        "model": "kontur:block/extractor_p3",
+        "model": "kontur:block/extractor_p4_on",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "2",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/extractor_p2",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "2",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/extractor_p2",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "5",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/extractor_p5",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "5",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/extractor_p5_on",
         "y": 270
       }
     }

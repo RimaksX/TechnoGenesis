@@ -12,12 +12,15 @@ import net.minecraft.core.Direction;
  * кабелям не подключаются.
  */
 public record MultiLayout(int w, int d, int h) {
-    /** Реакторы и аппараты 2x2. */
-    public static final MultiLayout SQUARE = new MultiLayout(2, 2, 1);
-    /** Длинные аппараты 3x2. */
-    public static final MultiLayout WIDE = new MultiLayout(3, 2, 1);
-    /** Колонны: одна клетка в основании, две в высоту. */
-    public static final MultiLayout TALL = new MultiLayout(1, 1, 2);
+    /** Больше всего частей у машины 3x2x2 и 2x3x2. */
+    public static final int MAX_PARTS = 12;
+
+    private static final java.util.Map<Integer, MultiLayout> CACHE = new java.util.concurrent.ConcurrentHashMap<>();
+
+    /** Раскладка w x d x h; одинаковые размеры делят один экземпляр. */
+    public static MultiLayout of(int w, int d, int h) {
+        return CACHE.computeIfAbsent(w * 10000 + d * 100 + h, k -> new MultiLayout(w, d, h));
+    }
 
     public int parts() {
         return w * d * h;
@@ -44,14 +47,14 @@ public record MultiLayout(int w, int d, int h) {
         return (w - 1) / 2;
     }
 
-    /** Клетка с разъёмом на данной стороне; -1, если разъёма нет (лицевая сторона). */
+    /** Клетка с разъёмом на данной стороне. */
     public int portIndex(RelativeSide side) {
         return switch (side) {
             case LEFT -> index(w - 1, 0, 0);
             case RIGHT -> index(0, 0, 0);
             case BACK, BOTTOM -> index(midColumn(), d - 1, 0);
             case TOP -> index(midColumn(), d - 1, h - 1);
-            case FRONT -> -1;
+            case FRONT -> index(midColumn(), 0, 0);
         };
     }
 

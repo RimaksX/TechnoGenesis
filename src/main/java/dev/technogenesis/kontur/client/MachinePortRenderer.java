@@ -87,25 +87,29 @@ public final class MachinePortRenderer implements BlockEntityRenderer<MachineBlo
         for (Direction dir : Direction.values()) {
             RelativeSide rs = RelativeSide.of(facing, dir);
             // у крупной машины гнёзда и индикатор лежат на гранях своих клеток: сдвигаем рисование к нужной
-            stack.pushPose();
-            if (layout != null) {
-                var cell = layout.cell(be.getBlockPos(), facing, rs == RelativeSide.FRONT ? layout.lightIndex()
-                        : Math.max(0, layout.portIndex(rs)));
-                stack.translate(cell.getX() - be.getBlockPos().getX(), cell.getY() - be.getBlockPos().getY(),
-                        cell.getZ() - be.getBlockPos().getZ());
+            if (rs == RelativeSide.FRONT) {
+                stack.pushPose();
+                moveToCell(stack, be, layout, facing, layout == null ? 0 : layout.lightIndex());
+                frontLight(vc, stack.last(), dir, be.status(), lit);
+                stack.popPose();
             }
-            PoseStack.Pose pose = stack.last();
-            drawSide(be, vc, pose, dir, rs, wrench, lit);
+            stack.pushPose();
+            moveToCell(stack, be, layout, facing, layout == null ? 0 : Math.max(0, layout.portIndex(rs)));
+            drawPort(be, vc, stack.last(), dir, rs, wrench, lit);
             stack.popPose();
         }
     }
 
-    private static void drawSide(MachineBlockEntity be, VertexConsumer vc, PoseStack.Pose pose, Direction dir,
-                             RelativeSide rs, WrenchMode wrench, int lit) {
-        if (rs == RelativeSide.FRONT) {
-            frontLight(vc, pose, dir, be.status(), lit);
-            return;
+    private static void moveToCell(PoseStack stack, MachineBlockEntity be, MultiLayout layout, Direction facing, int idx) {
+        if (layout != null) {
+            var cell = layout.cell(be.getBlockPos(), facing, idx);
+            stack.translate(cell.getX() - be.getBlockPos().getX(), cell.getY() - be.getBlockPos().getY(),
+                    cell.getZ() - be.getBlockPos().getZ());
         }
+    }
+
+    private static void drawPort(MachineBlockEntity be, VertexConsumer vc, PoseStack.Pose pose, Direction dir,
+                                 RelativeSide rs, WrenchMode wrench, int lit) {
         if (!be.kind().hasPort(rs)) {
             return;
         }

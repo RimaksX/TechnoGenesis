@@ -1,184 +1,176 @@
 {
-  "variants": {
-    "active=false,charge=0,facing=north": {
-      "model": "kontur:block/washing_drum"
+  "multipart": [
+    {
+      "when": {
+        "facing": "north",
+        "part": "0",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/washing_drum_p0"
+      }
     },
-    "active=false,charge=0,facing=east": {
-      "model": "kontur:block/washing_drum",
-      "y": 90
+    {
+      "when": {
+        "facing": "north",
+        "part": "0",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/washing_drum_p0_on"
+      }
     },
-    "active=false,charge=0,facing=south": {
-      "model": "kontur:block/washing_drum",
-      "y": 180
+    {
+      "when": {
+        "facing": "north",
+        "part": "1",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/washing_drum_p1"
+      }
     },
-    "active=false,charge=0,facing=west": {
-      "model": "kontur:block/washing_drum",
-      "y": 270
+    {
+      "when": {
+        "facing": "north",
+        "part": "1",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/washing_drum_p1_on"
+      }
     },
-    "active=false,charge=1,facing=north": {
-      "model": "kontur:block/washing_drum"
+    {
+      "when": {
+        "facing": "east",
+        "part": "0",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/washing_drum_p0",
+        "y": 90
+      }
     },
-    "active=false,charge=1,facing=east": {
-      "model": "kontur:block/washing_drum",
-      "y": 90
+    {
+      "when": {
+        "facing": "east",
+        "part": "0",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/washing_drum_p0_on",
+        "y": 90
+      }
     },
-    "active=false,charge=1,facing=south": {
-      "model": "kontur:block/washing_drum",
-      "y": 180
+    {
+      "when": {
+        "facing": "east",
+        "part": "1",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/washing_drum_p1",
+        "y": 90
+      }
     },
-    "active=false,charge=1,facing=west": {
-      "model": "kontur:block/washing_drum",
-      "y": 270
+    {
+      "when": {
+        "facing": "east",
+        "part": "1",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/washing_drum_p1_on",
+        "y": 90
+      }
     },
-    "active=false,charge=2,facing=north": {
-      "model": "kontur:block/washing_drum"
+    {
+      "when": {
+        "facing": "south",
+        "part": "0",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/washing_drum_p0",
+        "y": 180
+      }
     },
-    "active=false,charge=2,facing=east": {
-      "model": "kontur:block/washing_drum",
-      "y": 90
+    {
+      "when": {
+        "facing": "south",
+        "part": "0",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/washing_drum_p0_on",
+        "y": 180
+      }
     },
-    "active=false,charge=2,facing=south": {
-      "model": "kontur:block/washing_drum",
-      "y": 180
+    {
+      "when": {
+        "facing": "south",
+        "part": "1",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/washing_drum_p1",
+        "y": 180
+      }
     },
-    "active=false,charge=2,facing=west": {
-      "model": "kontur:block/washing_drum",
-      "y": 270
+    {
+      "when": {
+        "facing": "south",
+        "part": "1",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/washing_drum_p1_on",
+        "y": 180
+      }
     },
-    "active=false,charge=3,facing=north": {
-      "model": "kontur:block/washing_drum"
+    {
+      "when": {
+        "facing": "west",
+        "part": "0",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/washing_drum_p0",
+        "y": 270
+      }
     },
-    "active=false,charge=3,facing=east": {
-      "model": "kontur:block/washing_drum",
-      "y": 90
+    {
+      "when": {
+        "facing": "west",
+        "part": "0",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/washing_drum_p0_on",
+        "y": 270
+      }
     },
-    "active=false,charge=3,facing=south": {
-      "model": "kontur:block/washing_drum",
-      "y": 180
+    {
+      "when": {
+        "facing": "west",
+        "part": "1",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/washing_drum_p1",
+        "y": 270
+      }
     },
-    "active=false,charge=3,facing=west": {
-      "model": "kontur:block/washing_drum",
-      "y": 270
-    },
-    "active=false,charge=4,facing=north": {
-      "model": "kontur:block/washing_drum"
-    },
-    "active=false,charge=4,facing=east": {
-      "model": "kontur:block/washing_drum",
-      "y": 90
-    },
-    "active=false,charge=4,facing=south": {
-      "model": "kontur:block/washing_drum",
-      "y": 180
-    },
-    "active=false,charge=4,facing=west": {
-      "model": "kontur:block/washing_drum",
-      "y": 270
-    },
-    "active=false,charge=5,facing=north": {
-      "model": "kontur:block/washing_drum"
-    },
-    "active=false,charge=5,facing=east": {
-      "model": "kontur:block/washing_drum",
-      "y": 90
-    },
-    "active=false,charge=5,facing=south": {
-      "model": "kontur:block/washing_drum",
-      "y": 180
-    },
-    "active=false,charge=5,facing=west": {
-      "model": "kontur:block/washing_drum",
-      "y": 270
-    },
-    "active=true,charge=0,facing=north": {
-      "model": "kontur:block/washing_drum_on"
-    },
-    "active=true,charge=0,facing=east": {
-      "model": "kontur:block/washing_drum_on",
-      "y": 90
-    },
-    "active=true,charge=0,facing=south": {
-      "model": "kontur:block/washing_drum_on",
-      "y": 180
-    },
-    "active=true,charge=0,facing=west": {
-      "model": "kontur:block/washing_drum_on",
-      "y": 270
-    },
-    "active=true,charge=1,facing=north": {
-      "model": "kontur:block/washing_drum_on"
-    },
-    "active=true,charge=1,facing=east": {
-      "model": "kontur:block/washing_drum_on",
-      "y": 90
-    },
-    "active=true,charge=1,facing=south": {
-      "model": "kontur:block/washing_drum_on",
-      "y": 180
-    },
-    "active=true,charge=1,facing=west": {
-      "model": "kontur:block/washing_drum_on",
-      "y": 270
-    },
-    "active=true,charge=2,facing=north": {
-      "model": "kontur:block/washing_drum_on"
-    },
-    "active=true,charge=2,facing=east": {
-      "model": "kontur:block/washing_drum_on",
-      "y": 90
-    },
-    "active=true,charge=2,facing=south": {
-      "model": "kontur:block/washing_drum_on",
-      "y": 180
-    },
-    "active=true,charge=2,facing=west": {
-      "model": "kontur:block/washing_drum_on",
-      "y": 270
-    },
-    "active=true,charge=3,facing=north": {
-      "model": "kontur:block/washing_drum_on"
-    },
-    "active=true,charge=3,facing=east": {
-      "model": "kontur:block/washing_drum_on",
-      "y": 90
-    },
-    "active=true,charge=3,facing=south": {
-      "model": "kontur:block/washing_drum_on",
-      "y": 180
-    },
-    "active=true,charge=3,facing=west": {
-      "model": "kontur:block/washing_drum_on",
-      "y": 270
-    },
-    "active=true,charge=4,facing=north": {
-      "model": "kontur:block/washing_drum_on"
-    },
-    "active=true,charge=4,facing=east": {
-      "model": "kontur:block/washing_drum_on",
-      "y": 90
-    },
-    "active=true,charge=4,facing=south": {
-      "model": "kontur:block/washing_drum_on",
-      "y": 180
-    },
-    "active=true,charge=4,facing=west": {
-      "model": "kontur:block/washing_drum_on",
-      "y": 270
-    },
-    "active=true,charge=5,facing=north": {
-      "model": "kontur:block/washing_drum_on"
-    },
-    "active=true,charge=5,facing=east": {
-      "model": "kontur:block/washing_drum_on",
-      "y": 90
-    },
-    "active=true,charge=5,facing=south": {
-      "model": "kontur:block/washing_drum_on",
-      "y": 180
-    },
-    "active=true,charge=5,facing=west": {
-      "model": "kontur:block/washing_drum_on",
-      "y": 270
+    {
+      "when": {
+        "facing": "west",
+        "part": "1",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/washing_drum_p1_on",
+        "y": 270
+      }
     }
-  }
+  ]
 }

@@ -580,9 +580,7 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
                 continue;
             }
             for (RelativeSide s : RelativeSide.values()) {
-                if (s != RelativeSide.FRONT) {
-                    sides.set(t, s, def.coerce(t, sides.get(t, s)));
-                }
+                sides.set(t, s, def.coerce(t, sides.get(t, s)));
             }
         }
     }

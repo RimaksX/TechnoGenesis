@@ -79,9 +79,9 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
     private static final int EJ_W = 40;
     private static final int EJ_H = 10;
     private static final RelativeSide[] NET_SIDES = {RelativeSide.TOP, RelativeSide.LEFT, RelativeSide.RIGHT,
-            RelativeSide.BACK, RelativeSide.BOTTOM};
+            RelativeSide.BACK, RelativeSide.BOTTOM, RelativeSide.FRONT};
     /** Колонка и строка клетки в развёртке: верх над лицом, низ под ним, лево и право по бокам, зад справа от права. */
-    private static final int[][] NET_POS = {{1, 0}, {0, 1}, {2, 1}, {3, 1}, {1, 2}};
+    private static final int[][] NET_POS = {{1, 0}, {0, 1}, {2, 1}, {3, 1}, {1, 2}, {1, 1}};
     private static final TransferType[] ROW_ORDER = {TransferType.ITEMS, TransferType.OUT1, TransferType.OUT2,
             TransferType.OUT3, TransferType.FLUIDS, TransferType.ENERGY};
     /** Только клиент: какой тип сейчас настраивает панель. */

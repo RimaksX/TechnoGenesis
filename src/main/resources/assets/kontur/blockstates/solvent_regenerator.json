@@ -23,6 +23,46 @@
     {
       "when": {
         "facing": "north",
+        "part": "2",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/solvent_regenerator_p2"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "part": "2",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/solvent_regenerator_p2"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "part": "4",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/solvent_regenerator_p4"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "part": "4",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/solvent_regenerator_p4"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
         "part": "1",
         "active": "false"
       },
@@ -42,6 +82,46 @@
     },
     {
       "when": {
+        "facing": "north",
+        "part": "3",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/solvent_regenerator_p3"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "part": "3",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/solvent_regenerator_p3"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "part": "5",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/solvent_regenerator_p5"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "part": "5",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/solvent_regenerator_p5"
+      }
+    },
+    {
+      "when": {
         "facing": "east",
         "part": "0",
         "active": "false"
@@ -65,6 +145,50 @@
     {
       "when": {
         "facing": "east",
+        "part": "2",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/solvent_regenerator_p2",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "2",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/solvent_regenerator_p2",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "4",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/solvent_regenerator_p4",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "4",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/solvent_regenerator_p4",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
         "part": "1",
         "active": "false"
       },
@@ -81,6 +205,50 @@
       },
       "apply": {
         "model": "kontur:block/solvent_regenerator_p1",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "3",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/solvent_regenerator_p3",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "3",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/solvent_regenerator_p3",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "5",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/solvent_regenerator_p5",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "5",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/solvent_regenerator_p5",
         "y": 90
       }
     },
@@ -109,6 +277,50 @@
     {
       "when": {
         "facing": "south",
+        "part": "2",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/solvent_regenerator_p2",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "2",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/solvent_regenerator_p2",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "4",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/solvent_regenerator_p4",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "4",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/solvent_regenerator_p4",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
         "part": "1",
         "active": "false"
       },
@@ -125,6 +337,50 @@
       },
       "apply": {
         "model": "kontur:block/solvent_regenerator_p1",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "3",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/solvent_regenerator_p3",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "3",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/solvent_regenerator_p3",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "5",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/solvent_regenerator_p5",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "5",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/solvent_regenerator_p5",
         "y": 180
       }
     },
@@ -153,6 +409,50 @@
     {
       "when": {
         "facing": "west",
+        "part": "2",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/solvent_regenerator_p2",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "2",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/solvent_regenerator_p2",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "4",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/solvent_regenerator_p4",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "4",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/solvent_regenerator_p4",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
         "part": "1",
         "active": "false"
       },
@@ -169,6 +469,50 @@
       },
       "apply": {
         "model": "kontur:block/solvent_regenerator_p1",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "3",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/solvent_regenerator_p3",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "3",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/solvent_regenerator_p3",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "5",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/solvent_regenerator_p5",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "5",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/solvent_regenerator_p5",
         "y": 270
       }
     }

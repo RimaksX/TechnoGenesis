@@ -23,6 +23,26 @@
     {
       "when": {
         "facing": "north",
+        "part": "4",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/precipitation_reactor_p4"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "part": "4",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/precipitation_reactor_p4"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
         "part": "2",
         "active": "false"
       },
@@ -38,6 +58,26 @@
       },
       "apply": {
         "model": "kontur:block/precipitation_reactor_p2"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "part": "6",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/precipitation_reactor_p6"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "part": "6",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/precipitation_reactor_p6"
       }
     },
     {
@@ -57,7 +97,27 @@
         "active": "true"
       },
       "apply": {
-        "model": "kontur:block/precipitation_reactor_p1_on"
+        "model": "kontur:block/precipitation_reactor_p1"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "part": "5",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/precipitation_reactor_p5"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "part": "5",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/precipitation_reactor_p5"
       }
     },
     {
@@ -82,6 +142,26 @@
     },
     {
       "when": {
+        "facing": "north",
+        "part": "7",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/precipitation_reactor_p7"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "part": "7",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/precipitation_reactor_p7"
+      }
+    },
+    {
+      "when": {
         "facing": "east",
         "part": "0",
         "active": "false"
@@ -105,6 +185,28 @@
     {
       "when": {
         "facing": "east",
+        "part": "4",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/precipitation_reactor_p4",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "4",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/precipitation_reactor_p4",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
         "part": "2",
         "active": "false"
       },
@@ -121,6 +223,28 @@
       },
       "apply": {
         "model": "kontur:block/precipitation_reactor_p2",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "6",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/precipitation_reactor_p6",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "6",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/precipitation_reactor_p6",
         "y": 90
       }
     },
@@ -142,7 +266,29 @@
         "active": "true"
       },
       "apply": {
-        "model": "kontur:block/precipitation_reactor_p1_on",
+        "model": "kontur:block/precipitation_reactor_p1",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "5",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/precipitation_reactor_p5",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "5",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/precipitation_reactor_p5",
         "y": 90
       }
     },
@@ -165,6 +311,28 @@
       },
       "apply": {
         "model": "kontur:block/precipitation_reactor_p3",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "7",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/precipitation_reactor_p7",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "7",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/precipitation_reactor_p7",
         "y": 90
       }
     },
@@ -193,6 +361,28 @@
     {
       "when": {
         "facing": "south",
+        "part": "4",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/precipitation_reactor_p4",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "4",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/precipitation_reactor_p4",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
         "part": "2",
         "active": "false"
       },
@@ -209,6 +399,28 @@
       },
       "apply": {
         "model": "kontur:block/precipitation_reactor_p2",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "6",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/precipitation_reactor_p6",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "6",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/precipitation_reactor_p6",
         "y": 180
       }
     },
@@ -230,7 +442,29 @@
         "active": "true"
       },
       "apply": {
-        "model": "kontur:block/precipitation_reactor_p1_on",
+        "model": "kontur:block/precipitation_reactor_p1",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "5",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/precipitation_reactor_p5",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "5",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/precipitation_reactor_p5",
         "y": 180
       }
     },
@@ -253,6 +487,28 @@
       },
       "apply": {
         "model": "kontur:block/precipitation_reactor_p3",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "7",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/precipitation_reactor_p7",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "7",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/precipitation_reactor_p7",
         "y": 180
       }
     },
@@ -281,6 +537,28 @@
     {
       "when": {
         "facing": "west",
+        "part": "4",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/precipitation_reactor_p4",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "4",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/precipitation_reactor_p4",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
         "part": "2",
         "active": "false"
       },
@@ -297,6 +575,28 @@
       },
       "apply": {
         "model": "kontur:block/precipitation_reactor_p2",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "6",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/precipitation_reactor_p6",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "6",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/precipitation_reactor_p6",
         "y": 270
       }
     },
@@ -318,7 +618,29 @@
         "active": "true"
       },
       "apply": {
-        "model": "kontur:block/precipitation_reactor_p1_on",
+        "model": "kontur:block/precipitation_reactor_p1",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "5",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/precipitation_reactor_p5",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "5",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/precipitation_reactor_p5",
         "y": 270
       }
     },
@@ -341,6 +663,28 @@
       },
       "apply": {
         "model": "kontur:block/precipitation_reactor_p3",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "7",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/precipitation_reactor_p7",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "7",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/precipitation_reactor_p7",
         "y": 270
       }
     }

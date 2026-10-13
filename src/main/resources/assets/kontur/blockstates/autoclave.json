@@ -23,6 +23,26 @@
     {
       "when": {
         "facing": "north",
+        "part": "6",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/autoclave_p6"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "part": "6",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/autoclave_p6"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
         "part": "3",
         "active": "false"
       },
@@ -38,6 +58,26 @@
       },
       "apply": {
         "model": "kontur:block/autoclave_p3"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "part": "9",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/autoclave_p9"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "part": "9",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/autoclave_p9"
       }
     },
     {
@@ -63,6 +103,26 @@
     {
       "when": {
         "facing": "north",
+        "part": "7",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/autoclave_p7"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "part": "7",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/autoclave_p7"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
         "part": "4",
         "active": "false"
       },
@@ -78,6 +138,26 @@
       },
       "apply": {
         "model": "kontur:block/autoclave_p4"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "part": "10",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/autoclave_p10"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "part": "10",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/autoclave_p10"
       }
     },
     {
@@ -97,7 +177,27 @@
         "active": "true"
       },
       "apply": {
-        "model": "kontur:block/autoclave_p2_on"
+        "model": "kontur:block/autoclave_p2"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "part": "8",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/autoclave_p8"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "part": "8",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/autoclave_p8"
       }
     },
     {
@@ -122,6 +222,26 @@
     },
     {
       "when": {
+        "facing": "north",
+        "part": "11",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/autoclave_p11"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "part": "11",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/autoclave_p11"
+      }
+    },
+    {
+      "when": {
         "facing": "east",
         "part": "0",
         "active": "false"
@@ -145,6 +265,28 @@
     {
       "when": {
         "facing": "east",
+        "part": "6",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/autoclave_p6",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "6",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/autoclave_p6",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
         "part": "3",
         "active": "false"
       },
@@ -161,6 +303,28 @@
       },
       "apply": {
         "model": "kontur:block/autoclave_p3",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "9",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/autoclave_p9",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "9",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/autoclave_p9",
         "y": 90
       }
     },
@@ -189,6 +353,28 @@
     {
       "when": {
         "facing": "east",
+        "part": "7",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/autoclave_p7",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "7",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/autoclave_p7",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
         "part": "4",
         "active": "false"
       },
@@ -205,6 +391,28 @@
       },
       "apply": {
         "model": "kontur:block/autoclave_p4",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "10",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/autoclave_p10",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "10",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/autoclave_p10",
         "y": 90
       }
     },
@@ -226,7 +434,29 @@
         "active": "true"
       },
       "apply": {
-        "model": "kontur:block/autoclave_p2_on",
+        "model": "kontur:block/autoclave_p2",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "8",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/autoclave_p8",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "8",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/autoclave_p8",
         "y": 90
       }
     },
@@ -249,6 +479,28 @@
       },
       "apply": {
         "model": "kontur:block/autoclave_p5",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "11",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/autoclave_p11",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "11",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/autoclave_p11",
         "y": 90
       }
     },
@@ -277,6 +529,28 @@
     {
       "when": {
         "facing": "south",
+        "part": "6",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/autoclave_p6",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "6",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/autoclave_p6",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
         "part": "3",
         "active": "false"
       },
@@ -293,6 +567,28 @@
       },
       "apply": {
         "model": "kontur:block/autoclave_p3",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "9",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/autoclave_p9",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "9",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/autoclave_p9",
         "y": 180
       }
     },
@@ -321,6 +617,28 @@
     {
       "when": {
         "facing": "south",
+        "part": "7",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/autoclave_p7",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "7",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/autoclave_p7",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
         "part": "4",
         "active": "false"
       },
@@ -337,6 +655,28 @@
       },
       "apply": {
         "model": "kontur:block/autoclave_p4",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "10",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/autoclave_p10",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "10",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/autoclave_p10",
         "y": 180
       }
     },
@@ -358,7 +698,29 @@
         "active": "true"
       },
       "apply": {
-        "model": "kontur:block/autoclave_p2_on",
+        "model": "kontur:block/autoclave_p2",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "8",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/autoclave_p8",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "8",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/autoclave_p8",
         "y": 180
       }
     },
@@ -381,6 +743,28 @@
       },
       "apply": {
         "model": "kontur:block/autoclave_p5",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "11",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/autoclave_p11",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "11",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/autoclave_p11",
         "y": 180
       }
     },
@@ -409,6 +793,28 @@
     {
       "when": {
         "facing": "west",
+        "part": "6",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/autoclave_p6",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "6",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/autoclave_p6",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
         "part": "3",
         "active": "false"
       },
@@ -425,6 +831,28 @@
       },
       "apply": {
         "model": "kontur:block/autoclave_p3",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "9",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/autoclave_p9",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "9",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/autoclave_p9",
         "y": 270
       }
     },
@@ -453,6 +881,28 @@
     {
       "when": {
         "facing": "west",
+        "part": "7",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/autoclave_p7",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "7",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/autoclave_p7",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
         "part": "4",
         "active": "false"
       },
@@ -469,6 +919,28 @@
       },
       "apply": {
         "model": "kontur:block/autoclave_p4",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "10",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/autoclave_p10",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "10",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/autoclave_p10",
         "y": 270
       }
     },
@@ -490,7 +962,29 @@
         "active": "true"
       },
       "apply": {
-        "model": "kontur:block/autoclave_p2_on",
+        "model": "kontur:block/autoclave_p2",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "8",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/autoclave_p8",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "8",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/autoclave_p8",
         "y": 270
       }
     },
@@ -513,6 +1007,28 @@
       },
       "apply": {
         "model": "kontur:block/autoclave_p5",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "11",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/autoclave_p11",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "11",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/autoclave_p11",
         "y": 270
       }
     }

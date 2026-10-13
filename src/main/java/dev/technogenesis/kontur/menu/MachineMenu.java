@@ -213,7 +213,7 @@ public class MachineMenu extends AbstractContainerMenu {
             return false;
         }
         RelativeSide side = RelativeSide.values()[sideIdx];
-        if (side == RelativeSide.FRONT || !kind.hasPort(side)) {
+        if (!kind.hasPort(side)) {
             return false;
         }
         return be.cycleType(TransferType.values()[typeIdx], side, (id & 1) != 0) != null;

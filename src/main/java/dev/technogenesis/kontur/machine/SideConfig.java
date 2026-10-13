@@ -31,7 +31,7 @@ public final class SideConfig {
 
     private void fill(TransferType type, IoMode mode) {
         for (RelativeSide side : RelativeSide.values()) {
-            modes[type.ordinal()][side.ordinal()] = side == RelativeSide.FRONT ? IoMode.NONE : mode;
+            modes[type.ordinal()][side.ordinal()] = mode;
         }
     }
 
@@ -39,9 +39,8 @@ public final class SideConfig {
         return modes[type.ordinal()][side.ordinal()];
     }
 
-    /** Передняя грань - лицо машины, разъёмов на ней нет. */
     public void set(TransferType type, RelativeSide side, IoMode mode) {
-        modes[type.ordinal()][side.ordinal()] = side == RelativeSide.FRONT ? IoMode.NONE : mode;
+        modes[type.ordinal()][side.ordinal()] = mode;
     }
 
     public void cycle(TransferType type, RelativeSide side, boolean reverse, IoMode[] modes) {

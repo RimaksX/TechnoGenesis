@@ -17,27 +17,107 @@
         "active": "true"
       },
       "apply": {
-        "model": "kontur:block/plasma_furnace_p0"
+        "model": "kontur:block/plasma_furnace_p0_on"
       }
     },
     {
       "when": {
         "facing": "north",
-        "part": "3",
+        "part": "6",
         "active": "false"
       },
       "apply": {
-        "model": "kontur:block/plasma_furnace_p3"
+        "model": "kontur:block/plasma_furnace_p6"
       }
     },
     {
       "when": {
         "facing": "north",
-        "part": "3",
+        "part": "6",
         "active": "true"
       },
       "apply": {
-        "model": "kontur:block/plasma_furnace_p3"
+        "model": "kontur:block/plasma_furnace_p6"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "part": "2",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/plasma_furnace_p2"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "part": "2",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/plasma_furnace_p2"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "part": "8",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/plasma_furnace_p8"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "part": "8",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/plasma_furnace_p8"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "part": "4",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/plasma_furnace_p4"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "part": "4",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/plasma_furnace_p4"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "part": "10",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/plasma_furnace_p10"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "part": "10",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/plasma_furnace_p10"
       }
     },
     {
@@ -63,41 +143,61 @@
     {
       "when": {
         "facing": "north",
-        "part": "4",
+        "part": "7",
         "active": "false"
       },
       "apply": {
-        "model": "kontur:block/plasma_furnace_p4"
+        "model": "kontur:block/plasma_furnace_p7"
       }
     },
     {
       "when": {
         "facing": "north",
-        "part": "4",
+        "part": "7",
         "active": "true"
       },
       "apply": {
-        "model": "kontur:block/plasma_furnace_p4"
+        "model": "kontur:block/plasma_furnace_p7"
       }
     },
     {
       "when": {
         "facing": "north",
-        "part": "2",
+        "part": "3",
         "active": "false"
       },
       "apply": {
-        "model": "kontur:block/plasma_furnace_p2"
+        "model": "kontur:block/plasma_furnace_p3"
       }
     },
     {
       "when": {
         "facing": "north",
-        "part": "2",
+        "part": "3",
         "active": "true"
       },
       "apply": {
-        "model": "kontur:block/plasma_furnace_p2_on"
+        "model": "kontur:block/plasma_furnace_p3_on"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "part": "9",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/plasma_furnace_p9"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "part": "9",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/plasma_furnace_p9"
       }
     },
     {
@@ -122,6 +222,26 @@
     },
     {
       "when": {
+        "facing": "north",
+        "part": "11",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/plasma_furnace_p11"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "part": "11",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/plasma_furnace_p11"
+      }
+    },
+    {
+      "when": {
         "facing": "east",
         "part": "0",
         "active": "false"
@@ -138,29 +258,117 @@
         "active": "true"
       },
       "apply": {
-        "model": "kontur:block/plasma_furnace_p0",
+        "model": "kontur:block/plasma_furnace_p0_on",
         "y": 90
       }
     },
     {
       "when": {
         "facing": "east",
-        "part": "3",
+        "part": "6",
         "active": "false"
       },
       "apply": {
-        "model": "kontur:block/plasma_furnace_p3",
+        "model": "kontur:block/plasma_furnace_p6",
         "y": 90
       }
     },
     {
       "when": {
         "facing": "east",
-        "part": "3",
+        "part": "6",
         "active": "true"
       },
       "apply": {
-        "model": "kontur:block/plasma_furnace_p3",
+        "model": "kontur:block/plasma_furnace_p6",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "2",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/plasma_furnace_p2",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "2",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/plasma_furnace_p2",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "8",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/plasma_furnace_p8",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "8",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/plasma_furnace_p8",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "4",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/plasma_furnace_p4",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "4",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/plasma_furnace_p4",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "10",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/plasma_furnace_p10",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "10",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/plasma_furnace_p10",
         "y": 90
       }
     },
@@ -189,110 +397,242 @@
     {
       "when": {
         "facing": "east",
-        "part": "4",
+        "part": "7",
         "active": "false"
       },
       "apply": {
-        "model": "kontur:block/plasma_furnace_p4",
+        "model": "kontur:block/plasma_furnace_p7",
         "y": 90
       }
     },
     {
       "when": {
         "facing": "east",
-        "part": "4",
+        "part": "7",
         "active": "true"
       },
       "apply": {
-        "model": "kontur:block/plasma_furnace_p4",
+        "model": "kontur:block/plasma_furnace_p7",
         "y": 90
       }
     },
     {
       "when": {
         "facing": "east",
+        "part": "3",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/plasma_furnace_p3",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "3",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/plasma_furnace_p3_on",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "9",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/plasma_furnace_p9",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "9",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/plasma_furnace_p9",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "5",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/plasma_furnace_p5",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "5",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/plasma_furnace_p5",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "11",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/plasma_furnace_p11",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "11",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/plasma_furnace_p11",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "0",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/plasma_furnace_p0",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "0",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/plasma_furnace_p0_on",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "6",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/plasma_furnace_p6",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "6",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/plasma_furnace_p6",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
         "part": "2",
         "active": "false"
       },
       "apply": {
         "model": "kontur:block/plasma_furnace_p2",
-        "y": 90
+        "y": 180
       }
     },
     {
       "when": {
-        "facing": "east",
+        "facing": "south",
         "part": "2",
         "active": "true"
       },
       "apply": {
-        "model": "kontur:block/plasma_furnace_p2_on",
-        "y": 90
-      }
-    },
-    {
-      "when": {
-        "facing": "east",
-        "part": "5",
-        "active": "false"
-      },
-      "apply": {
-        "model": "kontur:block/plasma_furnace_p5",
-        "y": 90
-      }
-    },
-    {
-      "when": {
-        "facing": "east",
-        "part": "5",
-        "active": "true"
-      },
-      "apply": {
-        "model": "kontur:block/plasma_furnace_p5",
-        "y": 90
-      }
-    },
-    {
-      "when": {
-        "facing": "south",
-        "part": "0",
-        "active": "false"
-      },
-      "apply": {
-        "model": "kontur:block/plasma_furnace_p0",
+        "model": "kontur:block/plasma_furnace_p2",
         "y": 180
       }
     },
     {
       "when": {
         "facing": "south",
-        "part": "0",
-        "active": "true"
-      },
-      "apply": {
-        "model": "kontur:block/plasma_furnace_p0",
-        "y": 180
-      }
-    },
-    {
-      "when": {
-        "facing": "south",
-        "part": "3",
+        "part": "8",
         "active": "false"
       },
       "apply": {
-        "model": "kontur:block/plasma_furnace_p3",
+        "model": "kontur:block/plasma_furnace_p8",
         "y": 180
       }
     },
     {
       "when": {
         "facing": "south",
-        "part": "3",
+        "part": "8",
         "active": "true"
       },
       "apply": {
-        "model": "kontur:block/plasma_furnace_p3",
+        "model": "kontur:block/plasma_furnace_p8",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "4",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/plasma_furnace_p4",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "4",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/plasma_furnace_p4",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "10",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/plasma_furnace_p10",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "10",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/plasma_furnace_p10",
         "y": 180
       }
     },
@@ -321,110 +661,242 @@
     {
       "when": {
         "facing": "south",
-        "part": "4",
+        "part": "7",
         "active": "false"
       },
       "apply": {
-        "model": "kontur:block/plasma_furnace_p4",
+        "model": "kontur:block/plasma_furnace_p7",
         "y": 180
       }
     },
     {
       "when": {
         "facing": "south",
-        "part": "4",
+        "part": "7",
         "active": "true"
       },
       "apply": {
-        "model": "kontur:block/plasma_furnace_p4",
+        "model": "kontur:block/plasma_furnace_p7",
         "y": 180
       }
     },
     {
       "when": {
         "facing": "south",
+        "part": "3",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/plasma_furnace_p3",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "3",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/plasma_furnace_p3_on",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "9",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/plasma_furnace_p9",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "9",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/plasma_furnace_p9",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "5",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/plasma_furnace_p5",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "5",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/plasma_furnace_p5",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "11",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/plasma_furnace_p11",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "11",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/plasma_furnace_p11",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "0",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/plasma_furnace_p0",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "0",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/plasma_furnace_p0_on",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "6",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/plasma_furnace_p6",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "6",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/plasma_furnace_p6",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
         "part": "2",
         "active": "false"
       },
       "apply": {
         "model": "kontur:block/plasma_furnace_p2",
-        "y": 180
+        "y": 270
       }
     },
     {
       "when": {
-        "facing": "south",
+        "facing": "west",
         "part": "2",
         "active": "true"
       },
       "apply": {
-        "model": "kontur:block/plasma_furnace_p2_on",
-        "y": 180
-      }
-    },
-    {
-      "when": {
-        "facing": "south",
-        "part": "5",
-        "active": "false"
-      },
-      "apply": {
-        "model": "kontur:block/plasma_furnace_p5",
-        "y": 180
-      }
-    },
-    {
-      "when": {
-        "facing": "south",
-        "part": "5",
-        "active": "true"
-      },
-      "apply": {
-        "model": "kontur:block/plasma_furnace_p5",
-        "y": 180
-      }
-    },
-    {
-      "when": {
-        "facing": "west",
-        "part": "0",
-        "active": "false"
-      },
-      "apply": {
-        "model": "kontur:block/plasma_furnace_p0",
+        "model": "kontur:block/plasma_furnace_p2",
         "y": 270
       }
     },
     {
       "when": {
         "facing": "west",
-        "part": "0",
-        "active": "true"
-      },
-      "apply": {
-        "model": "kontur:block/plasma_furnace_p0",
-        "y": 270
-      }
-    },
-    {
-      "when": {
-        "facing": "west",
-        "part": "3",
+        "part": "8",
         "active": "false"
       },
       "apply": {
-        "model": "kontur:block/plasma_furnace_p3",
+        "model": "kontur:block/plasma_furnace_p8",
         "y": 270
       }
     },
     {
       "when": {
         "facing": "west",
-        "part": "3",
+        "part": "8",
         "active": "true"
       },
       "apply": {
-        "model": "kontur:block/plasma_furnace_p3",
+        "model": "kontur:block/plasma_furnace_p8",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "4",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/plasma_furnace_p4",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "4",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/plasma_furnace_p4",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "10",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/plasma_furnace_p10",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "10",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/plasma_furnace_p10",
         "y": 270
       }
     },
@@ -453,44 +925,66 @@
     {
       "when": {
         "facing": "west",
-        "part": "4",
+        "part": "7",
         "active": "false"
       },
       "apply": {
-        "model": "kontur:block/plasma_furnace_p4",
+        "model": "kontur:block/plasma_furnace_p7",
         "y": 270
       }
     },
     {
       "when": {
         "facing": "west",
-        "part": "4",
+        "part": "7",
         "active": "true"
       },
       "apply": {
-        "model": "kontur:block/plasma_furnace_p4",
+        "model": "kontur:block/plasma_furnace_p7",
         "y": 270
       }
     },
     {
       "when": {
         "facing": "west",
-        "part": "2",
+        "part": "3",
         "active": "false"
       },
       "apply": {
-        "model": "kontur:block/plasma_furnace_p2",
+        "model": "kontur:block/plasma_furnace_p3",
         "y": 270
       }
     },
     {
       "when": {
         "facing": "west",
-        "part": "2",
+        "part": "3",
         "active": "true"
       },
       "apply": {
-        "model": "kontur:block/plasma_furnace_p2_on",
+        "model": "kontur:block/plasma_furnace_p3_on",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "9",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/plasma_furnace_p9",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "9",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/plasma_furnace_p9",
         "y": 270
       }
     },
@@ -513,6 +1007,28 @@
       },
       "apply": {
         "model": "kontur:block/plasma_furnace_p5",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "11",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/plasma_furnace_p11",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "11",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/plasma_furnace_p11",
         "y": 270
       }
     }
