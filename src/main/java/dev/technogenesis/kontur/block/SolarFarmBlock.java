@@ -86,14 +86,14 @@ public class SolarFarmBlock extends MachineBlock {
         return shape;
     }
 
-    /** Форма совпадает с моделью: четыре ступени, передние плитки ниже, задние выше; шкаф инвертора у части 0. */
-    private static final VoxelShape FRONT_SHAPE = stairs(3, 5, 7, 9);
-    private static final VoxelShape BACK_SHAPE = stairs(11, 13, 15, 16);
-    private static final VoxelShape MASTER_SHAPE = Shapes.or(FRONT_SHAPE, Block.box(4, 3, 0, 12, 6, 4));
+    /** Форма совпадает с моделью: восемь одинаковых ступеней (шаг и толщина по 2, глубина по 4), шкаф управления на части 1. */
+    private static final VoxelShape FRONT_SHAPE = stairs(2, 4, 6, 8);
+    private static final VoxelShape BACK_SHAPE = stairs(10, 12, 14, 16);
+    private static final VoxelShape CABINET_SHAPE = Shapes.or(FRONT_SHAPE, Block.box(4, 2, 0, 12, 6, 4));
 
     private static VoxelShape shapeOf(BlockState state) {
         int part = state.getValue(PART);
-        return part == 0 ? MASTER_SHAPE : part < 3 ? FRONT_SHAPE : BACK_SHAPE;
+        return part == 1 ? CABINET_SHAPE : part < 3 ? FRONT_SHAPE : BACK_SHAPE;
     }
 
     /** Форма части для facing north; для других сторон поворачивается вокруг вертикали. */
