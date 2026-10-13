@@ -127,6 +127,12 @@ public enum MachineKind implements StringRepresentable {
             .tank(79, 20, 4000, false).module(-20, 41).cooler(-20, 63)
             .energy(EnergyKind.GENERATOR, 120000, 0, 1920, 480).build()),
 
+    // ---- термоядерная энергетика
+    // Термоядерный реактор: собирается игроком из корпуса и портов; 8000 FE/t за 40 мБ водорода и 20 мБ плазмы в тик
+    FUSION_REACTOR("fusion_reactor", true, false, null, MachineDefinition.builder()
+            .tank(50, 20, 16000, false).tank(86, 20, 16000, false)
+            .energy(EnergyKind.GENERATOR, 4_000_000, 0, 24576, 8000).build()),
+
     // ---- энергетика: возобновляемые источники и паровая турбина
     // Ветряной ротор: 24..96 FE/t, растёт с высотой и в непогоду; нужны открытое небо и свободные бока
     WIND_ROTOR("wind_rotor", true, false, null, MachineDefinition.builder()
@@ -203,6 +209,7 @@ public enum MachineKind implements StringRepresentable {
             case PLASMA_GENERATOR, PLASMA_FURNACE, VACUUM_CASTER -> "x12";
             case WATER_SPLITTER -> "gas";
             case ALLOY_FURNACE -> "alloy";
+            case FUSION_REACTOR -> "fusion";
             case MINER -> "mining";
             default -> "power";
         };

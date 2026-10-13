@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "SSS",
+    "HFH",
+    "SSS"
+  ],
+  "key": {
+    "S": {
+      "item": "kontur:stainless_steel_ingot"
+    },
+    "H": {
+      "item": "kontur:heat_plate"
+    },
+    "F": {
+      "item": "kontur:machine_frame"
+    }
+  },
+  "result": {
+    "id": "kontur:fusion_casing",
+    "count": 6
+  }
+}

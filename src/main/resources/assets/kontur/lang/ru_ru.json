@@ -532,5 +532,13 @@
   "tooltip.kontur.machine.solar_panel": "Солнечная панель: 24 FE/t днём при чистом небе",
   "tooltip.kontur.machine.solar_panel_advanced": "Улучшенная панель: 120 FE/t, принимает покрытие",
   "tooltip.kontur.machine.solar_farm": "Шесть панелей в одной ферме: 720 FE/t, принимает покрытие",
-  "tooltip.kontur.machine.miner": "Автоматический шахтёр: добывает руду на поле, нужны наконечники бура"
+  "tooltip.kontur.machine.miner": "Автоматический шахтёр: добывает руду на поле, нужны наконечники бура",
+  "block.kontur.fusion_casing": "Корпус реактора",
+  "block.kontur.fusion_port": "Порт реактора",
+  "block.kontur.fusion_reactor": "Термоядерный реактор",
+  "tooltip.kontur.stage.fusion": "Термоядерная энергетика",
+  "status.kontur.structure_missing": "Реактор не собран: не хватает блоков корпуса",
+  "status.kontur.structure_blocked": "В камере реактора посторонний блок",
+  "message.kontur.fusion_problem": "Реактор не собран: неверных блоков %s. Первый: %s вправо, %s вглубь, %s вверх от контроллера",
+  "tooltip.kontur.machine.fusion_reactor": "Собирается из корпуса: коробка 5×5×4 с пустой камерой 3×3×2, контроллер в центре передней стенки на втором ряду. Порты - в любом месте стенки. 8000 FE/т за водород и плазму по газовым трубам"
 }

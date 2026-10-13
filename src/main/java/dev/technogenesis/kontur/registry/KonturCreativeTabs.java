@@ -101,6 +101,9 @@ public final class KonturCreativeTabs {
                         out.accept(KonturBlocks.PLASMA_FURNACE);
                         out.accept(KonturBlocks.VACUUM_CASTER);
                         out.accept(KonturBlocks.ALLOY_FURNACE);
+                        out.accept(KonturBlocks.FUSION_CASING);
+                        out.accept(KonturBlocks.FUSION_PORT);
+                        out.accept(KonturBlocks.FUSION_REACTOR);
                         out.accept(KonturBlocks.WATER_SPLITTER);
                         out.accept(KonturBlocks.HYDROGEN_GENERATOR);
                         for (dev.technogenesis.kontur.network.CableTier tier : dev.technogenesis.kontur.network.CableTier.values()) {

@@ -38,6 +38,11 @@ public final class KonturBlockEntities {
                     .of(ConduitBlockEntity::new, KonturBlocks.PIPES.values().stream()
                             .map(b -> (Block) b.get()).toArray(Block[]::new)).build(null));
 
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<dev.technogenesis.kontur.blockentity.FusionPortBlockEntity>> FUSION_PORT =
+            BLOCK_ENTITIES.register("fusion_port", () -> BlockEntityType.Builder
+                    .of(dev.technogenesis.kontur.blockentity.FusionPortBlockEntity::new, KonturBlocks.FUSION_PORT.get())
+                    .build(null));
+
     static {
         for (MachineKind kind : MachineKind.values()) {
             MACHINES.put(kind, BLOCK_ENTITIES.register(kind.id, () -> BlockEntityType.Builder
@@ -56,6 +61,7 @@ public final class KonturBlockEntities {
             case WIND_ROTOR -> new dev.technogenesis.kontur.blockentity.WindRotorBlockEntity(pos, state);
             case THERMAL_GENERATOR -> new dev.technogenesis.kontur.blockentity.ThermalGeneratorBlockEntity(pos, state);
             case STEAM_TURBINE -> new dev.technogenesis.kontur.blockentity.SteamTurbineBlockEntity(pos, state);
+            case FUSION_REACTOR -> new dev.technogenesis.kontur.blockentity.FusionReactorBlockEntity(pos, state);
             case HYDROGEN_GENERATOR -> new dev.technogenesis.kontur.blockentity.HydrogenGeneratorBlockEntity(pos, state);
             case SOLAR_PANEL, SOLAR_PANEL_ADVANCED ->
                     new dev.technogenesis.kontur.blockentity.SolarPanelBlockEntity(kind, pos, state);
@@ -108,6 +114,9 @@ public final class KonturBlockEntities {
                 event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, type, (be, side) -> be.getEnergyStorage(side));
             }
         }
+        // порты корпуса реактора отдают баки и энергию контроллера, пока схема цела
+        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, FUSION_PORT.get(), (be, side) -> be.fluidHandler());
+        event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, FUSION_PORT.get(), (be, side) -> be.energyStorage());
         // ферма отдаёт энергию через разъёмы на боковых гранях задних (высоких) плиток; запрос уходит к главной части
         event.registerBlock(Capabilities.EnergyStorage.BLOCK, (level, pos, state, be, side) -> {
             var facing = state.getValue(dev.technogenesis.kontur.block.SolarFarmBlock.FACING);

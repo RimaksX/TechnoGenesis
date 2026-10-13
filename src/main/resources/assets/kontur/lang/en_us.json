@@ -532,5 +532,13 @@
   "tooltip.kontur.machine.solar_panel": "Solar panel: 24 FE/t by day under a clear sky",
   "tooltip.kontur.machine.solar_panel_advanced": "Advanced panel: 120 FE/t, accepts a coating",
   "tooltip.kontur.machine.solar_farm": "Six panels in one farm: 720 FE/t, accepts a coating",
-  "tooltip.kontur.machine.miner": "Automatic miner: mines ore over a field, needs drill tips"
+  "tooltip.kontur.machine.miner": "Automatic miner: mines ore over a field, needs drill tips",
+  "block.kontur.fusion_casing": "Reactor Casing",
+  "block.kontur.fusion_port": "Reactor Port",
+  "block.kontur.fusion_reactor": "Fusion Reactor",
+  "tooltip.kontur.stage.fusion": "Fusion Power",
+  "status.kontur.structure_missing": "Reactor incomplete: casing blocks are missing",
+  "status.kontur.structure_blocked": "A foreign block is inside the reactor chamber",
+  "message.kontur.fusion_problem": "Reactor incomplete: %s wrong blocks. First: %s right, %s deep, %s up from the controller",
+  "tooltip.kontur.machine.fusion_reactor": "Built from casing: a 5x5x4 box with an empty 3x3x2 chamber, the controller in the middle of the front wall on the second row. Ports go anywhere on the wall. 8000 FE/t from hydrogen and plasma through gas pipes"
 }

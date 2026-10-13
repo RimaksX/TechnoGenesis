@@ -45,6 +45,14 @@ public final class KonturBlocks {
             BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(3.0f, 6.0f).sound(SoundType.METAL)
                     .requiresCorrectToolForDrops().noOcclusion()));
 
+    /** Корпус и порты термоядерного реактора: игрок собирает из них коробку по схеме (см. FusionStructure). */
+    public static final DeferredBlock<Block> FUSION_CASING = block("fusion_casing", () -> new Block(
+            BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(4.0f, 12.0f).sound(SoundType.METAL)
+                    .requiresCorrectToolForDrops()));
+    public static final DeferredBlock<dev.technogenesis.kontur.block.FusionPortBlock> FUSION_PORT = block("fusion_port",
+            () -> new dev.technogenesis.kontur.block.FusionPortBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.METAL).strength(4.0f, 12.0f).sound(SoundType.METAL).requiresCorrectToolForDrops()));
+
     public static final Map<MachineKind, DeferredBlock<MachineBlock>> MACHINES = new EnumMap<>(MachineKind.class);
     public static final DeferredBlock<MachineBlock> JAW_CRUSHER = machine(MachineKind.JAW_CRUSHER);
     public static final DeferredBlock<MachineBlock> WASHING_DRUM = machine(MachineKind.WASHING_DRUM);
@@ -66,6 +74,7 @@ public final class KonturBlocks {
     public static final DeferredBlock<MachineBlock> STEAM_GENERATOR = machine(MachineKind.STEAM_GENERATOR);
     public static final DeferredBlock<MachineBlock> AUTOCLAVE = machine(MachineKind.AUTOCLAVE);
     public static final DeferredBlock<MachineBlock> PLASMA_GENERATOR = machine(MachineKind.PLASMA_GENERATOR);
+    public static final DeferredBlock<MachineBlock> FUSION_REACTOR = machine(MachineKind.FUSION_REACTOR);
     public static final DeferredBlock<MachineBlock> ALLOY_FURNACE = machine(MachineKind.ALLOY_FURNACE);
     public static final DeferredBlock<MachineBlock> WATER_SPLITTER = machine(MachineKind.WATER_SPLITTER);
     public static final DeferredBlock<MachineBlock> HYDROGEN_GENERATOR = machine(MachineKind.HYDROGEN_GENERATOR);
@@ -138,6 +147,9 @@ public final class KonturBlocks {
                             && state.getValue(MachineBlock.ACTIVE) ? 8 : 0);
             if (kind == MachineKind.SOLAR_FARM) {
                 return new SolarFarmBlock(props, kind);
+            }
+            if (kind == MachineKind.FUSION_REACTOR) {
+                return new dev.technogenesis.kontur.block.FusionControllerBlock(props, kind);
             }
             return kind.layout() != null ? new MultiMachineBlock(props, kind) : new MachineBlock(props, kind);
         });

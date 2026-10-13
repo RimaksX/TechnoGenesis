@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "HZH",
+    "MFM",
+    "XCX"
+  ],
+  "key": {
+    "H": {
+      "item": "kontur:heat_plate"
+    },
+    "Z": {
+      "item": "kontur:plasma_controller"
+    },
+    "M": {
+      "item": "kontur:power_module"
+    },
+    "F": {
+      "item": "kontur:fusion_casing"
+    },
+    "X": {
+      "item": "kontur:processor"
+    },
+    "C": {
+      "item": "kontur:control_circuit"
+    }
+  },
+  "result": {
+    "id": "kontur:fusion_reactor",
+    "count": 1
+  }
+}
