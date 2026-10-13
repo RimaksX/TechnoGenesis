@@ -492,5 +492,13 @@
   "tooltip.kontur.stage.gas": "Gases",
   "block.kontur.gas_pipe": "Gas Pipe",
   "block.kontur.gas_pipe_heavy": "Heavy Gas Pipe",
-  "block.kontur.hydrogen_generator": "Hydrogen Generator"
+  "block.kontur.hydrogen_generator": "Hydrogen Generator",
+  "block.kontur.alloy_furnace": "Alloy Furnace",
+  "tooltip.kontur.stage.alloy": "Alloys",
+  "item.kontur.steel_ingot": "Steel Ingot",
+  "item.kontur.stainless_steel_ingot": "Stainless Steel Ingot",
+  "item.kontur.tungsten_carbide_ingot": "Tungsten Carbide Ingot",
+  "item.kontur.titanium_alloy_ingot": "Titanium Alloy Ingot",
+  "item.kontur.magnetic_alloy_ingot": "Magnetic Alloy Ingot",
+  "item.kontur.nichrome_ingot": "Nichrome Ingot"
 }

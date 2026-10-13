@@ -2,13 +2,13 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "pattern": [
-    "CGC",
+    "SGS",
     "DHD",
-    "CGC"
+    "SGS"
   ],
   "key": {
-    "C": {
-      "item": "kontur:chromium_ingot"
+    "S": {
+      "item": "kontur:stainless_steel_ingot"
     },
     "G": {
       "item": "minecraft:glass"

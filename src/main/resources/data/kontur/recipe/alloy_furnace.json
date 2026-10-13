@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "BGB",
+    "WFW",
+    "DCD"
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:bricks"
+    },
+    "G": {
+      "item": "kontur:graphite"
+    },
+    "W": {
+      "item": "kontur:winding"
+    },
+    "F": {
+      "item": "kontur:machine_frame"
+    },
+    "D": {
+      "item": "kontur:gear_drive"
+    },
+    "C": {
+      "item": "kontur:control_circuit"
+    }
+  },
+  "result": {
+    "id": "kontur:alloy_furnace",
+    "count": 1
+  }
+}

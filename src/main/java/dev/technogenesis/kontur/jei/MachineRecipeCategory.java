@@ -96,10 +96,16 @@ final class MachineRecipeCategory implements IRecipeCategory<RecipeHolder<Machin
     public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<MachineRecipe> holder, IFocusGroup focuses) {
         MachineRecipe recipe = holder.value();
 
+        int inY = recipe.inputB().isPresent() ? 14 : 24;            // два входа (сплавы) стоят один над другим
         recipe.input().ifPresent(in -> {
             List<ItemStack> stacks = Arrays.stream(in.ingredient().getItems())
                     .map(s -> s.copyWithCount(in.count())).toList();
-            builder.addSlot(RecipeIngredientRole.INPUT, 5, 24).setBackground(slot, -1, -1).addItemStacks(stacks);
+            builder.addSlot(RecipeIngredientRole.INPUT, 5, inY).setBackground(slot, -1, -1).addItemStacks(stacks);
+        });
+        recipe.inputB().ifPresent(in -> {
+            List<ItemStack> stacks = Arrays.stream(in.ingredient().getItems())
+                    .map(s -> s.copyWithCount(in.count())).toList();
+            builder.addSlot(RecipeIngredientRole.INPUT, 5, 34).setBackground(slot, -1, -1).addItemStacks(stacks);
         });
         recipe.fluidInput().ifPresent(f -> {
             List<FluidStack> fluids = f.fluids().stream().map(fl -> new FluidStack(fl, f.amount())).toList();

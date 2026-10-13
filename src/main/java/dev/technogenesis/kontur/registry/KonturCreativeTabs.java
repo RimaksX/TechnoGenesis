@@ -50,6 +50,9 @@ public final class KonturCreativeTabs {
                         out.accept(KonturItems.GRAPHITE);
                         out.accept(KonturBlocks.ASH_BLOCK);
                         out.accept(KonturBlocks.AGGREGATE_BLOCK);
+                        for (var alloy : KonturItems.ALLOYS) {
+                            out.accept(alloy);
+                        }
                         out.accept(KonturBlocks.MACHINE_FRAME);
                         for (var component : KonturItems.COMPONENTS) {
                             out.accept(component);
@@ -97,6 +100,7 @@ public final class KonturCreativeTabs {
                         out.accept(KonturBlocks.PLASMA_GENERATOR);
                         out.accept(KonturBlocks.PLASMA_FURNACE);
                         out.accept(KonturBlocks.VACUUM_CASTER);
+                        out.accept(KonturBlocks.ALLOY_FURNACE);
                         out.accept(KonturBlocks.WATER_SPLITTER);
                         out.accept(KonturBlocks.HYDROGEN_GENERATOR);
                         for (dev.technogenesis.kontur.network.CableTier tier : dev.technogenesis.kontur.network.CableTier.values()) {

@@ -1,0 +1,23 @@
+{
+  "type": "kontur:alloying",
+  "results": [
+    {
+      "id": "kontur:magnetic_alloy_ingot",
+      "count": 2
+    }
+  ],
+  "energy": 18000,
+  "time": 100,
+  "input": {
+    "ingredient": {
+      "item": "kontur:cobalt_ingot"
+    },
+    "count": 2
+  },
+  "input_b": {
+    "ingredient": {
+      "item": "kontur:nickel_ingot"
+    },
+    "count": 1
+  }
+}

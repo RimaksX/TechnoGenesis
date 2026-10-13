@@ -492,5 +492,13 @@
   "tooltip.kontur.stage.gas": "Газы",
   "block.kontur.gas_pipe": "Газовая труба",
   "block.kontur.gas_pipe_heavy": "Тяжёлая газовая труба",
-  "block.kontur.hydrogen_generator": "Водородный генератор"
+  "block.kontur.hydrogen_generator": "Водородный генератор",
+  "block.kontur.alloy_furnace": "Сплавная печь",
+  "tooltip.kontur.stage.alloy": "Сплавы",
+  "item.kontur.steel_ingot": "Стальной слиток",
+  "item.kontur.stainless_steel_ingot": "Слиток нержавеющей стали",
+  "item.kontur.tungsten_carbide_ingot": "Слиток твёрдого сплава",
+  "item.kontur.titanium_alloy_ingot": "Слиток титанового сплава",
+  "item.kontur.magnetic_alloy_ingot": "Слиток магнитного сплава",
+  "item.kontur.nichrome_ingot": "Слиток нихрома"
 }

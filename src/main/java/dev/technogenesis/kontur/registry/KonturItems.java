@@ -36,6 +36,12 @@ public final class KonturItems {
             "circuit_blank", "circuit_board", "control_circuit", "processor_blank", "processor", "plasma_controller",
             "winding", "magnet", "power_module", "gear_drive", "precision_drive", "valve_block", "heat_plate"
     };
+    /** Слитки сплавов: делаются в сплавной печи из двух исходных материалов. */
+    public static final java.util.List<DeferredItem<Item>> ALLOYS = new java.util.ArrayList<>();
+    public static final String[] ALLOY_IDS = {
+            "steel_ingot", "stainless_steel_ingot", "tungsten_carbide_ingot", "titanium_alloy_ingot",
+            "magnetic_alloy_ingot", "nichrome_ingot"
+    };
     public static final DeferredItem<Item> WRENCH = ITEMS.register("wrench", () -> new WrenchItem(new Item.Properties()));
     public static final DeferredItem<Item> GANGUE = simple("gangue");
     public static final DeferredItem<Item> ASH = simple("ash");
@@ -47,6 +53,9 @@ public final class KonturItems {
     public static final DeferredItem<Item> GRAPHITE = simple("graphite");
 
     static {
+        for (String id : ALLOY_IDS) {
+            ALLOYS.add(simple(id));
+        }
         for (String id : COMPONENT_IDS) {
             COMPONENTS.add(ITEMS.register(id, () -> new dev.technogenesis.kontur.item.ComponentItem(new Item.Properties(), id)));
         }

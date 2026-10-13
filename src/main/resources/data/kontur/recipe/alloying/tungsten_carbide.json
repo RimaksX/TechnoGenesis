@@ -1,0 +1,23 @@
+{
+  "type": "kontur:alloying",
+  "results": [
+    {
+      "id": "kontur:tungsten_carbide_ingot",
+      "count": 2
+    }
+  ],
+  "energy": 24000,
+  "time": 100,
+  "input": {
+    "ingredient": {
+      "item": "kontur:tungsten_ingot"
+    },
+    "count": 2
+  },
+  "input_b": {
+    "ingredient": {
+      "item": "kontur:graphite"
+    },
+    "count": 1
+  }
+}

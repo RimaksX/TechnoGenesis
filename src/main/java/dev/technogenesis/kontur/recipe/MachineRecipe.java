@@ -98,16 +98,20 @@ public class MachineRecipe implements Recipe<MachineRecipeInput> {
 
     private final KonturRecipes.Kind kind;
     private final Optional<ItemInput> input;
+    /** Второй предмет на входе (сплавы): кладётся во второй входной слот. */
+    private final Optional<ItemInput> inputB;
     private final Optional<FluidInput> fluidInput;
     private final List<ChanceResult> results;
     private final List<FluidOutput> fluidResults;
     private final int energy;
     private final int time;
 
-    public MachineRecipe(KonturRecipes.Kind kind, Optional<ItemInput> input, Optional<FluidInput> fluidInput,
-                         List<ChanceResult> results, List<FluidOutput> fluidResults, int energy, int time) {
+    public MachineRecipe(KonturRecipes.Kind kind, Optional<ItemInput> input, Optional<ItemInput> inputB,
+                         Optional<FluidInput> fluidInput, List<ChanceResult> results, List<FluidOutput> fluidResults,
+                         int energy, int time) {
         this.kind = kind;
         this.input = input;
+        this.inputB = inputB;
         this.fluidInput = fluidInput;
         this.results = results;
         this.fluidResults = fluidResults;
@@ -118,27 +122,46 @@ public class MachineRecipe implements Recipe<MachineRecipeInput> {
     public static MapCodec<MachineRecipe> codec(KonturRecipes.Kind kind) {
         return RecordCodecBuilder.mapCodec(i -> i.group(
                 ItemInput.CODEC.optionalFieldOf("input").forGetter(r -> r.input),
+                ItemInput.CODEC.optionalFieldOf("input_b").forGetter(r -> r.inputB),
                 FluidInput.CODEC.optionalFieldOf("fluid_input").forGetter(r -> r.fluidInput),
                 ChanceResult.CODEC.listOf().fieldOf("results").forGetter(r -> r.results),
                 FluidOutput.CODEC.listOf().optionalFieldOf("fluid_results", List.of()).forGetter(r -> r.fluidResults),
                 ExtraCodecs.NON_NEGATIVE_INT.fieldOf("energy").forGetter(r -> r.energy),
                 ExtraCodecs.POSITIVE_INT.fieldOf("time").forGetter(r -> r.time)
-        ).apply(i, (in, fin, res, fres, e, t) -> new MachineRecipe(kind, in, fin, res, fres, e, t)));
+        ).apply(i, (in, inB, fin, res, fres, e, t) -> new MachineRecipe(kind, in, inB, fin, res, fres, e, t)));
     }
 
     public static StreamCodec<RegistryFriendlyByteBuf, MachineRecipe> streamCodec(KonturRecipes.Kind kind) {
-        return StreamCodec.composite(
-                ByteBufCodecs.optional(ItemInput.STREAM_CODEC), r -> r.input,
-                ByteBufCodecs.optional(FluidInput.STREAM_CODEC), r -> r.fluidInput,
-                ChanceResult.STREAM_CODEC.apply(ByteBufCodecs.list()), r -> r.results,
-                FluidOutput.STREAM_CODEC.apply(ByteBufCodecs.list()), r -> r.fluidResults,
-                ByteBufCodecs.VAR_INT, r -> r.energy,
-                ByteBufCodecs.VAR_INT, r -> r.time,
-                (in, fin, res, fres, e, t) -> new MachineRecipe(kind, in, fin, res, fres, e, t));
+        StreamCodec<RegistryFriendlyByteBuf, Optional<ItemInput>> item = ByteBufCodecs.optional(ItemInput.STREAM_CODEC);
+        StreamCodec<RegistryFriendlyByteBuf, Optional<FluidInput>> fluid = ByteBufCodecs.optional(FluidInput.STREAM_CODEC);
+        StreamCodec<RegistryFriendlyByteBuf, List<ChanceResult>> res = ChanceResult.STREAM_CODEC.apply(ByteBufCodecs.list());
+        StreamCodec<RegistryFriendlyByteBuf, List<FluidOutput>> fres = FluidOutput.STREAM_CODEC.apply(ByteBufCodecs.list());
+        return StreamCodec.of((buf, r) -> {
+            item.encode(buf, r.input);
+            item.encode(buf, r.inputB);
+            fluid.encode(buf, r.fluidInput);
+            res.encode(buf, r.results);
+            fres.encode(buf, r.fluidResults);
+            ByteBufCodecs.VAR_INT.encode(buf, r.energy);
+            ByteBufCodecs.VAR_INT.encode(buf, r.time);
+        }, buf -> {
+            Optional<ItemInput> in = item.decode(buf);
+            Optional<ItemInput> inB = item.decode(buf);
+            Optional<FluidInput> fin = fluid.decode(buf);
+            List<ChanceResult> results = res.decode(buf);
+            List<FluidOutput> fluidResults = fres.decode(buf);
+            int energy = ByteBufCodecs.VAR_INT.decode(buf);
+            int time = ByteBufCodecs.VAR_INT.decode(buf);
+            return new MachineRecipe(kind, in, inB, fin, results, fluidResults, energy, time);
+        });
     }
 
     public Optional<ItemInput> input() {
         return input;
+    }
+
+    public Optional<ItemInput> inputB() {
+        return inputB;
     }
 
     public Optional<FluidInput> fluidInput() {
@@ -175,6 +198,9 @@ public class MachineRecipe implements Recipe<MachineRecipeInput> {
     @Override
     public boolean matches(MachineRecipeInput in, Level level) {
         if (input.isPresent() && !(input.get().test(in.stack()) && in.stack().getCount() >= input.get().count())) {
+            return false;
+        }
+        if (inputB.isPresent() && !(inputB.get().test(in.stackB()) && in.stackB().getCount() >= inputB.get().count())) {
             return false;
         }
         return fluidInput.map(f -> f.test(in.fluid())).orElse(true);

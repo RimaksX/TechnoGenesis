@@ -8,13 +8,13 @@
   ],
   "key": {
     "T": {
-      "item": "kontur:tungsten_ingot"
+      "item": "kontur:tungsten_carbide_ingot"
     },
     "M": {
-      "item": "kontur:molybdenum_ingot"
+      "item": "kontur:nichrome_ingot"
     },
     "K": {
-      "item": "kontur:titanium_ingot"
+      "item": "kontur:titanium_alloy_ingot"
     }
   },
   "result": {

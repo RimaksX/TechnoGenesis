@@ -5,7 +5,7 @@ import java.util.List;
 
 /** Описание машины: слоты, баки, энергия и расположение элементов в интерфейсе. Общее для сервера и клиента. */
 public final class MachineDefinition {
-    public enum SlotRole { INPUT, OUTPUT, FUEL, MODULE, COATING, COOLER }
+    public enum SlotRole { INPUT, INPUT_B, OUTPUT, FUEL, MODULE, COATING, COOLER }
 
     public enum EnergyKind { CONSUMER, GENERATOR, STORAGE }
 
@@ -185,6 +185,16 @@ public final class MachineDefinition {
 
     public boolean hasFlame() {
         return flameX >= 0;
+    }
+
+    /** Индекс второго входного слота (сплавная печь) или -1. */
+    public int inputSlotB() {
+        for (int i = 0; i < slots.size(); i++) {
+            if (slots.get(i).role() == SlotRole.INPUT_B) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     /** Индекс входного слота или -1. */

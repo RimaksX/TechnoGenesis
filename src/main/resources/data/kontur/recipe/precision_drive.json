@@ -3,7 +3,7 @@
   "category": "misc",
   "pattern": [
     "MDM",
-    "CKC",
+    "SKS",
     "MDM"
   ],
   "key": {
@@ -13,8 +13,8 @@
     "D": {
       "item": "kontur:gear_drive"
     },
-    "C": {
-      "item": "kontur:chromium_ingot"
+    "S": {
+      "item": "kontur:stainless_steel_ingot"
     },
     "K": {
       "item": "kontur:circuit_board"

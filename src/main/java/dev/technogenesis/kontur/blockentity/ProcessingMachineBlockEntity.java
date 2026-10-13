@@ -22,6 +22,7 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction;
  */
 public class ProcessingMachineBlockEntity extends MachineBlockEntity {
     private final int inputSlot;
+    private final int inputSlotB;
     private final int[] outputSlots;
     private final int inputTank;
     private final int[] outputTanks;
@@ -30,6 +31,7 @@ public class ProcessingMachineBlockEntity extends MachineBlockEntity {
     public ProcessingMachineBlockEntity(MachineKind kind, BlockPos pos, BlockState state) {
         super(kind, pos, state);
         this.inputSlot = def.inputSlot();
+        this.inputSlotB = def.inputSlotB();
         this.outputSlots = def.outputSlots();
         this.inputTank = def.inputTank();
         this.outputTanks = new int[def.outputTankCount()];
@@ -63,9 +65,11 @@ public class ProcessingMachineBlockEntity extends MachineBlockEntity {
             return true;
         }
         checkMemo();
-        return itemMemo.computeIfAbsent(ItemStack.hashItemAndComponents(stack), k -> {
+        boolean second = slot == inputSlotB && inputSlotB >= 0;
+        return itemMemo.computeIfAbsent(ItemStack.hashItemAndComponents(stack) * 2 + (second ? 1 : 0), k -> {
             for (RecipeHolder<MachineRecipe> h : level.getRecipeManager().getAllRecipesFor(recipeType())) {
-                if (h.value().input().map(in -> in.test(stack)).orElse(false)) {
+                var wanted = second ? h.value().inputB() : h.value().input();
+                if (wanted.map(in -> in.test(stack)).orElse(false)) {
                     return true;
                 }
             }
@@ -107,13 +111,15 @@ public class ProcessingMachineBlockEntity extends MachineBlockEntity {
 
     private static int inputSignature(MachineRecipeInput input) {
         int h = ItemStack.hashItemAndComponents(input.stack()) * 31 + input.stack().getCount();
+        h = h * 31 + ItemStack.hashItemAndComponents(input.stackB()) * 7 + input.stackB().getCount();
         return h * 31 + input.fluid().getFluid().hashCode() * 17 + input.fluid().getAmount();
     }
 
     private MachineRecipeInput currentInput() {
         ItemStack in = inputSlot >= 0 ? inventory.getStackInSlot(inputSlot) : ItemStack.EMPTY;
+        ItemStack inB = inputSlotB >= 0 ? inventory.getStackInSlot(inputSlotB) : ItemStack.EMPTY;
         FluidStack fluid = inputTank >= 0 ? tanks[inputTank].getFluid() : FluidStack.EMPTY;
-        return new MachineRecipeInput(in, fluid);
+        return new MachineRecipeInput(in, inB, fluid);
     }
 
     @Override
@@ -199,6 +205,7 @@ public class ProcessingMachineBlockEntity extends MachineBlockEntity {
 
     private void finish(MachineRecipe recipe) {
         recipe.input().ifPresent(in -> inventory.extractItem(inputSlot, in.count(), false));
+        recipe.inputB().ifPresent(in -> inventory.extractItem(inputSlotB, in.count(), false));
         recipe.fluidInput().ifPresent(f -> tanks[inputTank].drain(f.amount(), FluidAction.EXECUTE));
         List<MachineRecipe.ChanceResult> results = recipe.results();
         for (int i = 0; i < results.size() && i < outputSlots.length; i++) {

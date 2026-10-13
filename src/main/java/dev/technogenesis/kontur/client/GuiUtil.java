@@ -49,7 +49,7 @@ public final class GuiUtil {
     /** Слот: рамка 18x18 вокруг предмета 16x16, который стоит в точке (x, y). Вход - бирюзовая, выход - янтарная. */
     public static void slot(GuiGraphics g, int x, int y, MachineDefinition.SlotRole role) {
         ResourceLocation sprite = role == null ? SLOT : switch (role) {
-            case INPUT, FUEL -> SLOT_IN;
+            case INPUT, INPUT_B, FUEL -> SLOT_IN;
             case OUTPUT -> SLOT_OUT;
             case MODULE, COATING, COOLER -> SLOT_MODULE;
         };

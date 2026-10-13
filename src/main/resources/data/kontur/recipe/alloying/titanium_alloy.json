@@ -1,0 +1,23 @@
+{
+  "type": "kontur:alloying",
+  "results": [
+    {
+      "id": "kontur:titanium_alloy_ingot",
+      "count": 2
+    }
+  ],
+  "energy": 20000,
+  "time": 100,
+  "input": {
+    "ingredient": {
+      "item": "kontur:titanium_ingot"
+    },
+    "count": 2
+  },
+  "input_b": {
+    "ingredient": {
+      "item": "kontur:aluminum_ingot"
+    },
+    "count": 1
+  }
+}

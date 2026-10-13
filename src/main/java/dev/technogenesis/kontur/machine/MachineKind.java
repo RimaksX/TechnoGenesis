@@ -110,6 +110,12 @@ public enum MachineKind implements StringRepresentable {
             .tank(36, 20, 4000, false).slot(72, 45, SlotRole.OUTPUT)
             .energy(EnergyKind.CONSUMER, 20000, 1200, 0, 200).arrow(66, 30).module(-20, 41).cooler(-20, 63).build()),
 
+    // ---- сплавы
+    // Сплавная печь: 240 FE/t, два материала (во входные слоты A и B) -> слиток сплава
+    ALLOY_FURNACE("alloy_furnace", true, false, KonturRecipes.ALLOYING, MachineDefinition.builder()
+            .slot(36, 29, SlotRole.INPUT).slot(36, 47, SlotRole.INPUT_B).slot(106, 38, SlotRole.OUTPUT)
+            .energy(EnergyKind.CONSUMER, 24000, 1440, 0, 240).arrow(66, 42).module(-20, 41).cooler(-20, 63).build()),
+
     // ---- газы
     // Разделитель воды: 192 FE/t, вода -> водород и кислород (два выходных бака, газы идут по газовым трубам)
     WATER_SPLITTER("water_splitter", true, false, KonturRecipes.WATER_SPLITTING, MachineDefinition.builder()
@@ -196,6 +202,7 @@ public enum MachineKind implements StringRepresentable {
             case ATTRITOR, STEAM_GENERATOR, AUTOCLAVE -> "x8";
             case PLASMA_GENERATOR, PLASMA_FURNACE, VACUUM_CASTER -> "x12";
             case WATER_SPLITTER -> "gas";
+            case ALLOY_FURNACE -> "alloy";
             case MINER -> "mining";
             default -> "power";
         };
@@ -206,7 +213,7 @@ public enum MachineKind implements StringRepresentable {
         return switch (this) {
             case WASHING_DRUM, JAW_CRUSHER, MAGNETIC_SEPARATOR, TAILINGS_MILL, STEAM_TURBINE -> MultiLayout.of(2, 1, 1);
             case SOLID_FUEL_GENERATOR, HYDROGEN_GENERATOR -> MultiLayout.of(1, 1, 2);
-            case SETTLING_TANK -> MultiLayout.of(2, 2, 1);
+            case SETTLING_TANK, ALLOY_FURNACE -> MultiLayout.of(2, 2, 1);
             case STEAM_GENERATOR -> MultiLayout.of(1, 1, 2);
             case ACID_PLANT, LEACHING_REACTOR, PRECIPITATION_REACTOR, ATTRITOR, PLASMA_GENERATOR, WATER_SPLITTER ->
                     MultiLayout.of(2, 2, 2);
