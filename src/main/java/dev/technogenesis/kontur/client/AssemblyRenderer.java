@@ -95,10 +95,11 @@ public final class AssemblyRenderer {
         var renderer = Minecraft.getInstance().getBlockRenderer().getModelRenderer();
         BakedModel missing = Minecraft.getInstance().getModelManager().getModel(AssemblyModels.GHOST);
         BakedModel wrong = Minecraft.getInstance().getModelManager().getModel(AssemblyModels.GHOST_WRONG);
+        BakedModel portGhost = Minecraft.getInstance().getModelManager().getModel(AssemblyModels.GHOST_PORT);
         for (AssemblyShape.Gap gap : cache.gaps()) {
             stack.pushPose();
             stack.translate(gap.pos().getX() - origin.getX(), gap.pos().getY() - origin.getY(), gap.pos().getZ() - origin.getZ());
-            renderer.renderModel(stack.last(), vc, null, gap.wrong() ? wrong : missing, 1f, 1f, 1f,
+            renderer.renderModel(stack.last(), vc, null, gap.wrong() ? wrong : gap.port() ? portGhost : missing, 1f, 1f, 1f,
                     LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY);
             stack.popPose();
         }

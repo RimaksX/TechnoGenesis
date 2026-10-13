@@ -30,6 +30,7 @@ public final class AssemblyModels {
     private static final Map<String, List<Part>> PARTS = new HashMap<>();
     public static final ModelResourceLocation GHOST = standalone("block/assembly_ghost");
     public static final ModelResourceLocation GHOST_WRONG = standalone("block/assembly_ghost_wrong");
+    public static final ModelResourceLocation GHOST_PORT = standalone("block/assembly_ghost_port");
 
     private AssemblyModels() {
     }
@@ -42,6 +43,7 @@ public final class AssemblyModels {
     public static void register(ModelEvent.RegisterAdditional event) {
         event.register(GHOST);
         event.register(GHOST_WRONG);
+        event.register(GHOST_PORT);
         PARTS.clear();
         for (AssemblyShape shape : AssemblyShape.ALL) {
             List<Part> parts = new ArrayList<>();

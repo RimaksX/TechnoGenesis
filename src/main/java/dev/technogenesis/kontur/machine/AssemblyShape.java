@@ -19,18 +19,27 @@ import net.minecraft.world.level.block.state.BlockState;
  * рисует вместо них готовую цельную модель машины.
  */
 public final class AssemblyShape {
-    /** Термоядерный реактор: коробка 5 x 5 x 4, камера 3 x 3 x 2. */
+    /**
+     * Термоядерный реактор: коробка 5 x 5 x 4, камера 3 x 3 x 2. Шесть портов на строго заданных местах:
+     * питание, вода, пар, водород, плазма, литиевый стержень.
+     */
     public static final AssemblyShape FUSION = new AssemblyShape("fusion_reactor", 2, 5, 1, 2, 1, 1, 3, 0, 1,
-            () -> KonturBlocks.FUSION_CASING.get(), null);
-    /** Доменная печь: башня 5 x 5 x 6, шахта 3 x 3 x 4. */
+            () -> KonturBlocks.FUSION_CASING.get(), null,
+            new int[][]{{-1, 0, -1}, {2, 2, -1}, {0, 4, -1}, {-2, 2, 0}, {2, 2, 0}, {0, 2, 2}});
+    /**
+     * Доменная печь: башня 5 x 5 x 6, шахта 3 x 3 x 4. Четыре порта: питание, летка (выход), газ (кислород), загрузка сверху.
+     */
     public static final AssemblyShape BLAST = new AssemblyShape("blast_furnace", 2, 5, 1, 4, 1, 1, 3, 0, 3,
-            () -> KonturBlocks.FURNACE_CASING.get(), null);
-    /** Паротурбинный зал: коробка 3 x 7 x 3, в тоннеле 1 x 5 x 1 стоят блоки ротора. */
+            () -> KonturBlocks.FURNACE_CASING.get(), null,
+            new int[][]{{-2, 0, -1}, {0, 0, -1}, {1, 4, -1}, {0, 2, 4}});
+    /** Паротурбинный зал: коробка 3 x 7 x 3, в тоннеле 1 x 5 x 1 стоят блоки ротора. Три порта: пар, конденсат, ток. */
     public static final AssemblyShape TURBINE = new AssemblyShape("turbine_hall", 1, 7, 1, 1, 0, 1, 5, 0, 0,
-            () -> KonturBlocks.TURBINE_CASING.get(), () -> KonturBlocks.TURBINE_ROTOR.get());
-    /** Градирня: башня 3 x 3 x 6, шахта 1 x 1 x 4. */
-    public static final AssemblyShape TOWER = new AssemblyShape("cooling_tower", 1, 3, 1, 4, 0, 1, 1, 0, 3,
-            () -> KonturBlocks.COOLER_CASING.get(), null);
+            () -> KonturBlocks.TURBINE_CASING.get(), () -> KonturBlocks.TURBINE_ROTOR.get(),
+            new int[][]{{0, 1, 1}, {1, 3, -1}, {0, 6, 0}});
+    /** Градирня: секция 5 x 3 x 3, воздушный канал 3 x 1 x 1. Три порта: конденсат, вода, питание. */
+    public static final AssemblyShape TOWER = new AssemblyShape("cooling_tower", 2, 3, 1, 1, 1, 1, 1, 0, 0,
+            () -> KonturBlocks.COOLER_CASING.get(), null,
+            new int[][]{{-2, 1, -1}, {2, 1, -1}, {1, 0, -1}});
 
     public static final List<AssemblyShape> ALL = List.of(FUSION, BLAST, TURBINE, TOWER);
 
@@ -46,9 +55,11 @@ public final class AssemblyShape {
     private final int innerH1;
     private final Supplier<Block> casing;
     private final Supplier<Block> interiorBlock;
+    private final int[][] portSlots;
 
     private AssemblyShape(String id, int halfWidth, int depth, int below, int above, int innerHalf, int innerB0,
-                          int innerB1, int innerH0, int innerH1, Supplier<Block> casing, Supplier<Block> interiorBlock) {
+                          int innerB1, int innerH0, int innerH1, Supplier<Block> casing, Supplier<Block> interiorBlock,
+                          int[][] portSlots) {
         this.id = id;
         this.halfWidth = halfWidth;
         this.depth = depth;
@@ -61,6 +72,7 @@ public final class AssemblyShape {
         this.innerH1 = innerH1;
         this.casing = casing;
         this.interiorBlock = interiorBlock;
+        this.portSlots = portSlots;
     }
 
     /** status - null, если машина собрана; problems - число неверных блоков; first - смещение первой ошибки {a, b, h}. */
@@ -71,11 +83,25 @@ public final class AssemblyShape {
     }
 
     /** Позиция, где схема нарушена: wrong - стоит чужой блок (а не просто пусто). */
-    public record Gap(BlockPos pos, boolean wrong) {
+    public record Gap(BlockPos pos, boolean wrong, boolean port) {
     }
 
     public static BlockPos at(BlockPos controller, Direction facing, int a, int b, int h) {
         return controller.relative(facing.getClockWise(), a).relative(facing.getOpposite(), b).above(h);
+    }
+
+    /** Место порта: на этих позициях стенки стоит только порт, на остальных только корпус. */
+    public boolean isPortSlot(int a, int b, int h) {
+        for (int[] s : portSlots) {
+            if (s[0] == a && s[1] == b && s[2] == h) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public int portCount() {
+        return portSlots.length;
     }
 
     private boolean interior(int a, int b, int h) {
@@ -91,11 +117,11 @@ public final class AssemblyShape {
     }
 
     /** Подходит ли блок в эту позицию схемы (в состоянии любой сборки). */
-    private boolean fits(BlockState state, boolean inside, Block shell) {
+    private boolean fits(BlockState state, boolean inside, Block shell, boolean slot) {
         if (inside) {
             return interiorBlock == null ? state.isAir() : state.is(interiorBlock.get());
         }
-        return state.is(shell) || state.is(KonturBlocks.ASSEMBLY_PORT.get());
+        return slot ? state.is(KonturBlocks.ASSEMBLY_PORT.get()) : state.is(shell);
     }
 
     public Result check(Level level, BlockPos controller, Direction facing) {
@@ -116,7 +142,7 @@ public final class AssemblyShape {
                     }
                     BlockState state = level.getBlockState(p);
                     boolean inside = interior(a, b, h);
-                    boolean ok = fits(state, inside, shell);
+                    boolean ok = fits(state, inside, shell, isPortSlot(a, b, h));
                     if (ok && state.is(KonturBlocks.ASSEMBLY_PORT.get())) {
                         ports.add(p);
                     }
@@ -153,16 +179,17 @@ public final class AssemblyShape {
                         continue;
                     }
                     BlockState state = level.getBlockState(p);
-                    if (!fits(state, interior(a, b, h), shell)) {
+                    boolean slot = isPortSlot(a, b, h);
+                    if (!fits(state, interior(a, b, h), shell, slot)) {
                         boolean hole = state.isAir() || state.canBeReplaced();
                         if (interior(a, b, h) && interiorBlock == null && !state.isAir()) {
-                            out.add(new Gap(p, true));
+                            out.add(new Gap(p, true, false));
                         } else if (hole) {
                             if (!interior(a, b, h) || interiorBlock != null) {
-                                out.add(new Gap(p, false));
+                                out.add(new Gap(p, false, slot));
                             }
                         } else {
-                            out.add(new Gap(p, true));
+                            out.add(new Gap(p, true, slot));
                         }
                     }
                 }
