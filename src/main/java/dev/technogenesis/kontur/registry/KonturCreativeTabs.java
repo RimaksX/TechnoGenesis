@@ -50,7 +50,7 @@ public final class KonturCreativeTabs {
                         out.accept(KonturItems.GRAPHITE);
                         out.accept(KonturBlocks.ASH_BLOCK);
                         out.accept(KonturBlocks.AGGREGATE_BLOCK);
-                        out.accept(KonturItems.MACHINE_FRAME);
+                        out.accept(KonturBlocks.MACHINE_FRAME);
                         out.accept(KonturItems.WRENCH);
                         for (dev.technogenesis.kontur.machine.ModuleTier tier : dev.technogenesis.kontur.machine.ModuleTier.values()) {
                             out.accept(KonturItems.MODULES.get(tier));

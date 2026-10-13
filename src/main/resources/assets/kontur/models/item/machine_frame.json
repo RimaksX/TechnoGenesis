@@ -1,6 +1,3 @@
 {
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "kontur:item/machine_frame"
-  }
+  "parent": "kontur:block/machine_frame"
 }

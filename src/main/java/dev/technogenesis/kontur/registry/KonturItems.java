@@ -39,7 +39,6 @@ public final class KonturItems {
     public static final DeferredItem<Item> SULFUR_POWDER = simple("sulfur_powder");
     public static final DeferredItem<Item> CRUSHED_SPODUMENE = simple("crushed_spodumene");
     public static final DeferredItem<Item> GRAPHITE = simple("graphite");
-    public static final DeferredItem<Item> MACHINE_FRAME = simple("machine_frame");
 
     static {
         for (Mineral mineral : Mineral.values()) {

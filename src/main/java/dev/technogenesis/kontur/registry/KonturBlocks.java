@@ -40,6 +40,11 @@ public final class KonturBlocks {
             BlockBehaviour.Properties.of().mapColor(MapColor.STONE).strength(1.5f, 6.0f)
                     .sound(SoundType.STONE).requiresCorrectToolForDrops()));
 
+    /** Пустая рама механизма: каркас без начинки, используется в рецептах машин (прозрачна, как рама на моделях машин). */
+    public static final DeferredBlock<Block> MACHINE_FRAME = block("machine_frame", () -> new Block(
+            BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(3.0f, 6.0f).sound(SoundType.METAL)
+                    .requiresCorrectToolForDrops().noOcclusion()));
+
     public static final Map<MachineKind, DeferredBlock<MachineBlock>> MACHINES = new EnumMap<>(MachineKind.class);
     public static final DeferredBlock<MachineBlock> JAW_CRUSHER = machine(MachineKind.JAW_CRUSHER);
     public static final DeferredBlock<MachineBlock> WASHING_DRUM = machine(MachineKind.WASHING_DRUM);
