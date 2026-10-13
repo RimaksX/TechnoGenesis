@@ -1,0 +1,34 @@
+{
+  "variants": {
+    "facing=north,active=false": {
+      "model": "kontur:block/blast_furnace"
+    },
+    "facing=north,active=true": {
+      "model": "kontur:block/blast_furnace_on"
+    },
+    "facing=east,active=false": {
+      "model": "kontur:block/blast_furnace",
+      "y": 90
+    },
+    "facing=east,active=true": {
+      "model": "kontur:block/blast_furnace_on",
+      "y": 90
+    },
+    "facing=south,active=false": {
+      "model": "kontur:block/blast_furnace",
+      "y": 180
+    },
+    "facing=south,active=true": {
+      "model": "kontur:block/blast_furnace_on",
+      "y": 180
+    },
+    "facing=west,active=false": {
+      "model": "kontur:block/blast_furnace",
+      "y": 270
+    },
+    "facing=west,active=true": {
+      "model": "kontur:block/blast_furnace_on",
+      "y": 270
+    }
+  }
+}

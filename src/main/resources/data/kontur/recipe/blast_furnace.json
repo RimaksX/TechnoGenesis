@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "CHC",
+    "DFD",
+    "VKV"
+  ],
+  "key": {
+    "C": {
+      "item": "kontur:furnace_casing"
+    },
+    "H": {
+      "item": "kontur:heat_plate"
+    },
+    "D": {
+      "item": "kontur:gear_drive"
+    },
+    "F": {
+      "item": "kontur:machine_frame"
+    },
+    "V": {
+      "item": "kontur:valve_block"
+    },
+    "K": {
+      "item": "kontur:control_circuit"
+    }
+  },
+  "result": {
+    "id": "kontur:blast_furnace",
+    "count": 1
+  }
+}

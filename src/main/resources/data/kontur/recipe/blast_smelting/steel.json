@@ -1,0 +1,29 @@
+{
+  "type": "kontur:blast_smelting",
+  "results": [
+    {
+      "id": "kontur:steel_ingot",
+      "count": 10
+    }
+  ],
+  "energy": 48000,
+  "time": 100,
+  "input": {
+    "ingredient": {
+      "item": "minecraft:iron_ingot"
+    },
+    "count": 8
+  },
+  "input_b": {
+    "ingredient": {
+      "item": "kontur:graphite"
+    },
+    "count": 2
+  },
+  "fluid_input": {
+    "fluids": [
+      "kontur:oxygen"
+    ],
+    "amount": 500
+  }
+}

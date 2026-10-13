@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "SVS",
+    "WCW",
+    "SSS"
+  ],
+  "key": {
+    "S": {
+      "item": "kontur:stainless_steel_ingot"
+    },
+    "V": {
+      "item": "kontur:valve_block"
+    },
+    "W": {
+      "item": "kontur:winding"
+    },
+    "C": {
+      "item": "kontur:control_circuit"
+    }
+  },
+  "result": {
+    "id": "kontur:assembly_port",
+    "count": 2
+  }
+}

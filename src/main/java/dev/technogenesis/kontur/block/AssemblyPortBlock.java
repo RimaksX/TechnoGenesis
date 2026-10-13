@@ -1,7 +1,7 @@
 package dev.technogenesis.kontur.block;
 
 import com.mojang.serialization.MapCodec;
-import dev.technogenesis.kontur.blockentity.FusionPortBlockEntity;
+import dev.technogenesis.kontur.blockentity.AssemblyPortBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.RenderShape;
@@ -10,10 +10,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
 /** Порт корпуса термоядерного реактора: стоит в любом месте стенки, подключает трубы и кабели к контроллеру. */
-public class FusionPortBlock extends BaseEntityBlock {
-    public static final MapCodec<FusionPortBlock> CODEC = simpleCodec(FusionPortBlock::new);
+public class AssemblyPortBlock extends BaseEntityBlock {
+    public static final MapCodec<AssemblyPortBlock> CODEC = simpleCodec(AssemblyPortBlock::new);
 
-    public FusionPortBlock(Properties properties) {
+    public AssemblyPortBlock(Properties properties) {
         super(properties);
     }
 
@@ -30,6 +30,6 @@ public class FusionPortBlock extends BaseEntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new FusionPortBlockEntity(pos, state);
+        return new AssemblyPortBlockEntity(pos, state);
     }
 }

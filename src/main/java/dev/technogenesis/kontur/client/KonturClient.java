@@ -41,6 +41,7 @@ public final class KonturClient {
     @SubscribeEvent
     public static void registerExtraModels(ModelEvent.RegisterAdditional event) {
         event.register(WindBladesRenderer.BLADES);
+        event.register(FusionPlasmaRenderer.PLASMA);
         MinerRenderer.models().forEach(event::register);
     }
 

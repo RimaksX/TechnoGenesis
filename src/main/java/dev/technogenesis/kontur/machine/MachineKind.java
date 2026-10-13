@@ -127,11 +127,17 @@ public enum MachineKind implements StringRepresentable {
             .tank(79, 20, 4000, false).module(-20, 41).cooler(-20, 63)
             .energy(EnergyKind.GENERATOR, 120000, 0, 1920, 480).build()),
 
-    // ---- термоядерная энергетика
-    // Термоядерный реактор: собирается игроком из корпуса и портов; 8000 FE/t за 40 мБ водорода и 20 мБ плазмы в тик
+    // ---- собираемые игроком машины
+    // Термоядерный реактор: водород, плазма, вода и литиевый стержень -> 8000 FE/t
     FUSION_REACTOR("fusion_reactor", true, false, null, MachineDefinition.builder()
-            .tank(50, 20, 16000, false).tank(86, 20, 16000, false)
+            .tank(22, 20, 16000, false).tank(46, 20, 16000, false).tank(70, 20, 16000, false)
+            .slot(112, 38, SlotRole.INPUT)
             .energy(EnergyKind.GENERATOR, 4_000_000, 0, 24576, 8000).build()),
+    // Доменная печь: 8 железа и 2 графита с кислородом дают 10 стали за цикл (480 FE/t)
+    BLAST_FURNACE("blast_furnace", true, false, KonturRecipes.BLAST_SMELTING, MachineDefinition.builder()
+            .tank(14, 20, 8000, false).slot(44, 29, SlotRole.INPUT).slot(44, 47, SlotRole.INPUT_B)
+            .slot(112, 38, SlotRole.OUTPUT)
+            .energy(EnergyKind.CONSUMER, 48000, 2880, 0, 480).arrow(72, 42).module(-20, 41).cooler(-20, 63).build()),
 
     // ---- энергетика: возобновляемые источники и паровая турбина
     // Ветряной ротор: 24..96 FE/t, растёт с высотой и в непогоду; нужны открытое небо и свободные бока
@@ -210,8 +216,18 @@ public enum MachineKind implements StringRepresentable {
             case WATER_SPLITTER -> "gas";
             case ALLOY_FURNACE -> "alloy";
             case FUSION_REACTOR -> "fusion";
+            case BLAST_FURNACE -> "alloy";
             case MINER -> "mining";
             default -> "power";
+        };
+    }
+
+    /** Схема машины, которую игрок собирает сам; null у остальных. */
+    public AssemblyShape shape() {
+        return switch (this) {
+            case FUSION_REACTOR -> AssemblyShape.FUSION;
+            case BLAST_FURNACE -> AssemblyShape.BLAST;
+            default -> null;
         };
     }
 

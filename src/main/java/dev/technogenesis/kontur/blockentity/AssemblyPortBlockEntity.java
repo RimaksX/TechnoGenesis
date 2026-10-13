@@ -8,15 +8,16 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.items.IItemHandler;
 import org.jetbrains.annotations.Nullable;
 
-/** Порт корпуса реактора: пробрасывает баки и энергию контроллера, если реактор собран. Адрес контроллера запоминает при проверке схемы. */
-public class FusionPortBlockEntity extends BlockEntity {
+/** Порт корпуса: пробрасывает предметы, баки и энергию контроллера, если машина собрана. Адрес контроллера запоминает при проверке схемы. */
+public class AssemblyPortBlockEntity extends BlockEntity {
     @Nullable
     private BlockPos controller;
 
-    public FusionPortBlockEntity(BlockPos pos, BlockState state) {
-        super(KonturBlockEntities.FUSION_PORT.get(), pos, state);
+    public AssemblyPortBlockEntity(BlockPos pos, BlockState state) {
+        super(KonturBlockEntities.ASSEMBLY_PORT.get(), pos, state);
     }
 
     public void setController(BlockPos pos) {
@@ -27,23 +28,30 @@ public class FusionPortBlockEntity extends BlockEntity {
     }
 
     @Nullable
-    private FusionReactorBlockEntity reactor() {
+    private MachineBlockEntity machine() {
         if (level == null || controller == null || !level.isLoaded(controller)) {
             return null;
         }
-        return level.getBlockEntity(controller) instanceof FusionReactorBlockEntity r && r.isFormed() ? r : null;
+        return level.getBlockEntity(controller) instanceof MachineBlockEntity m
+                && m instanceof AssemblyController c && c.isFormed() ? m : null;
+    }
+
+    @Nullable
+    public IItemHandler itemHandler() {
+        MachineBlockEntity m = machine();
+        return m == null ? null : m.getItemHandler(null);
     }
 
     @Nullable
     public IFluidHandler fluidHandler() {
-        FusionReactorBlockEntity r = reactor();
-        return r == null ? null : r.getFluidHandler(null);
+        MachineBlockEntity m = machine();
+        return m == null ? null : m.getFluidHandler(null);
     }
 
     @Nullable
     public IEnergyStorage energyStorage() {
-        FusionReactorBlockEntity r = reactor();
-        return r == null ? null : r.getEnergyStorage(null);
+        MachineBlockEntity m = machine();
+        return m == null ? null : m.getEnergyStorage(null);
     }
 
     @Override

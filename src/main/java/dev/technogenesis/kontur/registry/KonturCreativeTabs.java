@@ -50,6 +50,7 @@ public final class KonturCreativeTabs {
                         out.accept(KonturItems.GRAPHITE);
                         out.accept(KonturBlocks.ASH_BLOCK);
                         out.accept(KonturBlocks.AGGREGATE_BLOCK);
+                        out.accept(KonturItems.LITHIUM_ROD);
                         for (var alloy : KonturItems.ALLOYS) {
                             out.accept(alloy);
                         }
@@ -101,8 +102,10 @@ public final class KonturCreativeTabs {
                         out.accept(KonturBlocks.PLASMA_FURNACE);
                         out.accept(KonturBlocks.VACUUM_CASTER);
                         out.accept(KonturBlocks.ALLOY_FURNACE);
+                        out.accept(KonturBlocks.FURNACE_CASING);
+                        out.accept(KonturBlocks.BLAST_FURNACE);
                         out.accept(KonturBlocks.FUSION_CASING);
-                        out.accept(KonturBlocks.FUSION_PORT);
+                        out.accept(KonturBlocks.ASSEMBLY_PORT);
                         out.accept(KonturBlocks.FUSION_REACTOR);
                         out.accept(KonturBlocks.WATER_SPLITTER);
                         out.accept(KonturBlocks.HYDROGEN_GENERATOR);

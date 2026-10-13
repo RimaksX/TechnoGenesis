@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "BBB",
+    "BFB",
+    "BBB"
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:brick"
+    },
+    "F": {
+      "item": "kontur:machine_frame"
+    }
+  },
+  "result": {
+    "id": "kontur:furnace_casing",
+    "count": 8
+  }
+}

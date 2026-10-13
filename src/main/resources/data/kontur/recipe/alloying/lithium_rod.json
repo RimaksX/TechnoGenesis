@@ -1,0 +1,23 @@
+{
+  "type": "kontur:alloying",
+  "results": [
+    {
+      "id": "kontur:lithium_rod",
+      "count": 2
+    }
+  ],
+  "energy": 20000,
+  "time": 100,
+  "input": {
+    "ingredient": {
+      "item": "kontur:crushed_spodumene"
+    },
+    "count": 4
+  },
+  "input_b": {
+    "ingredient": {
+      "item": "kontur:stainless_steel_ingot"
+    },
+    "count": 1
+  }
+}

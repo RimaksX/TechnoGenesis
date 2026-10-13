@@ -42,6 +42,8 @@ public final class KonturItems {
             "steel_ingot", "stainless_steel_ingot", "tungsten_carbide_ingot", "titanium_alloy_ingot",
             "magnetic_alloy_ingot", "nichrome_ingot"
     };
+    /** Топливо термоядерного реактора: литий из сподумена даёт тритий; один стержень горит 5 минут. */
+    public static final DeferredItem<Item> LITHIUM_ROD = simple("lithium_rod");
     public static final DeferredItem<Item> WRENCH = ITEMS.register("wrench", () -> new WrenchItem(new Item.Properties()));
     public static final DeferredItem<Item> GANGUE = simple("gangue");
     public static final DeferredItem<Item> ASH = simple("ash");

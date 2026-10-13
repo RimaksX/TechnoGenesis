@@ -534,11 +534,16 @@
   "tooltip.kontur.machine.solar_farm": "Six panels in one farm: 720 FE/t, accepts a coating",
   "tooltip.kontur.machine.miner": "Automatic miner: mines ore over a field, needs drill tips",
   "block.kontur.fusion_casing": "Reactor Casing",
-  "block.kontur.fusion_port": "Reactor Port",
+  "block.kontur.assembly_port": "Casing Port",
   "block.kontur.fusion_reactor": "Fusion Reactor",
   "tooltip.kontur.stage.fusion": "Fusion Power",
-  "status.kontur.structure_missing": "Reactor incomplete: casing blocks are missing",
-  "status.kontur.structure_blocked": "A foreign block is inside the reactor chamber",
-  "message.kontur.fusion_problem": "Reactor incomplete: %s wrong blocks. First: %s right, %s deep, %s up from the controller",
-  "tooltip.kontur.machine.fusion_reactor": "Built from casing: a 5x5x4 box with an empty 3x3x2 chamber, the controller in the middle of the front wall on the second row. Ports go anywhere on the wall. 8000 FE/t from hydrogen and plasma through gas pipes"
+  "status.kontur.structure_missing": "Incomplete: casing blocks are missing",
+  "status.kontur.structure_blocked": "A foreign block is inside the chamber",
+  "tooltip.kontur.machine.fusion_reactor": "Built from casing: a 5x5x4 box with an empty 3x3x2 chamber, the controller in the middle of the front wall on the second row, ports anywhere on the wall. Needs hydrogen, plasma and water through gas and fluid pipes and a lithium rod (5 minutes). 8000 FE/t",
+  "block.kontur.furnace_casing": "Refractory Casing",
+  "block.kontur.blast_furnace": "Blast Furnace",
+  "item.kontur.lithium_rod": "Lithium Rod",
+  "message.kontur.assembly_problem": "Incomplete: %s wrong blocks. First: %s right, %s deep, %s up from the controller",
+  "tooltip.kontur.machine.blast_furnace": "Built from refractory casing: a 5x5x6 tower with a 3x3x4 shaft, the controller in the middle of the front wall on the second row, ports anywhere on the wall. 8 iron, 2 graphite and oxygen make 10 steel",
+  "tooltip.kontur.lithium_rod": "Fusion reactor fuel: burns for 5 minutes"
 }

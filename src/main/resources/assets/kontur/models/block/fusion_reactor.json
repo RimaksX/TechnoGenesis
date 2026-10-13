@@ -3,6 +3,6 @@
   "textures": {
     "top": "kontur:block/fusion_casing",
     "side": "kontur:block/fusion_casing",
-    "front": "kontur:block/fusion_controller_front"
+    "front": "kontur:block/fusion_reactor_front"
   }
 }
