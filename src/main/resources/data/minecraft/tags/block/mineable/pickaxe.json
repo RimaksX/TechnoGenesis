@@ -33,6 +33,8 @@
     "kontur:fluid_pipe_heavy",
     "kontur:fluid_pipe_ultra",
     "kontur:garnierite_ore",
+    "kontur:gas_pipe",
+    "kontur:gas_pipe_heavy",
     "kontur:graphite_ore",
     "kontur:halite_ore",
     "kontur:item_pipe",
@@ -68,6 +70,7 @@
     "kontur:vacuum_caster",
     "kontur:washing_drum",
     "kontur:water_pump",
+    "kontur:water_splitter",
     "kontur:wind_rotor",
     "kontur:wolframite_ore"
   ]

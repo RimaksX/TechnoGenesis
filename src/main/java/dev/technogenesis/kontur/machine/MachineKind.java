@@ -110,6 +110,12 @@ public enum MachineKind implements StringRepresentable {
             .tank(36, 20, 4000, false).slot(72, 45, SlotRole.OUTPUT)
             .energy(EnergyKind.CONSUMER, 20000, 1200, 0, 200).arrow(66, 30).module(-20, 41).cooler(-20, 63).build()),
 
+    // ---- газы
+    // Разделитель воды: 192 FE/t, вода -> водород и кислород (два выходных бака, газы идут по газовым трубам)
+    WATER_SPLITTER("water_splitter", true, false, KonturRecipes.WATER_SPLITTING, MachineDefinition.builder()
+            .tank(30, 20, 4000, false).tank(98, 20, 4000, true).tank(124, 20, 4000, true)
+            .energy(EnergyKind.CONSUMER, 19200, 1152, 0, 192).arrow(58, 30).module(-20, 41).cooler(-20, 63).build()),
+
     // ---- энергетика: возобновляемые источники и паровая турбина
     // Ветряной ротор: 24..96 FE/t, растёт с высотой и в непогоду; нужны открытое небо и свободные бока
     WIND_ROTOR("wind_rotor", true, false, null, MachineDefinition.builder()
@@ -184,6 +190,7 @@ public enum MachineKind implements StringRepresentable {
             case EXTRACTOR, ELECTROLYZER, SOLVENT_REGENERATOR -> "x5";
             case ATTRITOR, STEAM_GENERATOR, AUTOCLAVE -> "x8";
             case PLASMA_GENERATOR, PLASMA_FURNACE, VACUUM_CASTER -> "x12";
+            case WATER_SPLITTER -> "gas";
             case MINER -> "mining";
             default -> "power";
         };
@@ -196,7 +203,7 @@ public enum MachineKind implements StringRepresentable {
             case SOLID_FUEL_GENERATOR -> MultiLayout.of(1, 1, 2);
             case SETTLING_TANK -> MultiLayout.of(2, 2, 1);
             case STEAM_GENERATOR -> MultiLayout.of(1, 1, 2);
-            case ACID_PLANT, LEACHING_REACTOR, PRECIPITATION_REACTOR, ATTRITOR, PLASMA_GENERATOR ->
+            case ACID_PLANT, LEACHING_REACTOR, PRECIPITATION_REACTOR, ATTRITOR, PLASMA_GENERATOR, WATER_SPLITTER ->
                     MultiLayout.of(2, 2, 2);
             case FILTER_PRESS, EXTRACTOR, VACUUM_CASTER -> MultiLayout.of(3, 2, 1);
             case ELECTROLYZER, AUTOCLAVE -> MultiLayout.of(3, 2, 2);

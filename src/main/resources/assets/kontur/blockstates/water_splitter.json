@@ -1,0 +1,692 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "facing": "north",
+        "part": "0",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/water_splitter_p0"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "part": "0",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/water_splitter_p0_on"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "part": "4",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/water_splitter_p4"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "part": "4",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/water_splitter_p4"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "part": "2",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/water_splitter_p2"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "part": "2",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/water_splitter_p2"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "part": "6",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/water_splitter_p6"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "part": "6",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/water_splitter_p6_on"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "part": "1",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/water_splitter_p1"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "part": "1",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/water_splitter_p1"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "part": "5",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/water_splitter_p5"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "part": "5",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/water_splitter_p5"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "part": "3",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/water_splitter_p3"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "part": "3",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/water_splitter_p3"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "part": "7",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/water_splitter_p7"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "part": "7",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/water_splitter_p7"
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "0",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/water_splitter_p0",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "0",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/water_splitter_p0_on",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "4",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/water_splitter_p4",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "4",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/water_splitter_p4",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "2",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/water_splitter_p2",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "2",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/water_splitter_p2",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "6",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/water_splitter_p6",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "6",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/water_splitter_p6_on",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "1",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/water_splitter_p1",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "1",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/water_splitter_p1",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "5",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/water_splitter_p5",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "5",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/water_splitter_p5",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "3",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/water_splitter_p3",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "3",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/water_splitter_p3",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "7",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/water_splitter_p7",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "7",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/water_splitter_p7",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "0",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/water_splitter_p0",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "0",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/water_splitter_p0_on",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "4",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/water_splitter_p4",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "4",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/water_splitter_p4",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "2",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/water_splitter_p2",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "2",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/water_splitter_p2",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "6",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/water_splitter_p6",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "6",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/water_splitter_p6_on",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "1",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/water_splitter_p1",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "1",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/water_splitter_p1",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "5",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/water_splitter_p5",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "5",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/water_splitter_p5",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "3",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/water_splitter_p3",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "3",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/water_splitter_p3",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "7",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/water_splitter_p7",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "7",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/water_splitter_p7",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "0",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/water_splitter_p0",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "0",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/water_splitter_p0_on",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "4",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/water_splitter_p4",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "4",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/water_splitter_p4",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "2",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/water_splitter_p2",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "2",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/water_splitter_p2",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "6",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/water_splitter_p6",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "6",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/water_splitter_p6_on",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "1",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/water_splitter_p1",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "1",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/water_splitter_p1",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "5",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/water_splitter_p5",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "5",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/water_splitter_p5",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "3",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/water_splitter_p3",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "3",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/water_splitter_p3",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "7",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/water_splitter_p7",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "7",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/water_splitter_p7",
+        "y": 270
+      }
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "type": "kontur:water_splitting",
+  "results": [],
+  "energy": 19200,
+  "time": 100,
+  "fluid_input": {
+    "fluids": [
+      "minecraft:water",
+      "kontur:technical_water"
+    ],
+    "amount": 1000
+  },
+  "fluid_results": [
+    {
+      "fluid": "kontur:hydrogen",
+      "amount": 1000
+    },
+    {
+      "fluid": "kontur:oxygen",
+      "amount": 500
+    }
+  ]
+}

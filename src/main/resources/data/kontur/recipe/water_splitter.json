@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "GNG",
+    "GFG",
+    "WCV"
+  ],
+  "key": {
+    "G": {
+      "item": "kontur:graphite"
+    },
+    "N": {
+      "item": "kontur:nickel_ingot"
+    },
+    "F": {
+      "item": "kontur:machine_frame"
+    },
+    "W": {
+      "item": "kontur:winding"
+    },
+    "C": {
+      "item": "kontur:control_circuit"
+    },
+    "V": {
+      "item": "kontur:valve_block"
+    }
+  },
+  "result": {
+    "id": "kontur:water_splitter",
+    "count": 1
+  }
+}

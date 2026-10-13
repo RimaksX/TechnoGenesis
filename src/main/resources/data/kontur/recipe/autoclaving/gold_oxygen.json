@@ -1,0 +1,27 @@
+{
+  "type": "kontur:autoclaving",
+  "results": [
+    {
+      "id": "minecraft:gold_ingot",
+      "count": 4
+    },
+    {
+      "id": "kontur:gold_sintered_residue",
+      "count": 1
+    }
+  ],
+  "energy": 24000,
+  "time": 100,
+  "input": {
+    "ingredient": {
+      "item": "kontur:gold_slag_dust"
+    },
+    "count": 1
+  },
+  "fluid_input": {
+    "fluids": [
+      "kontur:oxygen"
+    ],
+    "amount": 500
+  }
+}

@@ -485,5 +485,11 @@
   "item.kontur.valve_block": "Valve Block",
   "tooltip.kontur.component.valve_block": "Chromium valves for chemical machines and the steam generator",
   "item.kontur.heat_plate": "Heat-Resistant Plate",
-  "tooltip.kontur.component.heat_plate": "Tungsten, molybdenum and titanium: for the autoclave and plasma machines"
+  "tooltip.kontur.component.heat_plate": "Tungsten, molybdenum and titanium: for the autoclave and plasma machines",
+  "block.kontur.water_splitter": "Water Splitter",
+  "fluid_type.kontur.hydrogen": "Hydrogen",
+  "fluid_type.kontur.oxygen": "Oxygen",
+  "tooltip.kontur.stage.gas": "Gases",
+  "block.kontur.gas_pipe": "Gas Pipe",
+  "block.kontur.gas_pipe_heavy": "Heavy Gas Pipe"
 }

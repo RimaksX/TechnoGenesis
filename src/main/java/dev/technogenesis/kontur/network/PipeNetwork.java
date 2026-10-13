@@ -2,6 +2,7 @@ package dev.technogenesis.kontur.network;
 
 import dev.technogenesis.kontur.blockentity.ConduitBlockEntity;
 import dev.technogenesis.kontur.blockentity.MachineBlockEntity;
+import dev.technogenesis.kontur.registry.KonturFluids;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,7 +21,7 @@ import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemHandlerHelper;
 
 /**
- * Связная сеть труб одного вида (предметы или жидкости). Раз в interval тиков забирает из сторон с режимом
+ * Связная сеть труб одного вида (предметы, жидкости или газы). Раз в interval тиков забирает из сторон с режимом
  * "забирать" и отдаёт в стороны с режимом "отдавать", но не больше amount за операцию (по самой слабой трубе).
  * Из точки в ту же самую точку ничего не возвращается, всё переносится только целиком и без потерь.
  */
@@ -273,6 +274,11 @@ public final class PipeNetwork {
         return wanted.isEmpty() ? sinks : wanted;
     }
 
+    /** Газовая сеть возит только газы, сеть жидкостей - всё, кроме газов, которым нужны газовые трубы. */
+    private boolean carries(Fluid fluid) {
+        return kind == ConduitKind.GASES ? KonturFluids.isGas(fluid) : !KonturFluids.needsGasPipe(fluid);
+    }
+
     private int moveFluids(int budget) {
         List<Endpoint<IFluidHandler>> sources = new ArrayList<>();
         List<Endpoint<IFluidHandler>> sinks = new ArrayList<>();
@@ -295,7 +301,7 @@ public final class PipeNetwork {
             Endpoint<IFluidHandler> src = sources.get((rotation + k) % sources.size());
             IFluidHandler from = src.handler(level);
             FluidStack probe = from.drain(left, IFluidHandler.FluidAction.SIMULATE);
-            if (probe.isEmpty()) {
+            if (probe.isEmpty() || !carries(probe.getFluid())) {
                 continue;
             }
             List<Endpoint<IFluidHandler>> targets = fluidTargets(sinks, probe);

@@ -34,6 +34,7 @@ public final class KonturRecipes {
     public static final Kind PLASMA_GENERATION = new Kind("plasma_generation");
     public static final Kind PLASMA_SMELTING = new Kind("plasma_smelting");
     public static final Kind VACUUM_CASTING = new Kind("vacuum_casting");
+    public static final Kind WATER_SPLITTING = new Kind("water_splitting");
 
     private KonturRecipes() {
     }

@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "TPT",
+    "PRP",
+    "TPT"
+  ],
+  "key": {
+    "T": {
+      "item": "kontur:titanium_ingot"
+    },
+    "P": {
+      "item": "kontur:gas_pipe"
+    },
+    "R": {
+      "item": "minecraft:redstone_block"
+    }
+  },
+  "result": {
+    "id": "kontur:gas_pipe_heavy",
+    "count": 4
+  }
+}

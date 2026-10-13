@@ -53,6 +53,10 @@ public final class KonturFluids {
     /** Ступень ×12: плазма из генератора плазмы; внутренняя жидкость. */
     public static final FluidSet PLASMA = new FluidSet("plasma", 0xFFB48CFF, 50, 100, false);
 
+    /** Газы (внутренние жидкости): водород и кислород делит вода в разделителе; ходят только по газовым трубам. */
+    public static final FluidSet HYDROGEN = new FluidSet("hydrogen", 0xFFDDF4FF, -10, 20, false);
+    public static final FluidSet OXYGEN = new FluidSet("oxygen", 0xFFA8D8FF, -12, 20, false);
+
     /** Раствор для каждого металла: жидкости разных металлов никогда не смешиваются. */
     public static final Map<Metal, FluidSet> SOLUTION = new EnumMap<>(Metal.class);
 
@@ -83,6 +87,17 @@ public final class KonturFluids {
     }
 
     private KonturFluids() {
+    }
+
+    /** Газ по газовым трубам: водород, кислород, пар и плазма (пар и плазма по-прежнему идут и по трубам жидкостей). */
+    public static boolean isGas(Fluid fluid) {
+        return fluid == HYDROGEN.source.get() || fluid == OXYGEN.source.get() || fluid == STEAM.source.get()
+                || fluid == PLASMA.source.get();
+    }
+
+    /** Эти газы по обычным трубам жидкостей не идут: нужны газовые трубы. */
+    public static boolean needsGasPipe(Fluid fluid) {
+        return fluid == HYDROGEN.source.get() || fluid == OXYGEN.source.get();
     }
 
     /** Тип жидкости, источник, поток и (для размещаемых) блок и ведро. */

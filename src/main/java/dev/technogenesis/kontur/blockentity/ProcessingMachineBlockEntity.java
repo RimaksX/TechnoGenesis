@@ -24,7 +24,7 @@ public class ProcessingMachineBlockEntity extends MachineBlockEntity {
     private final int inputSlot;
     private final int[] outputSlots;
     private final int inputTank;
-    private final int outputTank;
+    private final int[] outputTanks;
     private RecipeHolder<MachineRecipe> current;
 
     public ProcessingMachineBlockEntity(MachineKind kind, BlockPos pos, BlockState state) {
@@ -32,7 +32,10 @@ public class ProcessingMachineBlockEntity extends MachineBlockEntity {
         this.inputSlot = def.inputSlot();
         this.outputSlots = def.outputSlots();
         this.inputTank = def.inputTank();
-        this.outputTank = def.outputTank();
+        this.outputTanks = new int[def.outputTankCount()];
+        for (int i = 0; i < outputTanks.length; i++) {
+            outputTanks[i] = def.outputTank(i);
+        }
     }
 
     private RecipeType<MachineRecipe> recipeType() {
@@ -147,8 +150,11 @@ public class ProcessingMachineBlockEntity extends MachineBlockEntity {
                 return;
             }
         }
-        for (MachineRecipe.FluidOutput out : recipe.fluidResults()) {
-            if (outputTank < 0 || tanks[outputTank].fill(out.stack(), FluidAction.SIMULATE) < out.amount()) {
+        List<MachineRecipe.FluidOutput> fluidOuts = recipe.fluidResults();
+        for (int i = 0; i < fluidOuts.size(); i++) {
+            MachineRecipe.FluidOutput out = fluidOuts.get(i);
+            int tank = outputTanks.length == 0 ? -1 : outputTanks[Math.min(i, outputTanks.length - 1)];
+            if (tank < 0 || tanks[tank].fill(out.stack(), FluidAction.SIMULATE) < out.amount()) {
                 setStatus(MachineStatus.FLUID_OUTPUT_FULL);
                 return;
             }
@@ -201,8 +207,9 @@ public class ProcessingMachineBlockEntity extends MachineBlockEntity {
                 inventory.insertItem(outputSlots[i], r.stack(), false);
             }
         }
-        for (MachineRecipe.FluidOutput out : recipe.fluidResults()) {
-            tanks[outputTank].fill(out.stack(), FluidAction.EXECUTE);
+        List<MachineRecipe.FluidOutput> fluidOuts = recipe.fluidResults();
+        for (int i = 0; i < fluidOuts.size(); i++) {
+            tanks[outputTanks[Math.min(i, outputTanks.length - 1)]].fill(fluidOuts.get(i).stack(), FluidAction.EXECUTE);
         }
     }
 

@@ -92,7 +92,7 @@ public class ConduitBlock extends BaseEntityBlock {
     private boolean hasHandler(Level level, BlockPos neighbour, Direction dir) {
         return switch (tier.kind) {
             case ITEMS -> level.getCapability(Capabilities.ItemHandler.BLOCK, neighbour, dir.getOpposite()) != null;
-            case FLUIDS -> level.getCapability(Capabilities.FluidHandler.BLOCK, neighbour, dir.getOpposite()) != null;
+            case FLUIDS, GASES -> level.getCapability(Capabilities.FluidHandler.BLOCK, neighbour, dir.getOpposite()) != null;
         };
     }
 

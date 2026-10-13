@@ -485,5 +485,11 @@
   "item.kontur.valve_block": "Клапанный блок",
   "tooltip.kontur.component.valve_block": "Хромовые клапаны для химических машин и парогенератора",
   "item.kontur.heat_plate": "Жаропрочная плита",
-  "tooltip.kontur.component.heat_plate": "Вольфрам, молибден и титан: для автоклава и плазменных машин"
+  "tooltip.kontur.component.heat_plate": "Вольфрам, молибден и титан: для автоклава и плазменных машин",
+  "block.kontur.water_splitter": "Разделитель воды",
+  "fluid_type.kontur.hydrogen": "Водород",
+  "fluid_type.kontur.oxygen": "Кислород",
+  "tooltip.kontur.stage.gas": "Газы",
+  "block.kontur.gas_pipe": "Газовая труба",
+  "block.kontur.gas_pipe_heavy": "Тяжёлая газовая труба"
 }

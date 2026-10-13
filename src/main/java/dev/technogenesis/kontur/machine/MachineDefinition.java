@@ -226,6 +226,26 @@ public final class MachineDefinition {
         return -1;
     }
 
+    /** Номер n-го выходного бака (у разделителя воды их два: водород и кислород) или -1. */
+    public int outputTank(int n) {
+        int seen = 0;
+        for (int i = 0; i < tanks.size(); i++) {
+            if (tanks.get(i).output() && seen++ == n) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /** Сколько у машины выходных баков. */
+    public int outputTankCount() {
+        int n = 0;
+        for (TankDef t : tanks) {
+            n += t.output() ? 1 : 0;
+        }
+        return n;
+    }
+
     public static Builder builder() {
         return new Builder();
     }

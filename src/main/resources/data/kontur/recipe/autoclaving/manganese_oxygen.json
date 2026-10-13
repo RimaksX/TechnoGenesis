@@ -1,0 +1,27 @@
+{
+  "type": "kontur:autoclaving",
+  "results": [
+    {
+      "id": "kontur:manganese_ingot",
+      "count": 4
+    },
+    {
+      "id": "kontur:manganese_sintered_residue",
+      "count": 1
+    }
+  ],
+  "energy": 24000,
+  "time": 100,
+  "input": {
+    "ingredient": {
+      "item": "kontur:manganese_slag_dust"
+    },
+    "count": 1
+  },
+  "fluid_input": {
+    "fluids": [
+      "kontur:oxygen"
+    ],
+    "amount": 500
+  }
+}

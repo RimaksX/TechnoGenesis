@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "III",
+    "V V",
+    "III"
+  ],
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "V": {
+      "item": "kontur:valve_block"
+    }
+  },
+  "result": {
+    "id": "kontur:gas_pipe",
+    "count": 6
+  }
+}
