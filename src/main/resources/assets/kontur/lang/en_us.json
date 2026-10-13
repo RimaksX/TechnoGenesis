@@ -491,5 +491,6 @@
   "fluid_type.kontur.oxygen": "Oxygen",
   "tooltip.kontur.stage.gas": "Gases",
   "block.kontur.gas_pipe": "Gas Pipe",
-  "block.kontur.gas_pipe_heavy": "Heavy Gas Pipe"
+  "block.kontur.gas_pipe_heavy": "Heavy Gas Pipe",
+  "block.kontur.hydrogen_generator": "Hydrogen Generator"
 }

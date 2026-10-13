@@ -116,6 +116,11 @@ public enum MachineKind implements StringRepresentable {
             .tank(30, 20, 4000, false).tank(98, 20, 4000, true).tank(124, 20, 4000, true)
             .energy(EnergyKind.CONSUMER, 19200, 1152, 0, 192).arrow(58, 30).module(-20, 41).cooler(-20, 63).build()),
 
+    // Водородный генератор: 480 FE/t, 30 мБ водорода за тик (16 FE на мБ); газ подаётся по газовым трубам
+    HYDROGEN_GENERATOR("hydrogen_generator", true, false, null, MachineDefinition.builder()
+            .tank(79, 20, 4000, false).module(-20, 41).cooler(-20, 63)
+            .energy(EnergyKind.GENERATOR, 120000, 0, 1920, 480).build()),
+
     // ---- энергетика: возобновляемые источники и паровая турбина
     // Ветряной ротор: 24..96 FE/t, растёт с высотой и в непогоду; нужны открытое небо и свободные бока
     WIND_ROTOR("wind_rotor", true, false, null, MachineDefinition.builder()
@@ -200,7 +205,7 @@ public enum MachineKind implements StringRepresentable {
     public MultiLayout layout() {
         return switch (this) {
             case WASHING_DRUM, JAW_CRUSHER, MAGNETIC_SEPARATOR, TAILINGS_MILL, STEAM_TURBINE -> MultiLayout.of(2, 1, 1);
-            case SOLID_FUEL_GENERATOR -> MultiLayout.of(1, 1, 2);
+            case SOLID_FUEL_GENERATOR, HYDROGEN_GENERATOR -> MultiLayout.of(1, 1, 2);
             case SETTLING_TANK -> MultiLayout.of(2, 2, 1);
             case STEAM_GENERATOR -> MultiLayout.of(1, 1, 2);
             case ACID_PLANT, LEACHING_REACTOR, PRECIPITATION_REACTOR, ATTRITOR, PLASMA_GENERATOR, WATER_SPLITTER ->

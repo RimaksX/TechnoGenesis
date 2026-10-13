@@ -491,5 +491,6 @@
   "fluid_type.kontur.oxygen": "Кислород",
   "tooltip.kontur.stage.gas": "Газы",
   "block.kontur.gas_pipe": "Газовая труба",
-  "block.kontur.gas_pipe_heavy": "Тяжёлая газовая труба"
+  "block.kontur.gas_pipe_heavy": "Тяжёлая газовая труба",
+  "block.kontur.hydrogen_generator": "Водородный генератор"
 }

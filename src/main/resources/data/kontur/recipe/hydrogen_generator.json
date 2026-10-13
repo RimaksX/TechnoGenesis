@@ -1,0 +1,36 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "IKI",
+    "WFW",
+    "DVC"
+  ],
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "K": {
+      "item": "minecraft:bucket"
+    },
+    "W": {
+      "item": "kontur:winding"
+    },
+    "F": {
+      "item": "kontur:machine_frame"
+    },
+    "D": {
+      "item": "kontur:gear_drive"
+    },
+    "V": {
+      "item": "kontur:valve_block"
+    },
+    "C": {
+      "item": "kontur:control_circuit"
+    }
+  },
+  "result": {
+    "id": "kontur:hydrogen_generator",
+    "count": 1
+  }
+}

@@ -67,6 +67,7 @@ public final class KonturBlocks {
     public static final DeferredBlock<MachineBlock> AUTOCLAVE = machine(MachineKind.AUTOCLAVE);
     public static final DeferredBlock<MachineBlock> PLASMA_GENERATOR = machine(MachineKind.PLASMA_GENERATOR);
     public static final DeferredBlock<MachineBlock> WATER_SPLITTER = machine(MachineKind.WATER_SPLITTER);
+    public static final DeferredBlock<MachineBlock> HYDROGEN_GENERATOR = machine(MachineKind.HYDROGEN_GENERATOR);
     public static final DeferredBlock<MachineBlock> PLASMA_FURNACE = machine(MachineKind.PLASMA_FURNACE);
     public static final DeferredBlock<MachineBlock> VACUUM_CASTER = machine(MachineKind.VACUUM_CASTER);
     public static final DeferredBlock<MachineBlock> WIND_ROTOR = machine(MachineKind.WIND_ROTOR);

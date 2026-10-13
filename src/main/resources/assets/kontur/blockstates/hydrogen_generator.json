@@ -1,0 +1,176 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "facing": "north",
+        "part": "0",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/hydrogen_generator_p0"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "part": "0",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/hydrogen_generator_p0_on"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "part": "1",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/hydrogen_generator_p1"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "part": "1",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/hydrogen_generator_p1"
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "0",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/hydrogen_generator_p0",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "0",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/hydrogen_generator_p0_on",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "1",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/hydrogen_generator_p1",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "1",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/hydrogen_generator_p1",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "0",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/hydrogen_generator_p0",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "0",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/hydrogen_generator_p0_on",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "1",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/hydrogen_generator_p1",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "1",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/hydrogen_generator_p1",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "0",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/hydrogen_generator_p0",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "0",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/hydrogen_generator_p0_on",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "1",
+        "active": "false"
+      },
+      "apply": {
+        "model": "kontur:block/hydrogen_generator_p1",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "1",
+        "active": "true"
+      },
+      "apply": {
+        "model": "kontur:block/hydrogen_generator_p1",
+        "y": 270
+      }
+    }
+  ]
+}

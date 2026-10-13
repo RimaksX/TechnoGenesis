@@ -56,6 +56,7 @@ public final class KonturBlockEntities {
             case WIND_ROTOR -> new dev.technogenesis.kontur.blockentity.WindRotorBlockEntity(pos, state);
             case THERMAL_GENERATOR -> new dev.technogenesis.kontur.blockentity.ThermalGeneratorBlockEntity(pos, state);
             case STEAM_TURBINE -> new dev.technogenesis.kontur.blockentity.SteamTurbineBlockEntity(pos, state);
+            case HYDROGEN_GENERATOR -> new dev.technogenesis.kontur.blockentity.HydrogenGeneratorBlockEntity(pos, state);
             case SOLAR_PANEL, SOLAR_PANEL_ADVANCED ->
                     new dev.technogenesis.kontur.blockentity.SolarPanelBlockEntity(kind, pos, state);
             case MINER -> new dev.technogenesis.kontur.blockentity.MinerBlockEntity(pos, state);
