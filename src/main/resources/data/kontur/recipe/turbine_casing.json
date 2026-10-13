@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "SSS",
+    "WFW",
+    "SSS"
+  ],
+  "key": {
+    "S": {
+      "item": "kontur:steel_ingot"
+    },
+    "W": {
+      "item": "kontur:winding"
+    },
+    "F": {
+      "item": "kontur:machine_frame"
+    }
+  },
+  "result": {
+    "id": "kontur:turbine_casing",
+    "count": 6
+  }
+}

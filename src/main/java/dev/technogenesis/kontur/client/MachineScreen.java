@@ -42,6 +42,8 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
     public static final int IMAGE_H = 184;
 
     // шкала энергии (справа)
+    static final int REACTOR_HEAT_X = 89;
+    static final int REACTOR_HEAT_Y = 26;
     static final int ENERGY_X = 160;
     static final int ENERGY_Y = 18;
     // рабочая область (без рамки): x 8..152, y 18..74
@@ -184,6 +186,9 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
         }
         if (heatBarVisible()) {
             GuiUtil.heatBar(g, x + HOLDER_X + 6, y + HOLDER_Y + heatBarOffset(), menu.heatPercent());
+        }
+        if (menu.kind == MachineKind.FUSION_REACTOR) {
+            GuiUtil.heatBar(g, x + REACTOR_HEAT_X, y + REACTOR_HEAT_Y, menu.heatPercent());
         }
         if (hasConfigTab()) {
             boolean open = menu.configOpen();
@@ -350,6 +355,14 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
         if (!cfg && def.hasArrow() && inRect(mx, my, x + def.arrowX, y + def.arrowY - 2, GuiUtil.ARROW_W, GuiUtil.ARROW_H + 4)
                 && menu.totalTime() > 0) {
             g.renderTooltip(font, Component.translatable("gui.kontur.progress", 100 * menu.progress() / menu.totalTime()), mx, my);
+        }
+        if (menu.kind == MachineKind.FUSION_REACTOR && inRect(mx, my, x + REACTOR_HEAT_X, y + REACTOR_HEAT_Y, 18, 6)) {
+            List<Component> lines = new ArrayList<>();
+            lines.add(Component.translatable("gui.kontur.reactor_heat", menu.heatPercent()));
+            if (menu.overheated()) {
+                lines.add(Component.translatable("gui.kontur.reactor_scram").withStyle(ChatFormatting.RED));
+            }
+            g.renderComponentTooltip(font, lines, mx, my);
         }
         if (heatBarVisible() && inRect(mx, my, x + HOLDER_X + 6, y + HOLDER_Y + heatBarOffset(), 18, 6)) {
             List<Component> lines = new ArrayList<>();

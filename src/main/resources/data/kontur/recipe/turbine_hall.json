@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "PWP",
+    "MFM",
+    "VCV"
+  ],
+  "key": {
+    "P": {
+      "item": "kontur:precision_drive"
+    },
+    "W": {
+      "item": "kontur:winding"
+    },
+    "M": {
+      "item": "kontur:power_module"
+    },
+    "F": {
+      "item": "kontur:turbine_casing"
+    },
+    "V": {
+      "item": "kontur:valve_block"
+    },
+    "C": {
+      "item": "kontur:control_circuit"
+    }
+  },
+  "result": {
+    "id": "kontur:turbine_hall",
+    "count": 1
+  }
+}

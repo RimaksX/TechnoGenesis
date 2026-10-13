@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "top": "kontur:block/turbine_casing",
+    "side": "kontur:block/turbine_casing",
+    "front": "kontur:block/turbine_hall_front"
+  }
+}

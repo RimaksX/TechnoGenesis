@@ -23,6 +23,13 @@ public final class AssemblyShape {
     public static final AssemblyShape BLAST = new AssemblyShape(2, 5, 1, 4, 1, 1, 3, 0, 3,
             () -> KonturBlocks.FURNACE_CASING.get());
 
+    /** Паротурбинный зал: коробка 3 x 7 x 3, тоннель ротора 1 x 5 x 1. */
+    public static final AssemblyShape TURBINE = new AssemblyShape(1, 7, 1, 1, 0, 1, 5, 0, 0,
+            () -> KonturBlocks.TURBINE_CASING.get());
+    /** Градирня: башня 3 x 3 x 6, шахта 1 x 1 x 4. */
+    public static final AssemblyShape TOWER = new AssemblyShape(1, 3, 1, 4, 0, 1, 1, 0, 3,
+            () -> KonturBlocks.COOLER_CASING.get());
+
     public final int halfWidth;
     public final int depth;
     public final int below;

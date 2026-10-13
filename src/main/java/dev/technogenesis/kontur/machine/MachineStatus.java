@@ -10,7 +10,7 @@ public enum MachineStatus {
     FRAME_OPEN(true), FRAME_EXTRA(true), FRAME_SIZE(true), FRAME_CORNER(true), FRAME_FRONT(true), AREA_BLOCKED(true),
     NO_TIPS(true), NO_DEPOT(true), LIQUID(true), MINE_DONE(false), UNLOADED(true), TIP_SWAP(false), NOT_CHECKED(true),
     // термоядерный реактор
-    STRUCTURE_MISSING(true), STRUCTURE_BLOCKED(true);
+    STRUCTURE_MISSING(true), STRUCTURE_BLOCKED(true), SCRAM(true);
 
     public final boolean problem;
 

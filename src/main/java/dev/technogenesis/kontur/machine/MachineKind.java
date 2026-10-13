@@ -128,11 +128,19 @@ public enum MachineKind implements StringRepresentable {
             .energy(EnergyKind.GENERATOR, 120000, 0, 1920, 480).build()),
 
     // ---- собираемые игроком машины
-    // Термоядерный реактор: водород, плазма, вода и литиевый стержень -> 8000 FE/t
+    // Термоядерный реактор: водород, плазма, вода и литиевый стержень -> 100 мБ/т пара (на 8000 FE/t в турбине); нужен ток 600 FE/t
     FUSION_REACTOR("fusion_reactor", true, false, null, MachineDefinition.builder()
-            .tank(22, 20, 16000, false).tank(46, 20, 16000, false).tank(70, 20, 16000, false)
-            .slot(112, 38, SlotRole.INPUT)
-            .energy(EnergyKind.GENERATOR, 4_000_000, 0, 24576, 8000).build()),
+            .tank(12, 20, 16000, false).tank(34, 20, 16000, false).tank(56, 20, 16000, false).tank(122, 20, 16000, true)
+            .slot(90, 38, SlotRole.INPUT)
+            .energy(EnergyKind.CONSUMER, 60000, 3600, 0, 600).build()),
+    // Паротурбинный зал: пар -> энергия (80 FE на мБ, до 160 мБ/т) и конденсат
+    TURBINE_HALL("turbine_hall", true, false, null, MachineDefinition.builder()
+            .tank(36, 20, 8000, false).tank(106, 20, 8000, true)
+            .energy(EnergyKind.GENERATOR, 400000, 0, 24576, 12800).build()),
+    // Градирня: конденсат -> вода (95%), 150 FE/t на вентиляторы, до 200 мБ/т
+    COOLING_TOWER("cooling_tower", true, false, null, MachineDefinition.builder()
+            .tank(36, 20, 8000, false).tank(106, 20, 8000, true)
+            .energy(EnergyKind.CONSUMER, 6000, 900, 0, 150).build()),
     // Доменная печь: 8 железа и 2 графита с кислородом дают 10 стали за цикл (480 FE/t)
     BLAST_FURNACE("blast_furnace", true, false, KonturRecipes.BLAST_SMELTING, MachineDefinition.builder()
             .tank(14, 20, 8000, false).slot(44, 29, SlotRole.INPUT).slot(44, 47, SlotRole.INPUT_B)
@@ -215,7 +223,7 @@ public enum MachineKind implements StringRepresentable {
             case PLASMA_GENERATOR, PLASMA_FURNACE, VACUUM_CASTER -> "x12";
             case WATER_SPLITTER -> "gas";
             case ALLOY_FURNACE -> "alloy";
-            case FUSION_REACTOR -> "fusion";
+            case FUSION_REACTOR, TURBINE_HALL, COOLING_TOWER -> "fusion";
             case BLAST_FURNACE -> "alloy";
             case MINER -> "mining";
             default -> "power";
@@ -227,6 +235,8 @@ public enum MachineKind implements StringRepresentable {
         return switch (this) {
             case FUSION_REACTOR -> AssemblyShape.FUSION;
             case BLAST_FURNACE -> AssemblyShape.BLAST;
+            case TURBINE_HALL -> AssemblyShape.TURBINE;
+            case COOLING_TOWER -> AssemblyShape.TOWER;
             default -> null;
         };
     }

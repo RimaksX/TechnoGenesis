@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "VBV",
+    "DFD",
+    "WCW"
+  ],
+  "key": {
+    "V": {
+      "item": "kontur:valve_block"
+    },
+    "B": {
+      "item": "minecraft:bucket"
+    },
+    "D": {
+      "item": "kontur:gear_drive"
+    },
+    "F": {
+      "item": "kontur:cooler_casing"
+    },
+    "W": {
+      "item": "kontur:winding"
+    },
+    "C": {
+      "item": "kontur:control_circuit"
+    }
+  },
+  "result": {
+    "id": "kontur:cooling_tower",
+    "count": 1
+  }
+}

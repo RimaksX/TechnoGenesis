@@ -300,7 +300,7 @@ public class MachineMenu extends AbstractContainerMenu {
 
     /** Нагрев модуля в процентах от предела. */
     public int heatPercent() {
-        return def.hasModule() ? sync[16] : 0;
+        return def.hasModule() || kind == MachineKind.FUSION_REACTOR ? sync[16] : 0;
     }
 
     /** Остывание за тик: собственное плюс радиатор плюс вода, лёд или снег рядом. */
@@ -309,7 +309,7 @@ public class MachineMenu extends AbstractContainerMenu {
     }
 
     public boolean overheated() {
-        return def.hasModule() && sync[15] != 0;
+        return (def.hasModule() || kind == MachineKind.FUSION_REACTOR) && sync[15] != 0;
     }
 
     public int burnLeft() {

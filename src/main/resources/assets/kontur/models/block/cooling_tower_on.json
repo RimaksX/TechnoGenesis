@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "top": "kontur:block/cooler_casing",
+    "side": "kontur:block/cooler_casing",
+    "front": "kontur:block/cooling_tower_front_on"
+  }
+}

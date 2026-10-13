@@ -50,6 +50,9 @@ public final class KonturFluids {
     /** Ступень ×8: пар из парогенератора; внутренняя жидкость. */
     public static final FluidSet STEAM = new FluidSet("steam", 0xFFE6EEF2, 100, 200, false);
 
+    /** Конденсат: отработавший пар турбины; его остужает градирня и возвращает водой. Внутренняя жидкость. */
+    public static final FluidSet CONDENSATE = new FluidSet("condensate", 0xFFC6D4D8, 1000, 800, false);
+
     /** Ступень ×12: плазма из генератора плазмы; внутренняя жидкость. */
     public static final FluidSet PLASMA = new FluidSet("plasma", 0xFFB48CFF, 50, 100, false);
 

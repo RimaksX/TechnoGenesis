@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "SSS",
+    "SFS",
+    "SSS"
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:smooth_stone"
+    },
+    "F": {
+      "item": "kontur:machine_frame"
+    }
+  },
+  "result": {
+    "id": "kontur:cooler_casing",
+    "count": 6
+  }
+}

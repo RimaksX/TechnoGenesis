@@ -49,6 +49,12 @@ public final class KonturBlocks {
     public static final DeferredBlock<Block> FUSION_CASING = block("fusion_casing", () -> new Block(
             BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(4.0f, 12.0f).sound(SoundType.METAL)
                     .requiresCorrectToolForDrops()));
+    public static final DeferredBlock<Block> TURBINE_CASING = block("turbine_casing", () -> new Block(
+            BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(4.0f, 12.0f).sound(SoundType.METAL)
+                    .requiresCorrectToolForDrops()));
+    public static final DeferredBlock<Block> COOLER_CASING = block("cooler_casing", () -> new Block(
+            BlockBehaviour.Properties.of().mapColor(MapColor.QUARTZ).strength(3.0f, 9.0f).sound(SoundType.STONE)
+                    .requiresCorrectToolForDrops()));
     public static final DeferredBlock<Block> FURNACE_CASING = block("furnace_casing", () -> new Block(
             BlockBehaviour.Properties.of().mapColor(MapColor.TERRACOTTA_RED).strength(3.0f, 9.0f).sound(SoundType.STONE)
                     .requiresCorrectToolForDrops()));
@@ -79,6 +85,8 @@ public final class KonturBlocks {
     public static final DeferredBlock<MachineBlock> PLASMA_GENERATOR = machine(MachineKind.PLASMA_GENERATOR);
     public static final DeferredBlock<MachineBlock> FUSION_REACTOR = machine(MachineKind.FUSION_REACTOR);
     public static final DeferredBlock<MachineBlock> BLAST_FURNACE = machine(MachineKind.BLAST_FURNACE);
+    public static final DeferredBlock<MachineBlock> TURBINE_HALL = machine(MachineKind.TURBINE_HALL);
+    public static final DeferredBlock<MachineBlock> COOLING_TOWER = machine(MachineKind.COOLING_TOWER);
     public static final DeferredBlock<MachineBlock> ALLOY_FURNACE = machine(MachineKind.ALLOY_FURNACE);
     public static final DeferredBlock<MachineBlock> WATER_SPLITTER = machine(MachineKind.WATER_SPLITTER);
     public static final DeferredBlock<MachineBlock> HYDROGEN_GENERATOR = machine(MachineKind.HYDROGEN_GENERATOR);
